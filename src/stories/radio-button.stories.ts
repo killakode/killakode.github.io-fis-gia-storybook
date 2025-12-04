@@ -18,21 +18,9 @@ const meta: Meta<RadioButtonComponent> = {
       control: 'text',
       description: 'Текст метки радиокнопки',
     },
-    value: {
-      control: 'text',
-      description: 'Значение радиокнопки',
-    },
-    name: {
-      control: 'text',
-      description: 'Имя группы (для объединения радиокнопок)',
-    },
     disabled: {
       control: 'boolean',
       description: 'Отключенное состояние',
-    },
-    selectedValue: {
-      control: 'text',
-      description: 'Текущее выбранное значение в группе',
     },
   },
   parameters: {
@@ -54,34 +42,21 @@ type Story = StoryObj<RadioButtonComponent>;
 export const Playground: Story = {
   args: {
     label: 'Option 1',
-    value: 'option1',
-    name: 'demo',
     disabled: false,
-    selectedValue: '',
   },
 };
 
 // ========================================
-// STATES - Все состояния
+// STATES - Все состояния (только просмотр)
 // ========================================
 export const States: Story = {
   render: () => ({
     props: {},
     template: `
-      <style>
-        .state-demo-readonly input {
-          pointer-events: none;
-        }
-        .state-demo-readonly label {
-          pointer-events: none;
-          user-select: none;
-        }
-      </style>
-
       <div style="display: flex; flex-direction: column; gap: 2rem;">
         <div>
           <h3>Default State</h3>
-          <div class="state-demo-readonly">
+          <div style="pointer-events: none;">
             <app-radio-button
               label="Unchecked option"
               value="opt1"
@@ -92,7 +67,7 @@ export const States: Story = {
 
         <div>
           <h3>Checked State</h3>
-          <div class="state-demo-readonly">
+          <div style="pointer-events: none;">
             <app-radio-button
               label="Checked option"
               value="opt2"
@@ -122,39 +97,13 @@ export const States: Story = {
         </div>
 
         <div>
-          <h3>Hover State (статичный)</h3>
-          <style>
-            .forced-hover .p-radiobutton-box {
-              --p-radiobutton-background: var(--global-light-gray-4-color) !important;
-              --p-radiobutton-border-color: var(--global-blue-3-color) !important;
-            }
-          </style>
-          <div class="state-demo-readonly forced-hover">
-            <app-radio-button
-              label="Hover state"
-              value="opt5"
-              name="state-demo-5">
-            </app-radio-button>
-          </div>
-        </div>
-
-        <div>
-          <h3>Focus State (статичный)</h3>
-          <style>
-            .forced-focus .p-radiobutton-box {
-              --p-radiobutton-background: var(--global-light-gray-4-color) !important;
-              --p-radiobutton-focus-border-color: var(--global-blue-3-color) !important;
-              outline: 2px solid var(--global-blue-3-color);
-              outline-offset: 2px;
-            }
-          </style>
-          <div class="state-demo-readonly forced-focus">
-            <app-radio-button
-              label="Focus state"
-              value="opt6"
-              name="state-demo-6">
-            </app-radio-button>
-          </div>
+          <h3>Hover & Focus</h3>
+          <p style="color: #666; font-size: 0.875rem;">Наведите курсор или используйте Tab для фокуса</p>
+          <app-radio-button
+            label="Hover/Focus me"
+            value="opt5"
+            name="state-demo-5">
+          </app-radio-button>
         </div>
       </div>
     `,
@@ -216,6 +165,43 @@ export const Group: Story = {
       description: {
         story:
           'Пример группы радиокнопок с общим name. Только одна кнопка может быть выбрана одновременно.',
+      },
+    },
+  },
+};
+
+// ========================================
+// WITH LONG LABELS - Длинные метки
+// ========================================
+export const WithLongLabels: Story = {
+  render: () => ({
+    props: {
+      termsValue: 'agree',
+    },
+    template: `
+      <div style="display: flex; flex-direction: column; gap: 1rem; max-width: 600px;">
+        <h3>Radio with Long Text</h3>
+
+        <app-radio-button
+          label="I agree to the terms and conditions, privacy policy, and data processing agreement"
+          value="agree"
+          name="terms"
+          [(selectedValue)]="termsValue">
+        </app-radio-button>
+
+        <app-radio-button
+          label="I disagree and wish to proceed without accepting the terms"
+          value="disagree"
+          name="terms"
+          [(selectedValue)]="termsValue">
+        </app-radio-button>
+      </div>
+    `,
+  }),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Радиокнопки с длинными текстовыми метками',
       },
     },
   },
