@@ -1,0 +1,151 @@
+.p-floatlabel {
+  --p-message-content-padding: 0;
+  --p-message-error-color: rgba(225, 20, 50, 1);
+  --p-message-error-background: transparent;
+  --p-message-error-shadow: none;
+  --p-message-error-border-color: transparent;
+  --p-message-text-font-size: .875rem;
+
+  --p-floatlabel-font-weight: var(--global-main-font-weight);
+  --p-floatlabel-color: var(--global-dark-blue-color);
+  --p-floatlabel-focus-color: var(--global-dark-blue-color);
+  --p-floatlabel-active-color: var(--global-dark-blue-color);
+
+  --p-inputtext-color: var(--global-dark-blue-color);
+  --p-inputtext-background: var(--global-light-gray-color-header);
+  --p-inputtext-padding-y: 0.6875rem;
+  --p-inputtext-padding-x: 1rem;
+  --p-inputtext-border-color: var(--global-light-gray-3-color);
+  --p-inputtext-border-radius: 0.25rem;
+  --p-inputtext-shadow: none;
+  --p-inputtext-hover-border-color: var(--global-light-gray-3-color);
+  --p-inputtext-focus-border-color: var(--global-light-blue-3-color);
+  --p-inputtext-disabled-background: var(--global-light-gray-3-color);
+  --p-inputtext-disabled-color: var(--global-gray-4-color);
+
+  --p-inputtext-invalid-border-color: var(--global-red-color);
+}
+
+.p-floatlabel {
+  --p-message-text-sm-font-size: 0.875rem;
+  --p-message-error-simple-color: var(--global-red-2-color);
+  --p-message-text-font-weight: var(--global-main-font-weight);
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  &.nomargin {
+    margin-top: 0;
+  }
+
+  &:has(.readonly) {
+    margin-top: 0;
+
+    &:first-child {
+      margin-top: 1rem;
+    }
+  }
+
+  label {
+    position: relative;
+    top: 0;
+    transform: none;
+    transition: none;
+    inset-inline-start: 0;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: var(--global-dark-blue-color) !important;
+  }
+  input {
+    height: 3rem;
+
+    &:disabled {
+      border: none;
+      opacity: 1;
+    }
+  }
+  & > .is-invalid {
+    --p-inputtext-background: var(--global-light-pink-color);
+    --p-inputtext-border-color: rgba(238, 63, 88, 1);
+
+  }
+  .p-message {
+    max-width: fit-content;
+  }
+
+  .p-inputmask {
+    width: 100%;
+  }
+}
+.p-dropdown.is-invalid,
+.p-select.is-invalid {
+  --p-select-background: var(--global-light-pink-color);
+  --p-inputtext-background: var(--global-light-gray-color-header);
+}
+
+.p-card {
+  .p-inputtext {
+    height: 3rem;
+    width: 100%;
+
+    &.readonly {
+      border: none;
+      padding: 0;
+      background: none;
+      height: auto;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      & + label {
+        padding: 0;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        color: var(--global-gray-color) !important;
+      }
+    }
+  }
+  .p-floatlabel {
+    label {
+      transform: none;
+      transition: none;
+      inset-inline-start: 0;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+    }
+    input {
+      &:disabled {
+        --p-inputtext-border-color: var(--global-light-gray-3-color);
+
+        opacity: 1;
+      }
+    }
+  }
+  .width-35-custom {
+    width: 35%;
+  }
+}
+
+.width-35-custom {
+  width: 35%;
+}
+.min-w-0 {
+  min-width: 0 !important;
+}
+
+.p-inputnumber {
+  width: 100%;
+}
+
+.input-icon {
+  font-size: 1.5rem;
+}
+
+.p-inputnumber-fluid .p-inputnumber-input {
+  margin: 0 -1px;
+  z-index: 0;
+}
+
+.p-inputnumber-input:enabled:focus {
+  border-color: var(--p-inputtext-border-color);
+}
