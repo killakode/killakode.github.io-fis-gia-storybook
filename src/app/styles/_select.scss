@@ -14,11 +14,7 @@
   --p-select-color: var(--global-dark-blue-color);
   --p-select-padding-y: 0.688rem;
   --p-select-padding-x: 1rem;
-  --p-select-overlay-background: var(--global-white-color);
-  --p-select-overlay-color: var(--global-dark-blue-color);
-  --p-select-overlay-border-color: var(--global-light-blue-3-color);
-  --p-select-overlay-border-radius: 0.25rem;
-  --p-select-overlay-shadow: none;
+
   --p-anchor-gutter: -0.125rem;
   --p-select-list-gap: 0;
   --p-select-list-padding: 0;
@@ -37,6 +33,14 @@
   --p-select-option-selected-color: var(--global-dark-blue-color);
   --p-select-option-selected-focus-background: var(--global-light-gray-color);
   --p-select-option-selected-focus-color: var(--global-dark-blue-color);
+}
+
+.p-overlay{
+  --p-select-overlay-background: var(--global-white-color);
+  --p-select-overlay-color: var(--global-dark-blue-color);
+  --p-select-overlay-border-color: var(--global-light-blue-3-color);
+  --p-select-overlay-border-radius: 0.25rem;
+  --p-select-overlay-shadow: none;
 }
 
 // ============================================
