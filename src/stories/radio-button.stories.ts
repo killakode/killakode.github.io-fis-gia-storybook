@@ -18,16 +18,17 @@ const meta: Meta<RadioButtonComponent> = {
       control: 'text',
       description: 'Текст метки радиокнопки',
     },
-    disabled: {
-      control: 'boolean',
-      description: 'Отключенное состояние',
+    state: {
+      control: 'select',
+      options: ['default', 'checked', 'disabled', 'disabled-checked', 'hover', 'focus'],
+      description: 'Состояние радиокнопки для демонстрации',
     },
   },
   parameters: {
     docs: {
       description: {
         component:
-          'Компонент радиокнопки с поддержкой состояний: default, hover, checked, disabled, focus',
+          'Компонент радиокнопки с поддержкой состояний: default, checked, disabled, hover, focus',
       },
     },
   },
@@ -42,8 +43,40 @@ type Story = StoryObj<RadioButtonComponent>;
 export const Playground: Story = {
   args: {
     label: 'Option 1',
-    disabled: false,
+    state: 'default',
   },
+  render: (args) => ({
+    props: {
+      ...args,
+      isChecked: args.state === 'checked' || args.state === 'disabled-checked',
+      isDisabled: args.state === 'disabled' || args.state === 'disabled-checked',
+      stateClass: args.state === 'hover' ? 'forced-hover' : args.state === 'focus' ? 'forced-focus' : '',
+    },
+    template: `
+      <style>
+        .forced-hover .p-radiobutton-box {
+          --p-radiobutton-background: var(--global-light-gray-4-color) !important;
+          --p-radiobutton-border-color: var(--global-blue-3-color) !important;
+        }
+        .forced-focus .p-radiobutton-box {
+          --p-radiobutton-background: var(--global-light-gray-4-color) !important;
+          --p-radiobutton-focus-border-color: var(--global-blue-3-color) !important;
+          outline: 2px solid var(--global-blue-3-color);
+          outline-offset: 2px;
+        }
+      </style>
+
+      <div [class]="stateClass">
+        <app-radio-button
+          [label]="label"
+          value="playground"
+          name="playground-demo"
+          [selectedValue]="isChecked ? 'playground' : ''"
+          [disabled]="isDisabled">
+        </app-radio-button>
+      </div>
+    `,
+  }),
 };
 
 // ========================================
@@ -53,6 +86,19 @@ export const States: Story = {
   render: () => ({
     props: {},
     template: `
+      <style>
+        .forced-hover .p-radiobutton-box {
+          --p-radiobutton-background: var(--global-light-gray-4-color) !important;
+          --p-radiobutton-border-color: var(--global-blue-3-color) !important;
+        }
+        .forced-focus .p-radiobutton-box {
+          --p-radiobutton-background: var(--global-light-gray-4-color) !important;
+          --p-radiobutton-focus-border-color: var(--global-blue-3-color) !important;
+          outline: 2px solid var(--global-blue-3-color);
+          outline-offset: 2px;
+        }
+      </style>
+
       <div style="display: flex; flex-direction: column; gap: 2rem;">
         <div>
           <h3>Default State</h3>
@@ -78,6 +124,28 @@ export const States: Story = {
         </div>
 
         <div>
+          <h3>Hover State</h3>
+          <div style="pointer-events: none;" class="forced-hover">
+            <app-radio-button
+              label="Hover state"
+              value="opt-hover"
+              name="state-demo-hover">
+            </app-radio-button>
+          </div>
+        </div>
+
+        <div>
+          <h3>Focus State</h3>
+          <div style="pointer-events: none;" class="forced-focus">
+            <app-radio-button
+              label="Focus state"
+              value="opt-focus"
+              name="state-demo-focus">
+            </app-radio-button>
+          </div>
+        </div>
+
+        <div>
           <h3>Disabled States</h3>
           <div style="display: flex; flex-direction: column; gap: 1rem;">
             <app-radio-button
@@ -95,16 +163,6 @@ export const States: Story = {
             </app-radio-button>
           </div>
         </div>
-
-        <div>
-          <h3>Hover & Focus</h3>
-          <p style="color: #666; font-size: 0.875rem;">Наведите курсор или используйте Tab для фокуса</p>
-          <app-radio-button
-            label="Hover/Focus me"
-            value="opt5"
-            name="state-demo-5">
-          </app-radio-button>
-        </div>
       </div>
     `,
   }),
@@ -112,7 +170,7 @@ export const States: Story = {
     docs: {
       description: {
         story:
-          'Демонстрация всех состояний радиокнопок: default, checked, disabled, hover, focus. Состояния зафиксированы для визуального просмотра.',
+          'Демонстрация всех состояний радиокнопок: default, checked, hover, focus, disabled (unchecked/checked). Состояния зафиксированы для визуального просмотра.',
       },
     },
   },
@@ -128,6 +186,8 @@ export const Group: Story = {
     },
     template: `
       <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <h3>Radio Group Example</h3>
+        <p style="color: #666; font-size: 0.875rem;">Selected: {{ groupValue }}</p>
 
         <app-radio-button
           label="Option 1"
@@ -165,6 +225,80 @@ export const Group: Story = {
       description: {
         story:
           'Пример группы радиокнопок с общим name. Только одна кнопка может быть выбрана одновременно.',
+      },
+    },
+  },
+};
+
+// ========================================
+// MULTIPLE GROUPS - Несколько групп
+// ========================================
+export const MultipleGroups: Story = {
+  render: () => ({
+    props: {
+      paymentValue: 'card',
+      deliveryValue: 'standard',
+    },
+    template: `
+      <div style="display: flex; gap: 3rem;">
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+          <h3>Payment Method</h3>
+          <p style="color: #666; font-size: 0.875rem;">Selected: {{ paymentValue }}</p>
+
+          <app-radio-button
+            label="Credit Card"
+            value="card"
+            name="payment"
+            [(selectedValue)]="paymentValue">
+          </app-radio-button>
+
+          <app-radio-button
+            label="PayPal"
+            value="paypal"
+            name="payment"
+            [(selectedValue)]="paymentValue">
+          </app-radio-button>
+
+          <app-radio-button
+            label="Bank Transfer"
+            value="bank"
+            name="payment"
+            [(selectedValue)]="paymentValue">
+          </app-radio-button>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+          <h3>Delivery Method</h3>
+          <p style="color: #666; font-size: 0.875rem;">Selected: {{ deliveryValue }}</p>
+
+          <app-radio-button
+            label="Standard (3-5 days)"
+            value="standard"
+            name="delivery"
+            [(selectedValue)]="deliveryValue">
+          </app-radio-button>
+
+          <app-radio-button
+            label="Express (1-2 days)"
+            value="express"
+            name="delivery"
+            [(selectedValue)]="deliveryValue">
+          </app-radio-button>
+
+          <app-radio-button
+            label="Next Day"
+            value="next"
+            name="delivery"
+            [(selectedValue)]="deliveryValue">
+          </app-radio-button>
+        </div>
+      </div>
+    `,
+  }),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Несколько независимых групп радиокнопок с разными name',
       },
     },
   },

@@ -43,4 +43,18 @@
 .radio-wrapper {
   display: flex;
   align-items: center;
+
+  // Forced hover state
+  &.forced-hover .p-radiobutton-box {
+    --p-radiobutton-background: var(--global-light-gray-4-color) !important;
+    --p-radiobutton-border-color: var(--global-blue-3-color) !important;
+  }
+
+  // Forced focus state
+  &.forced-focus .p-radiobutton-box {
+    --p-radiobutton-background: var(--global-light-gray-4-color) !important;
+    --p-radiobutton-focus-border-color: var(--global-blue-3-color) !important;
+    outline: 2px solid var(--global-blue-3-color);
+    outline-offset: 2px;
+  }
 }
