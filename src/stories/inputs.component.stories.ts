@@ -71,6 +71,57 @@ export const Playground: Story = {
 };
 
 // ========================================
+// ALL STATES - Все состояния
+// ========================================
+export const AllStates: Story = {
+  render: () => ({
+    props: {},
+    template: `
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <div>
+          <h3>Default</h3>
+          <app-input label="Email" placeholder="example@mail.com" />
+        </div>
+
+        <div>
+          <h3>With Value</h3>
+          <app-input label="Email" value="user@example.com" />
+        </div>
+
+        <div>
+          <h3>Invalid</h3>
+          <app-input label="Email" value="invalid-email" [invalid]="true" placeholder="example@mail.com"/>
+        </div>
+
+        <div>
+          <h3>Disabled</h3>
+          <app-input label="Email" value="disabled@mail.com" [disabled]="true" placeholder="example@mail.com" />
+        </div>
+
+        <div>
+          <h3>Readonly</h3>
+          <app-input label="Email" value="readonly@mail.com" [readonly]="true" placeholder="example@mail.com" />
+        </div>
+
+        <div>
+          <h3>With Icon</h3>
+          <app-input label="Search" placeholder="Type to search..." [showIcon]="true" />
+        </div>
+      </div>
+    `,
+  }),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Демонстрация всех состояний: default, with value, invalid, disabled, readonly, with icon',
+      },
+    },
+  },
+};
+
+
+// ========================================
 // BASIC VARIANTS - Базовые варианты
 // ========================================
 export const Default: Story = {
@@ -225,56 +276,6 @@ export const WithIconNoLabel: Story = {
     docs: {
       description: {
         story: 'Поле с иконкой без label',
-      },
-    },
-  },
-};
-
-// ========================================
-// ALL STATES - Все состояния
-// ========================================
-export const AllStates: Story = {
-  render: () => ({
-    props: {},
-    template: `
-      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-        <div>
-          <h3>Default</h3>
-          <app-input label="Email" placeholder="example@mail.com" />
-        </div>
-
-        <div>
-          <h3>With Value</h3>
-          <app-input label="Email" value="user@example.com" />
-        </div>
-
-        <div>
-          <h3>Invalid</h3>
-          <app-input label="Email" value="invalid-email" [invalid]="true" placeholder="example@mail.com"/>
-        </div>
-
-        <div>
-          <h3>Disabled</h3>
-          <app-input label="Email" value="disabled@mail.com" [disabled]="true" placeholder="example@mail.com" />
-        </div>
-
-        <div>
-          <h3>Readonly</h3>
-          <app-input label="Email" value="readonly@mail.com" [readonly]="true" placeholder="example@mail.com" />
-        </div>
-
-        <div>
-          <h3>With Icon</h3>
-          <app-input label="Search" placeholder="Type to search..." [showIcon]="true" />
-        </div>
-      </div>
-    `,
-  }),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'Демонстрация всех состояний: default, with value, invalid, disabled, readonly, with icon',
       },
     },
   },
