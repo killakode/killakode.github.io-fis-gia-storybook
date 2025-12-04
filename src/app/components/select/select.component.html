@@ -1,0 +1,15 @@
+<p-select
+  [options]="options"
+  [(ngModel)]="value"
+  (onChange)="onChange($event)"
+  [placeholder]="placeholder"
+  [disabled]="disabled"
+  [showClear]="showClear"
+  [filter]="filter"
+  [appendTo]="appendTo"
+  optionLabel="label"
+  optionValue="value"
+  [class.ng-invalid]="invalid"
+  [class.ng-dirty]="invalid"
+  [style.max-width]="maxWidth"
+/>
