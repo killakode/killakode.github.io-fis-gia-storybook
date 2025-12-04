@@ -1,0 +1,11 @@
+<div class="radio-wrapper">
+  <p-radiobutton
+    [name]="name"
+    [value]="value"
+    [(ngModel)]="selectedValue"
+    (ngModelChange)="onValueChange($event)"
+    [disabled]="disabled"
+    [inputId]="value">
+  </p-radiobutton>
+  <label [for]="value" class="p-radio-label">{{ label }}</label>
+</div>
