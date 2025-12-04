@@ -1,0 +1,1441 @@
+.blue-button {
+  --p-button-success-background: var(--global-blue-color);
+  --p-button-success-border-color: var(--global-blue-color);
+  --p-button-success-color: var(--global-white-color);
+
+  --p-button-success-hover-background: var(--global-blue-3-color);
+  --p-button-success-hover-border-color: var(--global-blue-3-color);
+  --p-button-success-hover-color: var(--global-white-color);
+
+  --p-button-success-active-background: var(--global-blue-2-color);
+  --p-button-success-active-border-color: var(--global-blue-2-color);
+  --p-button-success-active-color: var(--global-white-color);
+
+  --p-button-success-focus-ring-shadow: none;
+
+  --p-button-accept-background: var(--global-blue-color);
+  --p-button-accept-border-color: var(--global-blue-color);
+  --p-button-accept-color: var(--global-white-color);
+  --p-button-accept-hover-background: var(--global-blue-3-color);
+  --p-button-accept-hover-border-color: var(--global-blue-3-color);
+  --p-button-accept-hover-color: var(--global-white-color);
+  --p-button-accept-active-background: var(--global-blue-2-color);
+  --p-button-accept-active-border-color: var(--global-blue-2-color);
+  --p-button-accept-active-color: var(--global-white-color);
+
+  --p-button-primary-background: var(--global-blue-color);
+  --p-button-primary-border-color: var(--global-blue-color);
+  --p-button-primary-color: var(--global-white-color);
+
+  --p-button-primary-hover-background: var(--global-blue-3-color);
+  --p-button-primary-hover-border-color: var(--global-blue-3-color);
+  --p-button-primary-hover-color: var(--global-white-color);
+
+  --p-button-primary-active-background: var(--global-blue-2-color);
+  --p-button-primary-active-border-color: var(--global-blue-2-color);
+  --p-button-primary-active-color: var(--global-white-color);
+
+  --p-button-primary-focus-ring-shadow: none;
+
+  --p-button-info-background: var(--global-blue-color);
+  --p-button-info-border-color: var(--global-blue-color);
+  --p-button-info-color: var(--global-white-color);
+
+  --p-button-info-hover-background: var(--global-blue-3-color);
+  --p-button-info-hover-border-color: var(--global-blue-3-color);
+  --p-button-info-hover-color: var(--global-white-color);
+
+  --p-button-info-active-background: var(--global-blue-2-color);
+  --p-button-info-active-border-color: var(--global-blue-color);
+  --p-button-info-active-color: var(--global-white-color);
+
+  --p-button-info-focus-ring-shadow: none;
+
+  --p-button-padding-y: 0.625rem;
+  --p-button-padding-x: 2.4375rem;
+  --p-button-border-radius: 0.5rem;
+  --p-button-label-font-weight: var(--global-main-font-weight);
+
+  outline: none;
+  border-width: 0.125rem;
+
+  button {
+    outline: none;
+    border-width: 0.125rem;
+    white-space: nowrap;
+
+    &:focus-visible {
+      --p-button-success-background: var(--global-blue-2-color);
+      --p-button-success-border-color: var(--global-blue-2-color);
+
+      --p-button-primary-background: var(--global-blue-2-color);
+      --p-button-primary-border-color: var(--global-blue-2-color);
+    }
+    &:disabled {
+      opacity: 1;
+      --p-button-success-background: var(--global-light-gray-4-color);
+      --p-button-success-border-color: var(--global-light-gray-4-color);
+      --p-button-success-color: var(--global-gray-4-color);
+
+      --p-button-primary-background: var(--global-light-gray-4-color);
+      --p-button-primary-border-color: var(--global-light-gray-4-color);
+      --p-button-primary-color: var(--global-gray-4-color);
+    }
+    &.p-button-loading:disabled {
+      --p-button-success-background: var(--global-blue-color);
+      --p-button-success-border-color: var(--global-blue-color);
+      --p-button-success-color: var(--global-white-color);
+
+      --p-button-primary-background: var(--global-blue-color);
+      --p-button-primary-border-color: var(--global-blue-color);
+      --p-button-primary-color: var(--global-white-color);
+
+      .p-button-loading-icon {
+        font-size: 1.5rem;
+      }
+    }
+  }
+  &:focus-visible {
+    --p-button-success-background: var(--global-blue-2-color);
+    --p-button-success-border-color: var(--global-blue-2-color);
+
+    --p-button-primary-background: var(--global-blue-2-color);
+    --p-button-primary-border-color: var(--global-blue-2-color);
+  }
+  &:disabled {
+    opacity: 1;
+    --p-button-success-background: var(--global-light-gray-4-color);
+    --p-button-success-border-color: var(--global-light-gray-4-color);
+    --p-button-success-color: var(--global-gray-4-color);
+
+    --p-button-primary-background: var(--global-light-gray-4-color);
+    --p-button-primary-border-color: var(--global-light-gray-4-color);
+    --p-button-primary-color: var(--global-gray-4-color);
+  }
+  &.p-button-loading:disabled {
+    --p-button-success-background: var(--global-blue-color);
+    --p-button-success-border-color: var(--global-blue-color);
+    --p-button-success-color: var(--global-white-color);
+
+    --p-button-primary-background: var(--global-blue-color);
+    --p-button-primary-border-color: var(--global-blue-color);
+    --p-button-primary-color: var(--global-white-color);
+
+    .p-button-loading-icon {
+      font-size: 1.5rem;
+    }
+  }
+}
+.multi-toggle-container .multi-toggle-button {
+  --p-button-success-background: var(--global-blue-color);
+  --p-button-success-border-color: var(--global-blue-color);
+  --p-button-success-color: var(--global-white-color);
+
+  --p-button-success-hover-background: var(--global-blue-3-color);
+  --p-button-success-hover-border-color: var(--global-blue-3-color);
+  --p-button-success-hover-color: var(--global-white-color);
+
+  --p-button-success-active-background: var(--global-blue-2-color);
+  --p-button-success-active-border-color: var(--global-blue-2-color);
+  --p-button-success-active-color: var(--global-white-color);
+
+
+  --p-button-accept-background: var(--global-blue-color);
+  --p-button-accept-border-color: var(--global-blue-color);
+  --p-button-accept-color: var(--global-white-color);
+  --p-button-accept-hover-background: var(--global-blue-3-color);
+  --p-button-accept-hover-border-color: var(--global-blue-3-color);
+  --p-button-accept-hover-color: var(--global-white-color);
+  --p-button-accept-active-background: var(--global-blue-2-color);
+  --p-button-accept-active-border-color: var(--global-blue-2-color);
+  --p-button-accept-active-color: var(--global-white-color);
+
+  --p-button-success-focus-ring-shadow: none;
+
+  --p-button-primary-background: var(--global-blue-color);
+  --p-button-primary-border-color: var(--global-blue-color);
+  --p-button-primary-color: var(--global-white-color);
+
+  --p-button-primary-hover-background: var(--global-blue-3-color);
+  --p-button-primary-hover-border-color: var(--global-blue-3-color);
+  --p-button-primary-hover-color: var(--global-white-color);
+
+  --p-button-primary-active-background: var(--global-blue-2-color);
+  --p-button-primary-active-border-color: var(--global-blue-2-color);
+  --p-button-primary-active-color: var(--global-white-color);
+
+  --p-button-primary-focus-ring-shadow: none;
+
+  --p-button-padding-y: 2px;
+  --p-button-padding-x: 2.4375rem;
+  --p-button-border-radius: 0.5rem;
+  --p-button-label-font-weight: var(--global-main-font-weight);
+
+  outline: none;
+  border-width: 0.125rem;
+
+  button {
+    display: inline-flex;
+    cursor: pointer;
+    user-select: none;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    color: var(--p-button-primary-color);
+    background: var(--p-button-primary-background);
+    border: none;
+    padding-block: 0;
+    padding-inline: 0;
+    font-size: 0.75rem;
+    font-family: inherit;
+    font-feature-settings: inherit;
+    transition: background var(--p-button-transition-duration), color var(--p-button-transition-duration), border-color var(--p-button-transition-duration), outline-color var(--p-button-transition-duration), box-shadow var(--p-button-transition-duration);
+    border-radius: var(--p-button-border-radius);
+    outline-color: transparent;
+    gap: var(--p-button-gap);
+
+    outline: none;
+    width: 3.75rem;
+    height: 1rem;
+
+    &:before {
+      content: none;
+    }
+
+    &:not(:disabled):hover {
+      background: var(--p-button-primary-hover-background);
+      border: none;
+      color: var(--p-button-primary-hover-color);
+    }
+    &:not(:disabled):active {
+      background: var(--p-button-primary-active-background);
+      border: none;
+      color: var(--p-button-primary-active-color);
+    }
+
+    &:focus-visible {
+      --p-button-success-background: var(--global-blue-2-color);
+      --p-button-success-border-color: var(--global-blue-2-color);
+
+      --p-button-accept-background: var(--global-blue-2-color);
+      --p-button-accept-border-color: var(--global-blue-2-color);
+
+      --p-button-primary-background: var(--global-blue-2-color);
+      --p-button-primary-border-color: var(--global-blue-2-color);
+
+      --p-button-info-background: var(--global-blue-2-color);
+      --p-button-info-border-color: var(--global-blue-2-color);
+    }
+    &:disabled {
+      opacity: 1;
+      --p-button-success-background: var(--global-light-gray-4-color);
+      --p-button-success-border-color: var(--global-light-gray-4-color);
+      --p-button-success-color: var(--global-gray-4-color);
+
+      --p-button-accept-background: var(--global-light-gray-4-color);
+      --p-button-accept-border-color: var(--global-light-gray-4-color);
+      --p-button-accept-color: var(--global-gray-4-color);
+
+      --p-button-primary-background: var(--global-light-gray-4-color);
+      --p-button-primary-border-color: var(--global-light-gray-4-color);
+      --p-button-primary-color: var(--global-gray-4-color);
+
+      --p-button-info-background: var(--global-light-gray-4-color);
+      --p-button-info-border-color: var(--global-light-gray-4-color);
+      --p-button-info-color: var(--global-gray-4-color);
+    }
+    &.p-button-loading:disabled {
+      --p-button-success-background: var(--global-blue-color);
+      --p-button-success-border-color: var(--global-blue-color);
+      --p-button-success-color: var(--global-white-color);
+
+      --p-button-accept-background: var(--global-blue-color);
+      --p-button-accept-border-color: var(--global-blue-color);
+      --p-button-accept-color: var(--global-white-color);
+
+      --p-button-primary-background: var(--global-blue-color);
+      --p-button-primary-border-color: var(--global-blue-color);
+      --p-button-primary-color: var(--global-white-color);
+
+      --p-button-info-background: var(--global-blue-color);
+      --p-button-info-border-color: var(--global-blue-color);
+      --p-button-info-color: var(--global-white-color);
+
+      .p-button-loading-icon {
+        font-size: 1.5rem;
+      }
+    }
+  }
+  &:focus-visible {
+    --p-button-success-background: var(--global-blue-2-color);
+    --p-button-success-border-color: var(--global-blue-2-color);
+
+    --p-button-accept-background: var(--global-blue-2-color);
+    --p-button-accept-border-color: var(--global-blue-2-color);
+
+    --p-button-primary-background: var(--global-blue-2-color);
+    --p-button-primary-border-color: var(--global-blue-2-color);
+
+    --p-button-info-background: var(--global-blue-2-color);
+    --p-button-info-border-color: var(--global-blue-2-color);
+  }
+  &:disabled {
+    opacity: 1;
+    --p-button-success-background: var(--global-light-gray-4-color);
+    --p-button-success-border-color: var(--global-light-gray-4-color);
+    --p-button-success-color: var(--global-gray-4-color);
+
+    --p-button-accept-background: var(--global-light-gray-4-color);
+    --p-button-accept-border-color: var(--global-light-gray-4-color);
+    --p-button-accept-color: var(--global-gray-4-color);
+
+    --p-button-primary-background: var(--global-light-gray-4-color);
+    --p-button-primary-border-color: var(--global-light-gray-4-color);
+    --p-button-primary-color: var(--global-gray-4-color);
+
+    --p-button-info-background: var(--global-light-gray-4-color);
+    --p-button-info-border-color: var(--global-light-gray-4-color);
+    --p-button-info-color: var(--global-gray-4-color);
+  }
+  &.p-button-loading:disabled {
+    --p-button-success-background: var(--global-blue-color);
+    --p-button-success-border-color: var(--global-blue-color);
+    --p-button-success-color: var(--global-white-color);
+
+    --p-button-accept-background: var(--global-blue-color);
+    --p-button-accept-border-color: var(--global-blue-color);
+    --p-button-accept-color: var(--global-white-color);
+
+    --p-button-primary-background: var(--global-blue-color);
+    --p-button-primary-border-color: var(--global-blue-color);
+    --p-button-primary-color: var(--global-white-color);
+
+    --p-button-info-background: var(--global-blue-color);
+    --p-button-info-border-color: var(--global-blue-color);
+    --p-button-info-color: var(--global-white-color);
+
+    .p-button-loading-icon {
+      font-size: 1.5rem;
+    }
+  }
+}
+.white-button {
+  --p-button-secondary-background: var(--global-white-color);
+  --p-button-secondary-border-color: var(--global-blue-color);
+  --p-button-secondary-color: var( --global-blue-color);
+
+  --p-button-secondary-hover-background: var(--global-light-gray-color-header);
+  --p-button-secondary-hover-border-color: var(--global-blue-3-color);
+  --p-button-secondary-hover-color: var(--global-blue-3-color);
+
+  --p-button-secondary-active-background: var(--global-light-gray-color-header);
+  --p-button-secondary-active-border-color: var(--global-blue-2-color);
+  --p-button-secondary-active-color: var(--global-blue-2-color);
+
+
+  --p-button-info-background: var(--global-white-color);
+  --p-button-info-border-color: var(--global-blue-color);
+  --p-button-info-color: var( --global-blue-color);
+  --p-button-info-hover-background: var(--global-light-gray-color-header);
+  --p-button-info-hover-border-color: var(--global-blue-3-color);
+  --p-button-info-hover-color: var(--global-blue-3-color);
+  --p-button-info-active-background: var(--global-light-gray-color-header);
+  --p-button-info-active-border-color: var(--global-blue-2-color);
+  --p-button-info-active-color: var(--global-blue-2-color);
+
+  --p-button-primary-background: var(--global-white-color);
+  --p-button-primary-border-color: var(--global-blue-color);
+  --p-button-primary-color: var(--global-blue-color);
+
+  --p-button-primary-hover-background: var(--global-light-gray-color-header);
+  --p-button-primary-hover-border-color: var(--global-blue-3-color);
+  --p-button-primary-hover-color: var(--global-blue-3-color);
+
+  --p-button-primary-active-background: var(--global-light-gray-color-header);
+  --p-button-primary-active-border-color: var(--global-blue-2-color);
+  --p-button-primary-active-color: var(--global-blue-2-color);
+
+  --p-button-success-background: var(--global-white-color);
+  --p-button-success-border-color: var(--global-blue-color);
+  --p-button-success-color: var(--global-blue-color);
+
+  --p-button-success-hover-background: var(--global-light-gray-color-header);
+  --p-button-success-hover-border-color: var(--global-blue-3-color);
+  --p-button-success-hover-color: var(--global-blue-3-color);
+
+  --p-button-success-active-background: var(--global-light-gray-color-header);
+  --p-button-success-active-border-color: var(--global-blue-2-color);
+  --p-button-success-active-color: var(--global-blue-2-color);
+
+  --p-button-danger-background: var(--global-white-color);
+  --p-button-danger-border-color: var(--global-blue-color);
+  --p-button-danger-color: var(--global-blue-color);
+
+  --p-button-danger-hover-background: var(--global-light-gray-color-header);
+  --p-button-danger-hover-border-color: var(--global-blue-3-color);
+  --p-button-danger-hover-color: var(--global-blue-3-color);
+
+  --p-button-danger-active-background: var(--global-light-gray-color-header);
+  --p-button-danger-active-border-color: var(--global-blue-2-color);
+  --p-button-danger-active-color: var(--global-blue-2-color);
+
+  --p-button-padding-y: 0.625rem;
+  --p-button-padding-x: 2.4375rem;
+  --p-button-border-radius: 0.5rem;
+  --p-button-label-font-weight: var(--global-main-font-weight);
+
+  outline: none;
+  border-width: 0.125rem;
+
+  button {
+    outline: none;
+    border-width: 0.125rem;
+
+    &:focus-visible {
+      --p-button-secondary-background: var(--global-light-gray-color-header);
+      --p-button-secondary-border-color: var(--global-blue-2-color);
+      --p-button-secondary-color: var(--global-blue-2-color);
+
+      --p-button-info-background: var(--global-light-gray-color-header);
+      --p-button-info-border-color: var(--global-blue-2-color);
+      --p-button-info-color: var(--global-blue-2-color);
+
+      --p-button-primary-background: var(--global-light-gray-color-header);
+      --p-button-primary-border-color: var(--global-blue-2-color);
+      --p-button-primary-color: var(--global-blue-2-color);
+
+      --p-button-success-background: var(--global-light-gray-color-header);
+      --p-button-success-border-color: var(--global-blue-2-color);
+      --p-button-success-color: var(--global-blue-2-color);
+
+      --p-button-danger-background: var(--global-light-gray-color-header);
+      --p-button-danger-border-color: var(--global-blue-2-color);
+      --p-button-danger-color: var(--global-blue-2-color);
+    }
+    &:disabled {
+      opacity: 1;
+      --p-button-secondary-background: var(--global-light-gray-4-color);
+      --p-button-secondary-border-color: var(--global-light-gray-4-color);
+      --p-button-secondary-color: var(--global-gray-4-color);
+
+      --p-button-info-background: var(--global-light-gray-4-color);
+      --p-button-info-border-color: var(--global-light-gray-4-color);
+      --p-button-info-color: var(--global-gray-4-color);
+
+      --p-button-primary-background: var(--global-light-gray-4-color);
+      --p-button-primary-border-color: var(--global-light-gray-4-color);
+      --p-button-primary-color: var(--global-gray-4-color);
+
+      --p-button-success-background: var(--global-light-gray-4-color);
+      --p-button-success-border-color: var(--global-light-gray-4-color);
+      --p-button-success-color: var(--global-gray-4-color);
+
+      --p-button-danger-background: var(--global-light-gray-4-color);
+      --p-button-danger-border-color: var(--global-light-gray-4-color);
+      --p-button-danger-color: var(--global-gray-4-color);
+
+      .icon-arrow:before {
+        color: var(--global-gray-4-color);
+      }
+    }
+    &.p-button-loading:disabled {
+      --p-button-secondary-background: var(--global-white-color);
+      --p-button-secondary-border-color: var(--global-blue-color);
+      --p-button-secondary-color: var(--global-blue-color);
+
+      --p-button-info-background: var(--global-white-color);
+      --p-button-info-border-color: var(--global-blue-color);
+      --p-button-info-color: var(--global-blue-color);
+
+      --p-button-primary-background: var(--global-white-color);
+      --p-button-primary-border-color: var(--global-blue-color);
+      --p-button-primary-color: var(--global-blue-color);
+
+      --p-button-success-background: var(--global-white-color);
+      --p-button-success-border-color: var(--global-blue-color);
+      --p-button-success-color: var(--global-blue-color);
+
+      --p-button-danger-background: var(--global-white-color);
+      --p-button-danger-border-color: var(--global-blue-color);
+      --p-button-danger-color: var(--global-blue-color);
+
+      .p-button-loading-icon {
+        font-size: 1.5rem;
+      }
+    }
+  }
+   &:focus-visible {
+    --p-button-secondary-background: var(--global-light-gray-color-header);
+    --p-button-secondary-border-color: var(--global-blue-2-color);
+    --p-button-secondary-color: var(--global-blue-2-color);
+
+    --p-button-info-background: var(--global-light-gray-color-header);
+    --p-button-info-border-color: var(--global-blue-2-color);
+    --p-button-info-color: var(--global-blue-2-color);
+
+    --p-button-primary-background: var(--global-light-gray-color-header);
+    --p-button-primary-border-color: var(--global-blue-2-color);
+    --p-button-primary-color: var(--global-blue-2-color);
+
+    --p-button-success-background: var(--global-light-gray-color-header);
+    --p-button-success-border-color: var(--global-blue-2-color);
+    --p-button-success-color: var(--global-blue-2-color);
+
+    --p-button-danger-background: var(--global-light-gray-color-header);
+    --p-button-danger-border-color: var(--global-blue-2-color);
+    --p-button-danger-color: var(--global-blue-2-color);
+  }
+  &:disabled {
+    opacity: 1;
+    --p-button-secondary-background: var(--global-light-gray-4-color);
+    --p-button-secondary-border-color: var(--global-light-gray-4-color);
+    --p-button-secondary-color: var(--global-gray-4-color);
+
+    --p-button-info-background: var(--global-light-gray-4-color);
+    --p-button-info-border-color: var(--global-light-gray-4-color);
+    --p-button-info-color: var(--global-gray-4-color);
+
+    --p-button-primary-background: var(--global-light-gray-4-color);
+    --p-button-primary-border-color: var(--global-light-gray-4-color);
+    --p-button-primary-color: var(--global-gray-4-color);
+
+    --p-button-success-background: var(--global-light-gray-4-color);
+    --p-button-success-border-color: var(--global-light-gray-4-color);
+    --p-button-success-color: var(--global-gray-4-color);
+
+    --p-button-danger-background: var(--global-light-gray-4-color);
+    --p-button-danger-border-color: var(--global-light-gray-4-color);
+    --p-button-danger-color: var(--global-gray-4-color);
+  }
+  &.p-button-loading:disabled {
+    --p-button-secondary-background: var(--global-white-color);
+    --p-button-secondary-border-color: var(--global-blue-color);
+    --p-button-secondary-color: var(--global-blue-color);
+
+    --p-button-info-background: var(--global-white-color);
+    --p-button-info-border-color: var(--global-blue-color);
+    --p-button-info-color: var(--global-blue-color);
+
+    --p-button-primary-background: var(--global-white-color);
+    --p-button-primary-border-color: var(--global-blue-color);
+    --p-button-primary-color: var(--global-blue-color);
+
+    --p-button-success-background: var(--global-white-color);
+    --p-button-success-border-color: var(--global-blue-color);
+    --p-button-success-color: var(--global-blue-color);
+
+    --p-button-danger-background: var(--global-white-color);
+    --p-button-danger-border-color: var(--global-blue-color);
+    --p-button-danger-color: var(--global-blue-color);
+
+    .p-button-loading-icon {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.noborder-button {
+  --p-button-secondary-background: var(--global-white-color);
+  --p-button-secondary-border-color: var(--global-white-color);
+  --p-button-secondary-color: var( --global-blue-color);
+
+  --p-button-secondary-hover-background: var(--global-white-color);
+  --p-button-secondary-hover-border-color: var(--global-white-color);
+  --p-button-secondary-hover-color: var(--global-blue-3-color);
+
+  --p-button-secondary-active-background: var(--global-blue-color);
+  --p-button-secondary-active-border-color: var(--global-blue-color);
+  --p-button-secondary-active-color: var(--global-white-color);
+
+  --p-button-primary-background: var(--global-white-color);
+  --p-button-primary-border-color: var(--global-white-color);
+  --p-button-primary-color: var( --global-blue-color);
+
+  --p-button-primary-hover-background: var(--global-white-color);
+  --p-button-primary-hover-border-color: var(--global-white-color);
+  --p-button-primary-hover-color: var(--global-blue-3-color);
+
+  --p-button-primary-active-background: var(--global-blue-color);
+  --p-button-primary-active-border-color: var(--global-blue-color);
+  --p-button-primary-active-color: var(--global-white-color);
+
+  --p-button-padding-y: 0.625rem;
+  --p-button-padding-x: 2.5rem;
+  --p-button-border-radius: 0.5rem;
+  --p-button-label-font-weight: var(--global-main-font-weight);
+
+  button {
+    border-width: 0.125rem;
+
+    &:focus-visible {
+      --p-button-secondary-background: var(--global-light-gray-color-header);
+      --p-button-secondary-border-color: var(--global-blue-2-color);
+      --p-button-secondary-color: var(--global-blue-2-color);
+    }
+    &:disabled {
+      opacity: 1;
+      --p-button-secondary-background: var(--global-light-gray-4-color);
+      --p-button-secondary-border-color: var(--global-light-gray-4-color);
+      --p-button-secondary-color: var(--global-gray-4-color);
+    }
+  }
+}
+
+
+.link-button {
+  --p-button-secondary-background: var(--global-white-color);
+  --p-button-secondary-border-color: var(--global-white-color);
+  --p-button-secondary-color: var( --global-blue-color);
+
+  --p-button-secondary-hover-background: var(--global-white-color);
+  --p-button-secondary-hover-border-color: var(--global-white-color);
+  --p-button-secondary-hover-color: var(--global-blue-3-color);
+
+  --p-button-secondary-active-background: var(--global-white-color);
+  --p-button-secondary-active-border-color: var(--global-white-color);
+  --p-button-secondary-active-color: var(--global-blue-2-color);
+
+  --p-button-primary-background: var(--global-white-color);
+  --p-button-primary-border-color: var(--global-white-color);
+  --p-button-primary-color: var( --global-blue-color);
+
+  --p-button-primary-hover-background: var(--global-white-color);
+  --p-button-primary-hover-border-color: var(--global-white-color);
+  --p-button-primary-hover-color: var(--global-blue-3-color);
+
+  --p-button-primary-active-background: var(--global-white-color);
+  --p-button-primary-active-border-color: var(--global-white-color);
+  --p-button-primary-active-color: var(--global-blue-2-color);
+
+  --p-button-text-info-background: var(--global-white-color);
+  --p-button-text-info-border-color: var(--global-white-color);
+  --p-button-text-info-color: var( --global-blue-color);
+
+  --p-button-text-info-hover-background: var(--global-white-color);
+  --p-button-text-info-hover-border-color: var(--global-white-color);
+  --p-button-text-info-hover-color: var(--global-blue-3-color);
+
+  --p-button-text-info-active-background: var(--global-white-color);
+  --p-button-text-info-active-border-color: var(--global-white-color);
+  --p-button-text-info-active-color: var(--global-blue-2-color);
+
+  --p-button-padding-y: 0;
+  --p-button-padding-x: 0;
+  --p-button-border-radius: 0;
+  --p-button-label-font-weight: var(--global-main-font-weight);
+  i {
+    font-size: 24px;
+    &:before {
+      color: var(--p-button-primary-color);
+    }
+  }
+  &:hover {
+    i:before {
+        color: var(--p-button-primary-hover-color);
+    }
+  }
+  &:active {
+    i:before {
+        color: var(--p-button-primary-active-color);
+    }
+  }
+  .p-button-info:not(:disabled):hover {
+    color: var(--p-button-text-info-hover-color);
+  }
+  .p-button-info:not(:disabled):active {
+    color: var(--p-button-text-info-active-color);
+  }
+  .p-button-info:focus-visible {
+    color: var(--p-button-text-info-active-color);
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+.white-button-chevron-action {
+  --p-button-primary-background: var(--global-white-color);
+  --p-button-primary-border-color: var(--global-blue-color);
+  --p-button-primary-color: var(--global-blue-color);
+  --p-button-padding-y: 0.625rem;
+  --p-button-padding-x: 1.375rem;
+  --p-button-border-radius: 0.5rem;
+  --p-button-gap: 0.5rem;
+  --p-button-label-font-weight: var(--global-main-font-weight);
+
+  --p-button-primary-hover-background: var(--global-light-gray-color-header);
+  --p-button-primary-hover-border-color: var(--global-blue-3-color);
+  --p-button-primary-hover-color: var(--global-blue-3-color);
+
+  --p-button-primary-active-background: var(--global-light-gray-color-header);
+  --p-button-primary-active-border-color: var(--global-blue-2-color);
+  --p-button-primary-active-color: var(--global-blue-2-color);
+
+  --p-button-secondary-background: var(--global-white-color);
+  --p-button-secondary-border-color: var(--global-blue-color);
+  --p-button-secondary-color: var(--global-blue-color);
+
+  --p-button-secondary-hover-background: var(--global-light-gray-color-header);
+  --p-button-secondary-hover-border-color: var(--global-blue-3-color);
+  --p-button-secondary-hover-color: var(--global-blue-3-color);
+
+  --p-button-secondary-active-background: var(--global-light-gray-color-header);
+  --p-button-secondary-active-border-color: var(--global-blue-2-color);
+  --p-button-secondary-active-color: var(--global-blue-2-color);
+
+  button {
+    width: unset;
+    border-width: 0.125rem;
+    gap: var(--p-button-gap);
+
+    .p-button-icon {
+      transition: transform 0.35s ease;
+    }
+    .p-button-icon::before {
+      font-size: 1.5rem;
+      color: var(--global-blue-color);
+      transition: color 0.2s ease;
+    }
+    &:hover {
+      .p-button-icon::before {
+        color: var(--global-blue-3-color);
+      }
+    }
+    &:active {
+      .p-button-icon {
+        transform: rotate(-180deg);
+      }
+      .p-button-icon::before {
+        color: var(--global-blue-2-color);
+      }
+    }
+    &:focus-visible {
+      outline: none;
+
+      --p-button-primary-background: var(--global-light-gray-color-header);
+      --p-button-primary-border-color: var(--global-blue-2-color);
+      --p-button-primary-color: var(--global-blue-2-color);
+
+      --p-button-secondary-background: var(--global-light-gray-color-header);
+      --p-button-secondary-border-color: var(--global-blue-2-color);
+      --p-button-secondary-color: var(--global-blue-2-color);
+
+      .p-button-icon::before {
+        color: var(--global-blue-2-color);
+      }
+    }
+    &:disabled {
+      .p-button-icon {
+        transform: rotate(0deg);
+      }
+    }
+  }
+  &:has(+ .p-menu-overlay) button,
+  &:has(+ p-listbox) button {
+    --p-button-primary-background: var(--global-light-gray-color-header);
+    --p-button-primary-border-color: var(--global-blue-2-color);
+    --p-button-primary-color: var(--global-blue-2-color);
+
+    --p-button-secondary-background: var(--global-light-gray-color-header);
+    --p-button-secondary-border-color: var(--global-blue-2-color);
+    --p-button-secondary-color: var(--global-blue-2-color);
+
+    .p-button-icon {
+      transform: rotate(-180deg);
+    }
+    .p-button-icon::before {
+      color: var(--global-blue-2-color);
+    }
+    &:hover {
+      .p-button-icon::before {
+        color: var(--global-blue-3-color);
+      }
+    }
+  }
+  .p-button-icon-only {
+    padding-inline-start: var(--p-button-padding-x);
+    padding-inline-end: var(--p-button-padding-x);
+  }
+}
+
+.blue-button-chevron-action {
+  --p-button-primary-background: var(--global-blue-color);
+  --p-button-primary-border-color: var(--global-blue-color);
+  --p-button-primary-color: var(--global-white-color);
+  --p-button-padding-y: 0.625rem;
+  --p-button-padding-x: 1.375rem;
+  --p-button-border-radius: 0.5rem;
+  --p-button-gap: 0.5rem;
+  --p-button-label-font-weight: var(--global-main-font-weight);
+
+  --p-button-primary-hover-background: var(--global-blue-3-color);
+  --p-button-primary-hover-border-color: var(--global-blue-3-color);
+  --p-button-primary-hover-color: var(--global-white-color);
+
+  --p-button-primary-active-background: var(--global-blue-2-color);
+  --p-button-primary-active-border-color: var(--global-blue-2-color);
+  --p-button-primary-active-color: var(--global-white-color);
+
+  --p-button-secondary-background: var(--global-blue-color);
+  --p-button-secondary-border-color: var(--global-blue-color);
+  --p-button-secondary-color: var(--global-white-color);
+
+  --p-button-secondary-hover-background: var(--global-blue-3-color);
+  --p-button-secondary-hover-border-color: var(--global-blue-3-color);
+  --p-button-secondary-hover-color: var(--global-white-color);
+
+  --p-button-secondary-active-background: var(--global-blue-2-color);
+  --p-button-secondary-active-border-color: var(--global-blue-2-color);
+  --p-button-secondary-active-color: var(--global-white-color);
+
+  button {
+    border-width: 0.125rem;
+
+    .p-button-icon {
+      transition: transform 0.35s ease;
+    }
+    .p-button-icon::before {
+      font-size: 1.5rem;
+      color: var(--global-white-color);
+      transition: color 0.2s ease;
+    }
+    &:active {
+      .p-button-icon {
+        transform: rotate(-180deg);
+      }
+    }
+    &:focus-visible {
+      --p-button-primary-background: var(--global-blue-2-color);
+      --p-button-primary-border-color: var(--global-blue-2-color);
+      --p-button-primary-color: var(--global-white-color);
+
+      --p-button-secondary-background: var(--global-blue-2-color);
+      --p-button-secondary-border-color: var(--global-blue-2-color);
+      --p-button-secondary-color: var(--global-white-color);
+    }
+    &:disabled {
+      .p-button-icon {
+        transform: rotate(0deg);
+      }
+    }
+  }
+  &:has(+ .p-menu-overlay) button {
+    --p-button-primary-background: var(--global-blue-2-color);
+    --p-button-primary-border-color: var(--global-blue-2-color);
+    --p-button-primary-color: var(--global-white-color);
+
+    --p-button-secondary-background: var(--global-blue-2-color);
+    --p-button-secondary-border-color: var(--global-blue-2-color);
+    --p-button-secondary-color: var(--global-white-color);
+
+    .p-button-icon {
+      transform: rotate(-180deg);
+    }
+  }
+}
+.p-treetable .p-treetable-tbody>tr>td .p-treetable-toggler {
+  padding: 0;
+  // margin-right: 0.5rem;
+  left: -0.5rem;
+  position: relative;
+  font-size: 1.5rem;
+}
+.p-treetable-node-checkbox {
+  margin-right: 0.5rem;
+}
+.p-treetable-wrapper .p-button-icon-only {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.p-treetable-wrapper .p-button-icon-only,
+.p-datatable-table .p-button-icon-only {
+  --p-inputgroup-addon-border-radius: 0.5rem;
+  --p-button-padding-y: 0;
+  --p-button-icon-only-width: 2rem;
+  --p-inputgroup-addon-min-width: 2rem;
+  --p-button-primary-color: var(--global-blue-color);
+  --p-button-primary-background: transparent;
+  --p-button-primary-border-color: transparent;
+  --p-button-primary-hover-background: transparent;
+  --p-button-primary-hover-border-color: transparent;
+  --p-button-primary-hover-color: var(--global-blue-3-color);
+  --p-button-primary-active-color: var(--global-white-color);
+  --p-button-primary-active-background: var(--global-blue-color);
+  --p-button-primary-active-border-color: var(--global-blue-color);
+
+  --p-button-success-color: var(--global-blue-color);
+  --p-button-success-background: transparent;
+  --p-button-success-border-color: transparent;
+  --p-button-success-hover-background: transparent;
+  --p-button-success-hover-border-color: transparent;
+  --p-button-success-hover-color: var(--global-blue-3-color);
+  --p-button-success-active-color: var(--global-white-color);
+  --p-button-success-active-background: var(--global-blue-color);
+  --p-button-success-active-border-color: var(--global-blue-color);
+
+  flex-shrink: 0;
+
+  padding: 0;
+  height: 2rem;
+  font-size: 1.5rem;
+
+  .p-button-icon::before {
+    color: inherit;
+  }
+  &.p-button-text,
+  &.p-button-text.p-button-danger,
+  &.p-button-text.p-button-secondary,
+  &.p-button-text.p-button-warn {
+    --p-button-text-danger-color: var(--global-blue-color);
+    --p-button-text-danger-background: transparent;
+    --p-button-text-danger-border-color: transparent;
+
+    --p-button-text-danger-hover-background: transparent;
+    --p-button-text-danger-hover-border-color: transparent;
+    --p-button-text-danger-hover-color: var(--global-blue-3-color);
+
+    --p-button-text-danger-active-background: var(--global-blue-color);
+    --p-button-text-danger-active-border-color: var(--global-blue-color);
+
+    --p-button-text-secondary-color: var(--global-blue-color);
+    --p-button-text-secondary-background: transparent;
+    --p-button-text-secondary-border-color: transparent;
+
+    --p-button-text-secondary-hover-background: transparent;
+    --p-button-text-secondary-hover-border-color: transparent;
+    --p-button-text-secondary-hover-color: var(--global-blue-3-color);
+
+    --p-button-text-secondary-active-background: var(--global-blue-color);
+    --p-button-text-secondary-active-border-color: var(--global-blue-color);
+
+    --p-button-text-warn-color: var(--global-blue-color);
+    --p-button-text-warn-background: transparent;
+    --p-button-text-warn-border-color: transparent;
+
+    --p-button-text-warn-hover-background: transparent;
+    --p-button-text-warn-hover-border-color: transparent;
+    --p-button-text-warn-hover-color: var(--global-blue-3-color);
+
+    --p-button-text-warn-active-background: var(--global-blue-color);
+    --p-button-text-warn-active-border-color: var(--global-blue-color);
+
+    .p-button-icon::before {
+      display: inline-block;
+      width: 1.5rem;
+      height: 1.5rem;
+      color: inherit;
+    }
+    &:not(:disabled):hover {
+      background-color: transparent;
+      border-color: transparent;
+      color: var(--p-button-primary-hover-color);
+    }
+    &:not(:disabled):active,
+    &:not(:disabled):focus-visible {
+      background-color: var(--p-button-primary-active-background);
+      border-color: var(--p-button-primary-active-border-color);
+      color: var(--global-white-color);
+
+      outline: none;
+
+    }
+  }
+  &:focus-visible {
+    --p-button-primary-color: var(--global-white-color);
+    --p-button-primary-background: var(--global-blue-color);
+    --p-button-primary-border-color: var(--global-blue-color);
+    --p-button-success-color: var(--global-white-color);
+    --p-button-success-background: var(--global-blue-color);
+    --p-button-success-border-color: var(--global-blue-color);
+    outline: none;
+  }
+}
+
+.p-carousel-next-button,
+.p-carousel-prev-button {
+  .p-button-icon-only,
+  .p-button {
+    --p-button-text-primary-hover-background: transparent;
+    --p-button-text-primary-active-background: transparent;
+  }
+}
+
+.button-icon,
+.p-carousel-next-button,
+.p-carousel-prev-button {
+
+  .p-button-icon,
+  .p-button-icon-only,
+  .p-button {
+    font-size: 24px;
+
+    .sert-left & {
+      font-size: 20px;
+    }
+  }
+  .p-button-label {
+    font-size: 16px;
+  }
+  .icon-arrow-right,
+  .icon-step,
+  .icon-token {
+    display: block;
+
+    &.ring {
+      border: 2px solid var(--global-lighter-gray);
+      border-radius: 100%;
+      transition: border-color 0.35s ease;
+      width: 24px;
+      height: 24px;
+
+    }
+    &.left {
+      transform: rotate(180deg);
+
+    }
+  }
+  .icon-token {
+    &:before {
+      font-size: 24px;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
+
+  &:not(:disabled):hover {
+    .icon-arrow-right,
+    .icon-step,
+    .icon-token {
+      &.ring {
+        border-color: var(--global-blue-3-color);
+      }
+    }
+  }
+  &:not(:disabled):active {
+    .icon-arrow-right,
+    .icon-step,
+    .icon-token {
+      &.ring {
+        border-color: var(--global-blue-2-color);
+      }
+    }
+  }
+
+  padding: 0;
+  gap: 0.5rem;
+
+  --p-button-secondary-background: var(--global-white-color);
+  --p-button-secondary-border-color: var(--global-white-color);
+  --p-button-secondary-color: var( --global-blue-color);
+
+  --p-button-secondary-hover-background: var(--global-white-color);
+  --p-button-secondary-hover-border-color: var(--global-white-color);
+  --p-button-secondary-hover-color: var(--global-blue-3-color);
+
+  --p-button-secondary-active-background: var(--global-white-color);
+  --p-button-secondary-active-border-color: var(--global-white-color);
+  --p-button-secondary-active-color: var(--global-blue-2-color);
+
+  &.p-button-warn {
+    --p-button-warn-background: transparent;
+    --p-button-warn-border-color: transparent;
+    --p-button-warn-color: var(--global-red-color);
+
+    --p-button-warn-hover-background: transparent;
+    --p-button-warn-hover-border-color: transparent;
+    --p-button-warn-hover-color: var(--global-red-color);
+
+    --p-button-warn-active-background: transparent;
+    --p-button-warn-active-border-color: transparent;
+    --p-button-warn-active-color: var(--global-red-color);
+
+    &:hover {
+      filter: brightness(110%);
+    }
+    &:active {
+      filter: brightness(90%);
+    }
+  }
+  &.p-button-help {
+    --p-button-help-background: var(--global-white-color);
+    --p-button-help-border-color: var(--global-white-color);
+    --p-button-help-color: var( --global-blue-color);
+    --p-button-help-hover-background: var(--global-white-color);
+    --p-button-help-hover-border-color: var(--global-white-color);
+    --p-button-help-hover-color: var(--global-blue-3-color);
+    --p-button-help-active-background: var(--global-white-color);
+    --p-button-help-active-border-color: var(--global-white-color);
+    --p-button-help-active-color: var(--global-blue-2-color);
+  }
+  &.p-button-success {
+    --p-button-success-background: transparent;
+    --p-button-success-border-color: transparent;
+    --p-button-success-color: var(--global-green-button);
+    --p-button-success-hover-background: transparent;
+    --p-button-success-hover-border-color: transparent;
+    --p-button-success-hover-color: var(--global-green-button);
+    --p-button-success-active-background: transparent;
+    --p-button-success-active-border-color: transparent;
+    --p-button-success-active-color: var(--global-green-button);
+
+    &:hover {
+      filter: brightness(110%);
+    }
+    &:active {
+      filter: brightness(90%);
+    }
+  }
+  & .p-button-info {
+    --p-button-text-info-background: var(--global-white-color);
+    --p-button-text-info-border-color: var(--global-white-color);
+    --p-button-text-info-color: var(--global-blue-color);
+
+    --p-button-text-info-hover-background: var(--global-white-color);
+    --p-button-text-info-hover-border-color: var(--global-white-color);
+    --p-button-text-info-hover-color: var(--global-blue-3-color);
+
+    --p-button-text-info-active-background: var(--global-white-color);
+    --p-button-text-info-active-border-color: var(--global-white-color);
+    --p-button-text-info-active-color: var(--global-blue-2-color);
+
+    --p-button-sm-padding-x: 0;
+    --p-button-sm-padding-y: 0;
+
+    font-size: 1rem;
+
+    & .p-button-icon::before {
+      color: inherit;
+    }
+    &:not(:disabled):hover {
+      background-color: var(--p-button-text-info-hover-background);
+      border-color: var(--p-button-text-info-hover-border-color);
+      color: var(--p-button-text-info-hover-color);
+    }
+    &:not(:disabled):active,
+    &:not(:disabled):focus-visible {
+      outline: none;
+      background-color: var(--p-button-text-info-active-background);
+      border-color: var(--p-button-text-info-active-border-color);
+      color: var(--p-button-text-info-active-color);
+    }
+    &:disabled {
+      background-color: var(--p-button-text-info-background);
+      border-color: var(--p-button-text-info-border-color);
+      color: var(--global-light-blue-2-color);
+    }
+  }
+  & .p-button-danger {
+    --p-button-text-danger-background: var(--global-white-color);
+    --p-button-text-danger-border-color: var(--global-white-color);
+    --p-button-text-danger-color: var(--global-blue-color);
+
+    --p-button-text-danger-hover-background: var(--global-white-color);
+    --p-button-text-danger-hover-border-color: var(--global-white-color);
+    --p-button-text-danger-hover-color: var(--global-blue-3-color);
+
+    --p-button-text-danger-active-background: var(--global-white-color);
+    --p-button-text-danger-active-border-color: var(--global-white-color);
+    --p-button-text-danger-active-color: var(--global-blue-2-color);
+
+    --p-button-sm-padding-x: 0;
+    --p-button-sm-padding-y: 0;
+
+    font-size: 1rem;
+
+    & .p-button-icon::before {
+      color: inherit;
+    }
+    &:not(:disabled):hover {
+      background-color: var(--p-button-text-danger-hover-background);
+      border-color: var(--p-button-text-danger-hover-border-color);
+      color: var(--p-button-text-danger-hover-color);
+    }
+    &:not(:disabled):active,
+    &:not(:disabled):focus-visible {
+      outline: none;
+      background-color: var(--p-button-text-danger-active-background);
+      border-color: var(--p-button-text-danger-active-border-color);
+      color: var(--p-button-text-danger-active-color);
+    }
+    &:disabled {
+      background-color: var(--p-button-text-danger-background);
+      border-color: var(--p-button-text-danger-border-color);
+      color: var(--p-button-text-danger-color);
+    }
+  }
+}
+
+.button-icon-tabs {
+  --p-button-secondary-background: transparent;
+  --p-button-secondary-border-color: transparent;
+  --p-button-secondary-color: var(--global-blue-color);
+
+  --p-button-secondary-hover-background: transparent;
+  --p-button-secondary-hover-border-color: transparent;
+  --p-button-secondary-hover-color: var(--global-blue-3-color);
+
+  --p-button-secondary-active-background: transparent;
+  --p-button-secondary-active-border-color: transparent;
+  --p-button-secondary-active-color: var(--global-blue-2-color);
+
+  --p-button-icon-only-width: 2rem;
+  --p-button-border-radius: 0.5rem;
+
+  & .p-button-icon {
+    font-size: 1.5rem;
+
+    &::before {
+      color: inherit;
+    }
+  }
+  button {
+    height: 3.2rem;
+    padding: 0.25rem;
+
+    &:focus-visible {
+      --p-button-secondary-background: transparent;
+      --p-button-secondary-border-color: transparent;
+      --p-button-secondary-color: var(--global-blue-2-color);
+
+      outline: none
+    }
+  }
+}
+
+.width-10rem-custom {
+  width: 10rem;
+}
+.width-13-75rem-custom {
+  width: 13.75rem;
+}
+.width-9-25rem-custom {
+  width: 9.25rem;
+  flex-shrink: 0;
+
+  button {
+    width: 9.25rem;
+  }
+}
+
+
+
+.p-button-icon.to-top {
+  transform: rotate(180deg);
+}
+.p-button-icon-only.to-top {
+  transform: rotate(180deg);
+}
+
+.p-button-collapse {
+  --p-button-text-primary-color: var(--global-light-blue-color);
+  --p-button-icon-only-width: 1.8125rem;
+  --p-button-padding-y: 0;
+  --p-button-border-radius:  0.225rem;
+  --p-button-text-primary-hover-background: var(--global-light-gray-color-opacity);
+  --p-button-text-primary-active-background: var(--global-light-gray-color);
+
+  --p-button-primary-background: transparent;
+  --p-button-primary-border-color: transparent;
+  --p-button-primary-color: var(--global-light-blue-color);
+
+  --p-button-primary-hover-background: var(--global-light-gray-color-opacity);
+  --p-button-primary-hover-border-color: transparent;
+  --p-button-primary-hover-color: var(--global-gray-color);
+
+  --p-button-primary-active-background: transparent;
+  --p-button-primary-active-border-color: transparent;
+  --p-button-primary-active-color: var(--global-gray-color);
+
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+
+  border: none;
+  font-size: 1.5rem;
+
+  &:not(:disabled):hover {
+    --p-button-text-primary-color: var(--global-gray-color);
+  }
+  .p-button-icon {
+    transition: transform 0.35s ease;
+    transform: rotate(180deg);
+  }
+  .p-button-icon::before {
+    color: var(--global-light-blue-color);
+  }
+  .p-button-icon:hover::before {
+    color: var(--global-gray-color);
+  }
+  &:not(:disabled):active {
+    --p-button-text-primary-color: var(--global-gray-color);
+  }
+  .dialog-collapse:has(.station-info) & {
+    .p-button-icon {
+      transform: rotate(0deg);
+    }
+  }
+  &:focus-visible {
+    background: var(--global-light-gray-color);
+
+    .p-button-icon::before {
+      color: var(--global-gray-color);
+    }
+  }
+}
+.button-no-border {
+  display: inline-block;
+  height: 1.5rem;
+
+  button {
+    padding: 0;
+  }
+}
+
+.buttons-inline {
+  width: 100%;
+
+  .blue-button {
+    overflow: hidden;
+
+    button {
+      white-space: nowrap;
+      max-width: 100%;
+
+      .p-button-label {
+        // text-overflow: ellipsis;
+        display: block;
+        // overflow: hidden;
+      }
+    }
+  }
+}
+
+.button-icon-no-border-custom {
+  --p-button-primary-color: var(--global-blue-color);
+  --p-button-primary-background: transparent;
+  --p-button-primary-border-color: transparent;
+  --p-button-padding-y: 0;
+  --p-button-padding-x: 0;
+  --p-button-primary-hover-background: transparent;
+  --p-button-primary-hover-border-color: transparent;
+  --p-button-primary-hover-color: var(--global-blue-3-color);
+  --p-button-primary-active-background: transparent;
+  --p-button-primary-active-border-color: transparent;
+  --p-button-primary-active-color: var(--global-blue-2-color);
+
+  --p-button-success-color: var(--global-blue-color);
+  --p-button-success-background: transparent;
+  --p-button-success-border-color: transparent;
+  --p-button-success-hover-color: var(--global-blue-3-color);
+  --p-button-success-hover-background: transparent;
+  --p-button-success-hover-border-color: transparent;
+  --p-button-success-active-color: var(--global-blue-2-color);
+  --p-button-success-active-background: transparent;
+  --p-button-success-active-border-color: transparent;
+
+  max-height: fit-content;
+  padding: 0;
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--p-button-primary-color);
+
+  .p-button-icon {
+    font-size: 1.5rem;
+  }
+  .p-button {
+    max-height: 1.5rem;
+
+    &:hover {
+      color: var(--p-button-primary-hover-color);
+      i::before,
+      .p-button-icon::before {
+        color: var(--p-button-primary-hover-color);
+      }
+    }
+    &:active,
+    &:focus-visible {
+      color: var(--p-button-primary-active-color);
+      outline: none;
+      i::before,
+      .p-button-icon::before {
+        color: var(--p-button-primary-active-color);
+      }
+    }
+  }
+}
+
+.no-i-button {
+  i {
+    display: none;
+    }
+}
+
+.circle-arrow-button {
+  &:disabled {
+    opacity: 1;
+
+    .p-button-icon::before {
+      color: var(--global-lighter-gray);
+    }
+  }
+  .p-button-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.opacity-disabled-custom:disabled {
+  opacity: var(--p-disabled-opacity);
+}
+
+.p-inputnumber-button {
+  --p-inputnumber-button-width: 3.125rem;
+  --p-inputnumber-button-border-radius: 0.25rem;
+  --p-inputnumber-button-vertical-padding: var(--p-form-field-padding-y);
+  --p-inputnumber-button-background: transparent;
+  --p-inputnumber-button-hover-background: var(--global-light-gray-color-header);
+  --p-inputnumber-button-active-background: var(--global-light-gray-color-header);
+  --p-inputnumber-button-border-color: var(--p-form-field-border-color);
+  --p-inputnumber-button-hover-border-color: var(--global-blue-3-color);
+  --p-inputnumber-button-active-border-color: var(--global-blue-2-color);
+  --p-inputnumber-button-color: var(--p-surface-400);
+  --p-inputnumber-button-hover-color:var(--global-blue-3-color);
+  --p-inputnumber-button-active-color: var(--global-blue-2-color);
+}
+.p-inputnumber-horizontal .p-inputnumber-decrement-button,
+.p-inputnumber-horizontal .p-inputnumber-increment-button {
+  border: 1px solid var(--p-inputnumber-button-border-color);
+  z-index: 1;
+
+  &:hover {
+    border-color: var(--p-inputnumber-button-hover-border-color);
+  }
+  &:active,
+  &:focus-visible {
+    border-color: var(--p-inputnumber-button-active-border-color);
+
+  }
+}
+
+.button-ellipsis {
+  max-width: 100%;
+  button {
+    justify-content: flex-start;
+
+    .p-button-label {
+      max-width: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+}

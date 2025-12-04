@@ -1,0 +1,56 @@
+:host {
+  display: inline-block;
+}
+
+// Принудительные состояния для Storybook
+// Используем ::ng-deep для проникновения в PrimeNG компоненты
+
+:host(.force-state-hover) ::ng-deep button:not(:disabled) {
+  // Эмуляция hover
+  --p-button-success-background: var(--global-blue-3-color) !important;
+  --p-button-success-border-color: var(--global-blue-3-color) !important;
+  --p-button-primary-background: var(--global-blue-3-color) !important;
+  --p-button-primary-border-color: var(--global-blue-3-color) !important;
+
+  --p-button-secondary-background: var(--global-light-gray-color-header) !important;
+  --p-button-secondary-border-color: var(--global-blue-3-color) !important;
+  --p-button-secondary-color: var(--global-blue-3-color) !important;
+}
+
+:host(.force-state-active) ::ng-deep button:not(:disabled) {
+  // Эмуляция active
+  --p-button-success-background: var(--global-blue-2-color) !important;
+  --p-button-success-border-color: var(--global-blue-2-color) !important;
+  --p-button-primary-background: var(--global-blue-2-color) !important;
+  --p-button-primary-border-color: var(--global-blue-2-color) !important;
+
+  --p-button-secondary-background: var(--global-light-gray-color-header) !important;
+  --p-button-secondary-border-color: var(--global-blue-2-color) !important;
+  --p-button-secondary-color: var(--global-blue-2-color) !important;
+}
+
+:host(.force-state-focus) ::ng-deep button:not(:disabled) {
+  // Эмуляция focus
+  outline: 2px solid var(--global-blue-2-color) !important;
+  outline-offset: 2px !important;
+
+  --p-button-success-background: var(--global-blue-2-color) !important;
+  --p-button-success-border-color: var(--global-blue-2-color) !important;
+  --p-button-primary-background: var(--global-blue-2-color) !important;
+  --p-button-primary-border-color: var(--global-blue-2-color) !important;
+
+  --p-button-secondary-background: var(--global-light-gray-color-header) !important;
+  --p-button-secondary-border-color: var(--global-blue-2-color) !important;
+  --p-button-secondary-color: var(--global-blue-2-color) !important;
+}
+
+:host(.force-state-focus-active) ::ng-deep button:not(:disabled) {
+  // Эмуляция focus + active
+  outline: 2px solid var(--global-blue-2-color) !important;
+  outline-offset: 2px !important;
+
+  --p-button-success-background: var(--global-blue-2-color) !important;
+  --p-button-success-border-color: var(--global-blue-2-color) !important;
+  --p-button-primary-background: var(--global-blue-2-color) !important;
+  --p-button-primary-border-color: var(--global-blue-2-color) !important;
+}
