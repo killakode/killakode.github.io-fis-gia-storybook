@@ -3,7 +3,8 @@
 // ============================================
 // CSS-переменные PrimeNG Select
 // ============================================
-:root {
+:root,
+.p-select {
   --p-select-background: var(--global-light-gray-color-header);
   --p-select-border-color: var(--global-light-gray-3-color);
   --p-select-border-radius: 0.25rem;
@@ -22,6 +23,11 @@
   --p-select-list-gap: 0;
   --p-select-list-padding: 0;
   --p-select-list-header-padding: 0.688rem 1rem;
+  --p-icon-size: 1.5rem;
+  --p-form-field-padding-x: 1rem;
+}
+
+.p-select-option {
   --p-select-option-padding: 0.688rem 1rem;
   --p-select-option-color: var(--global-dark-blue-color);
   --p-select-option-border-radius: 0;
@@ -31,8 +37,6 @@
   --p-select-option-selected-color: var(--global-dark-blue-color);
   --p-select-option-selected-focus-background: var(--global-light-gray-color);
   --p-select-option-selected-focus-color: var(--global-dark-blue-color);
-  --p-icon-size: 1.5rem;
-  --p-form-field-padding-x: 1rem;
 }
 
 // ============================================
@@ -93,7 +97,6 @@
   inset: unset !important;
   margin: 0 !important;
 }
-
 
 // ============================================
 // Опции списка
@@ -289,7 +292,9 @@
   --p-multiselect-option-focus-color: var(--global-dark-blue-color);
   --p-multiselect-option-selected-background: transparent;
   --p-multiselect-option-selected-color: var(--global-dark-blue-color);
-  --p-multiselect-option-selected-focus-background: var(--global-light-gray-color);
+  --p-multiselect-option-selected-focus-background: var(
+    --global-light-gray-color
+  );
   --p-multiselect-option-selected-focus-color: var(--global-dark-blue-color);
   --p-multiselect-option-gap: 0.5rem;
   --p-icon-size: 1.5rem;
