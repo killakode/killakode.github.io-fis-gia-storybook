@@ -1,0 +1,84 @@
+.checkbox-wrapper {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 1.5rem;
+
+  .checkbox-label {
+    cursor: pointer;
+    user-select: none;
+    font-size: 0.875rem;
+    color: var(--global-text-color, #1d2129);
+  }
+
+  // Состояния для демонстрации в Storybook
+  &.state-hover {
+    .p-checkbox:not(.p-disabled):not(.p-checkbox-checked) .p-checkbox-box {
+      background: var(--global-light-gray-4-color) !important;
+    }
+
+    .p-checkbox-checked:not(.p-disabled) .p-checkbox-box {
+      background: var(--global-white-color) !important;
+      border-color: var(--global-blue-3-color) !important;
+
+      .p-checkbox-icon,
+      .p-iconwrapper {
+        background-color: var(--global-blue-3-color) !important;
+      }
+    }
+  }
+
+  &.state-focus {
+    .p-checkbox:not(.p-disabled):not(.p-checkbox-checked) .p-checkbox-box {
+      background: var(--global-light-gray-4-color) !important;
+      border-color: var(--global-blue-3-color) !important;
+    }
+
+    .p-checkbox-checked:not(.p-disabled) .p-checkbox-box {
+      background: var(--global-white-color) !important;
+      border-color: var(--global-blue-3-color) !important;
+
+      .p-checkbox-icon,
+      .p-iconwrapper {
+        background-color: var(--global-blue-3-color) !important;
+      }
+    }
+  }
+
+  &.state-active {
+    .p-checkbox-checked:not(.p-disabled) .p-checkbox-box {
+      border-color: var(--global-blue-color) !important;
+
+      .p-checkbox-icon,
+      .p-iconwrapper {
+        background-color: var(--global-blue-color) !important;
+      }
+    }
+  }
+}
+
+// Disabled label
+.checkbox-wrapper:has(.p-checkbox.p-disabled) .checkbox-label {
+  color: var(--global-gray-4-color, #86909c);
+  cursor: not-allowed;
+}
+
+// Readonly
+.checkbox-wrapper:has(.p-checkbox[readonly]) {
+  pointer-events: none;
+
+  .checkbox-label {
+    color: var(--global-gray-4-color, #86909c);
+  }
+}
+
+// Indeterminate state
+:deep(.p-checkbox[data-indeterminate="true"]) {
+  .p-checkbox-box {
+    .p-iconwrapper::before {
+      content: "−";
+      font-family: Arial, sans-serif;
+    }
+  }
+}
