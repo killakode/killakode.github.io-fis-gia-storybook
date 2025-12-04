@@ -24,7 +24,6 @@ export class SelectComponent {
   @Input() showClear: boolean = false;
   @Input() filter: boolean = false;
   @Input() appendTo: string = 'body';
-  @Input() maxWidth: string = '34rem';
   @Input() invalid: boolean = false;
 
   @Input() value: any = null;

@@ -1,6 +1,9 @@
 // select.stories.ts
 import type { Meta, StoryObj } from '@storybook/angular';
-import { SelectComponent, SelectOption } from '../app/components/select/select.component';
+import {
+  SelectComponent,
+  SelectOption,
+} from '../app/components/select/select.component';
 
 const meta: Meta<SelectComponent> = {
   title: 'Components/Select',
@@ -31,10 +34,6 @@ const meta: Meta<SelectComponent> = {
       control: 'boolean',
       description: 'Состояние ошибки валидации',
     },
-    maxWidth: {
-      control: 'text',
-      description: 'Максимальная ширина компонента',
-    },
     appendTo: {
       control: 'select',
       options: ['body', null],
@@ -58,7 +57,10 @@ const defaultOptions: SelectOption[] = [
   { label: 'Вариант 1', value: 1 },
   { label: 'Вариант 2', value: 2 },
   { label: 'Вариант 3', value: 3 },
-  { label: 'Длинный текст варианта который переносится на несколько строк', value: 4 },
+  {
+    label: 'Длинный текст варианта который переносится на несколько строк',
+    value: 4,
+  },
   { label: 'Вариант 5', value: 5, disabled: true },
 ];
 
@@ -78,7 +80,6 @@ export const Playground: Story = {
     showClear: false,
     filter: false,
     invalid: false,
-    maxWidth: '34rem',
   },
 };
 
@@ -182,7 +183,8 @@ export const LongText: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Список с длинными текстами, которые переносятся на несколько строк',
+        story:
+          'Список с длинными текстами, которые переносятся на несколько строк',
       },
     },
   },
@@ -266,41 +268,11 @@ export const ManyOptions: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Список с большим количеством опций, поиском и кастомным скроллбаром',
+        story:
+          'Список с большим количеством опций, поиском и кастомным скроллбаром',
       },
     },
   },
 };
 
-// ========================================
-// SIZES - Размеры
-// ========================================
-export const CustomWidth: Story = {
-  args: {
-    options: defaultOptions,
-    placeholder: 'Выберите значение',
-    maxWidth: '20rem',
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Список с кастомной максимальной шириной',
-      },
-    },
-  },
-};
 
-export const FullWidth: Story = {
-  args: {
-    options: defaultOptions,
-    placeholder: 'Выберите значение',
-    maxWidth: '100%',
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Список на всю ширину контейнера',
-      },
-    },
-  },
-};
