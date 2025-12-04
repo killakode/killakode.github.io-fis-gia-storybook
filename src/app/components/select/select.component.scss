@@ -2,169 +2,36 @@
 :host {
   display: block;
   width: 100%;
+}
 
-  ::ng-deep {
-    .p-select {
-      width: 100%;
-      min-width: 7.625rem;
+// Локальные стили для самого селекта
+::ng-deep {
+  .p-select {
+    width: 100%;
+    min-width: 7.625rem;
+    max-width: 25rem;
+  }
+
+  // Label с ellipsis
+  .p-select-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+  }
+
+  // Invalid состояние
+  .p-select.ng-invalid.ng-dirty {
+    --p-select-border-color: var(--global-red-color);
+    outline: none;
+
+    .p-select-dropdown-icon::before {
+      color: var(--global-red-color);
     }
+  }
 
-    // Иконка стрелки
-    .p-select-dropdown-icon {
-      font-size: 1.5rem;
-      transform: rotate(0deg);
-      transition: transform 0.35s ease;
-    }
-
-    // При открытии
-    .p-select-open {
-      --p-select-border-color: var(--global-light-blue-3-color);
-      --p-select-hover-border-color: var(--global-light-blue-3-color);
-      border-radius: var(--p-select-border-radius) !important;
-
-      .p-select-dropdown-icon {
-        transform: rotate(-180deg);
-      }
-    }
-
-    // Overlay
-    .p-overlay {
-      left: -0.0625rem !important;
-      max-width: 100%;
-    }
-
-    .p-select-overlay {
-      border-radius: var(--p-select-overlay-border-radius) !important;
-      margin-top: 3px;
-      overflow: hidden;
-    }
-
-    // Опции
-    .p-select-option {
-      position: relative;
-      white-space: normal;
-
-      // Разделитель
-      &::after {
-        content: '';
-        position: absolute;
-        width: calc(100% - 2rem);
-        height: 0.0625rem;
-        right: 1rem;
-        bottom: 0;
-        left: 1rem;
-        background-color: var(--global-light-gray-2-color);
-      }
-
-      &:hover {
-        background-color: var(--global-light-gray-color);
-
-        &::after {
-          content: none;
-        }
-      }
-    }
-
-    // Последний элемент без разделителя
-    .p-select-list > *:last-child .p-select-option::after {
-      content: none;
-    }
-
-    // Скрываем разделитель у элемента перед hover
-    .p-select-list > *:has(+ * > .p-select-option:hover) > .p-select-option::after {
-      content: none;
-    }
-
-    // Выбранный элемент с иконкой
-    .p-select-option-selected {
-      display: flex;
-      flex-direction: row-reverse;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-
-      &::before {
-        content: '\e900'; // icon-check
-        font-family: 'icomoon';
-        font-size: 1.5rem;
-        color: var(--global-blue-color);
-      }
-    }
-
-    // Кнопка очистки
-    .p-select-clear-icon {
-      height: 1rem;
-      display: flex;
-      align-items: center;
-      inset-inline-end: 3rem;
-
-      svg {
-        display: none;
-      }
-
-      &::before {
-        content: '\e901'; // icon-close
-        font-family: 'icomoon';
-        font-size: 1.5rem;
-        color: var(--global-blue-color);
-      }
-
-      &:hover::before {
-        color: var(--global-blue-3-color);
-      }
-
-      &:active::before,
-      &:focus-visible::before {
-        color: var(--global-blue-2-color);
-      }
-
-      &:disabled::before {
-        color: var(--global-light-blue-2-color);
-      }
-    }
-
-    // Кастомный скроллбар
-    .p-select-list-container {
-      &::-webkit-scrollbar {
-        width: 1rem;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        border-radius: 0.5rem;
-        background-color: var(--global-light-gray-3-color);
-        background-clip: padding-box;
-        border: solid transparent 0.3125rem;
-
-        &:hover {
-          background-color: var(--global-gray-color);
-        }
-      }
-
-      &::-webkit-scrollbar-track {
-        background-color: transparent;
-      }
-
-      &::-webkit-scrollbar-button {
-        display: none;
-      }
-    }
-
-    // Firefox
-    @supports (scrollbar-color: gray white) and (-moz-appearance: none) {
-      .p-select-list-container {
-        scrollbar-color: var(--global-light-gray-3-color) var(--global-white-color);
-        scrollbar-width: auto;
-      }
-    }
-
-    // Invalid состояние
-    .p-select.ng-invalid.ng-dirty {
-      --p-select-border-color: var(--global-red-color);
-      outline: none;
-
-      .p-select-dropdown-icon::before {
-        color: var(--global-red-color);
-      }
-    }
+  // Отступ для label при наличии clear button
+  .p-select:has(.p-select-clear-icon) .p-select-label {
+    padding-right: 2rem;
   }
 }

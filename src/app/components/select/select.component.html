@@ -1,7 +1,10 @@
 <p-select
+  #selectElement
   [options]="options"
   [(ngModel)]="value"
   (onChange)="onChange($event)"
+  (onShow)="onShow()"
+  (onHide)="onHide()"
   [placeholder]="placeholder"
   [disabled]="disabled"
   [showClear]="showClear"
@@ -11,4 +14,8 @@
   optionValue="value"
   [class.ng-invalid]="invalid"
   [class.ng-dirty]="invalid"
+  [dropdownIcon]="'icon-arrow'"
+  [pTooltip]="showTooltip ? selectedLabel : ''"
+  tooltipPosition="top"
+  [escape]="false"
 />
