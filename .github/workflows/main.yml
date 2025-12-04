@@ -2,7 +2,7 @@ name: Build and Deploy Storybook
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   workflow_dispatch:
 
 # Разрешения для деплоя на GitHub Pages
