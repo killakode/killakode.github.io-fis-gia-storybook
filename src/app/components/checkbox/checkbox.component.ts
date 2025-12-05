@@ -1,3 +1,4 @@
+// checkbox.component.ts
 import { Component, Input, forwardRef, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -6,6 +7,8 @@ import {
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
+
+let nextUniqueId = 0; // ← Счётчик для уникальных ID
 
 @Component({
   selector: 'app-checkbox',
@@ -29,9 +32,20 @@ export class CheckboxComponent implements ControlValueAccessor {
   @Input() state?: 'default' | 'hover' | 'focus' | 'active';
   @Input() indeterminate = false;
   @Input() checked = false;
+  @Input() inputId?: string; // ← Возможность передать свой ID
+
+  // Генерируем уникальный ID, если не передан
+  uniqueId: string = `checkbox-${++nextUniqueId}`;
 
   private onChange: (value: boolean) => void = () => {};
   private onTouched: () => void = () => {};
+
+  ngOnInit() {
+    // Если inputId передан извне, используем его
+    if (this.inputId) {
+      this.uniqueId = this.inputId;
+    }
+  }
 
   writeValue(value: boolean): void {
     this.checked = value || false;

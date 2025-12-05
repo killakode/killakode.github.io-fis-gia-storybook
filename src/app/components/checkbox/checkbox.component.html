@@ -1,3 +1,4 @@
+<!-- checkbox.component.html -->
 <div class="checkbox-wrapper" [class]="getStateClass()">
   <p-checkbox
     [(ngModel)]="checked"
@@ -7,6 +8,9 @@
     (onChange)="onCheckboxChange($event)"
     [attr.data-indeterminate]="indeterminate ? true : null"
     checkboxIcon="icon-check"
+    [inputId]="uniqueId"
   />
-  <label *ngIf="label" class="checkbox-label">{{ label }}</label>
+  <label *ngIf="label" [for]="uniqueId" class="checkbox-label">
+    {{ label }}
+  </label>
 </div>
