@@ -58,15 +58,6 @@ const meta: Meta<PopupComponent> = {
         defaultValue: { summary: '3000' },
       },
     },
-    key: {
-      control: 'text',
-      description:
-        'Ключ для группировки уведомлений (используется для программного управления)',
-      table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: 'popup' },
-      },
-    },
   },
   args: {
     position: 'top-right',
