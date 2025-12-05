@@ -1,0 +1,302 @@
+// Базовые переменные из твоего проекта
+@import '../../styles/buttons';
+
+.dialog-demo-container {
+  .p-dialog-mask {
+    position: absolute !important; // вместо fixed
+    z-index: 1;
+  }
+}
+
+// Базовые стили диалога
+.p-dialog-mask {
+  background: var(--p-mask-background, rgba(11, 31, 51, 0.1));
+  z-index: 1001;
+}
+
+.p-dialog,
+p-dialog,
+:root {
+  --p-dialog-border-radius: 1rem;
+  --p-dialog-shadow: none;
+  --p-dialog-background: var(--global-white-color, #fff);
+  --p-dialog-color: var(--global-dark-color, #0b1f33);
+  --p-dialog-header-padding: 2rem 2rem 1rem;
+  --p-dialog-header-gap: 0.5rem;
+  --p-dialog-title-font-size: 1.5rem;
+  --p-dialog-title-font-weight: 700;
+  --p-dialog-content-padding: 0 2rem 2rem 2rem;
+  --p-dialog-footer-padding: 0 2rem 2rem 2rem;
+  --p-dialog-footer-gap: 0.5rem;
+
+  font-family: var(
+    --global-main-font,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif
+  );
+  line-height: 1.5rem;
+  border: none;
+}
+
+// Кнопка закрытия
+.p-dialog-close-button {
+  top: -1.3125rem;
+  right: -1.375rem;
+  position: relative;
+  outline: none;
+  --p-button-text-secondary-hover-background: #fff;
+  --p-button-text-secondary-active-background: #fff;
+  --p-button-text-secondary-color: #66727f;
+  --p-button-text-secondary-hover-color: var(--global-blue-3-color, #4a90e2);
+  --p-button-text-secondary-active-color: var(--global-blue-2-color, #2e5c8a);
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+// Размеры диалогов
+.popup .p-dialog {
+  width: 57.5rem;
+  max-width: calc(100vw - 2.5rem);
+}
+
+.popup--big .p-dialog {
+  width: 90vw;
+  max-width: 82.5rem;
+}
+
+.popup--fullwidth .p-dialog {
+  width: calc(100vw - 2.5rem);
+  max-width: 117.5rem;
+}
+
+// Для контейнера - уменьшаем размеры
+.dialog-demo-container {
+  .popup .p-dialog {
+    width: 90%;
+    max-width: 40rem;
+  }
+
+  .popup--big .p-dialog {
+    width: 95%;
+    max-width: 50rem;
+  }
+
+  .popup--fullwidth .p-dialog {
+    width: 98%;
+    max-width: 60rem;
+  }
+}
+
+// Confirm диалог
+.p-dialog-mask:has(.confirm-dialog-custom) {
+  --p-dialog-border-radius: 1rem;
+  --p-dialog-shadow: none;
+  --p-dialog-background: var(--global-white-color, #fff);
+  --p-dialog-color: var(--global-dark-color, #0b1f33);
+  --p-dialog-header-padding: 0.4375rem 0.3125rem 0;
+  --p-confirmdialog-content-gap: 1.5rem;
+  --p-dialog-content-padding: 0 0 2.5rem;
+  --p-dialog-footer-padding: 0 0 2rem;
+  --p-dialog-footer-gap: 1.25rem;
+
+  .p-dialog {
+    width: 33.3125rem;
+    max-width: calc(100vw - 2.5rem);
+    border: none;
+  }
+
+  .p-dialog-close-button {
+    top: 0;
+    right: 0;
+  }
+
+  .p-dialog-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: var(
+      --global-main-font,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif
+    );
+    color: var(--global-dark-color, #0b1f33);
+    letter-spacing: var(--global-main-letter-spacing, normal);
+
+    .header div {
+      font-size: 5rem;
+    }
+  }
+
+  .confirm-dialog-custom {
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: var(--global-main-font-weight, 400);
+  }
+
+  .p-dialog-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      --p-button-padding-y: 0.625rem;
+      --p-button-padding-x: 2.40625rem;
+
+      font-family: var(
+        --global-main-font,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        sans-serif
+      );
+      font-size: 1rem;
+      line-height: 1.5rem;
+      font-weight: var(--global-main-font-weight, 400);
+      letter-spacing: var(--global-main-letter-spacing, normal);
+    }
+  }
+}
+
+// Confirm в контейнере
+.dialog-demo-container {
+  .p-dialog-mask:has(.confirm-dialog-custom) .p-dialog {
+    width: 90%;
+    max-width: 30rem;
+  }
+}
+
+// Скроллбар
+.p-dialog-content {
+  &::-webkit-scrollbar {
+    width: 1rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 0.5rem;
+    background-color: var(--global-light-gray-3-color, #e0e0e0);
+    background-clip: padding-box;
+    border: solid transparent 0.3125rem;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: var(--global-gray-color, #9e9e9e);
+  }
+}
+
+// Контент и футер
+.dialog-content {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.dialog-footer {
+  display: flex;
+  gap: 1.25rem;
+  justify-content: flex-end;
+}
+
+// Общая обёртка
+.dialog-playground {
+  min-height: 400px;
+}
+
+// Стили для панели управления
+.dialog-controls {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.controls-title {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+  color: #0b1f33;
+  font-weight: 700;
+  line-height: 2rem;
+}
+
+.controls-buttons {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+// Контейнер для демонстрации (как в popup)
+.dialog-demo-container {
+  position: relative;
+  width: 100%;
+  min-height: 600px;
+  border: 2px dashed #dee2e6;
+  border-radius: 0.75rem;
+  background: linear-gradient(90deg, #f8f9fa 1px, transparent 1px),
+    linear-gradient(180deg, #f8f9fa 1px, transparent 1px);
+  background-size: 50px 50px;
+  overflow: hidden;
+  isolation: isolate;
+  contain: layout style paint;
+}
+
+.demo-placeholder {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.demo-info {
+  text-align: center;
+  color: #66727f;
+
+  i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+    color: #94a3b8;
+  }
+
+  p {
+    margin: 0 0 1rem 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #475569;
+  }
+
+  span {
+    display: block;
+    font-size: 0.875rem;
+    margin: 0.25rem 0;
+    color: #64748b;
+
+    strong {
+      font-weight: 600;
+      color: #0f172a;
+      font-family: "Courier New", monospace;
+      background: #f1f5f9;
+      padding: 0.125rem 0.375rem;
+      border-radius: 0.25rem;
+    }
+  }
+}
+
+.p-dialog-wrapper {
+  width: 100%;
+  height: 100%;
+}

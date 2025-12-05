@@ -1,0 +1,105 @@
+<!-- Универсальный контейнер-обёртка -->
+<div class="dialog-playground">
+  <!-- Панель управления -->
+  <div class="dialog-controls">
+    <h3 class="controls-title">Управление диалогами</h3>
+
+    <div class="controls-buttons">
+      <p-button
+        *ngIf="type === 'standard'"
+        label="Открыть стандартный диалог"
+        icon="pi pi-window-maximize"
+        (onClick)="openStandardDialog()"
+        severity="primary"
+        class="blue-button"
+      ></p-button>
+
+      <p-button
+        *ngIf="type === 'confirm'"
+        label="Открыть диалог подтверждения"
+        icon="pi pi-question-circle"
+        severity="warn"
+        (onClick)="openConfirmDialog()"
+        severity="secondary"
+        class="white-button"
+      ></p-button>
+    </div>
+  </div>
+
+  <!-- Контейнер для демонстрации позиционирования -->
+  <div class="dialog-demo-container">
+    <div class="demo-placeholder">
+      <div class="demo-info">
+        <i class="pi pi-map-marker"></i>
+        <p>Область для отображения диалогов</p>
+        <span class="demo-type"
+          >Тип: <strong>{{ type }}</strong></span
+        >
+        <span class="demo-position"
+          >Позиция:
+          <strong>{{
+            appendTo === "body" ? "весь экран" : "в контейнере"
+          }}</strong></span
+        >
+      </div>
+    </div>
+
+    <!-- Обёртка для диалогов -->
+    <div class="p-dialog-wrapper">
+      <!-- Стандартный диалог -->
+      <p-dialog
+        *ngIf="type === 'standard'"
+        [(visible)]="visible"
+        [header]="showHeader ? header : ''"
+        [closable]="closable"
+        [styleClass]="sizeClass"
+        [appendTo]="appendTo"
+        (onHide)="closeDialog()"
+      >
+        <!-- Контент -->
+        <div class="dialog-content">
+          {{ content }}
+        </div>
+
+        <!-- Футер -->
+        <ng-template pTemplate="footer" *ngIf="showFooter">
+          <div class="dialog-footer">
+            <p-button
+              [label]="rejectLabel"
+              severity="secondary"
+              (onClick)="handleReject()"
+              class="white-button"
+            ></p-button>
+            <p-button
+              [label]="acceptLabel"
+              severity="primary"
+              class="blue-button"
+              (onClick)="handleAccept()"
+            ></p-button>
+          </div>
+        </ng-template>
+      </p-dialog>
+
+      <!-- Confirm диалог -->
+      <p-confirmDialog
+        [key]="confirmKey"
+        styleClass="confirm-dialog-custom"
+        [closable]="closable"
+        [appendTo]="appendTo"
+      >
+        <ng-template pTemplate="header">
+          <div class="header">
+            <div [class]="confirmIcon"></div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="message" let-message>
+          <div class="confirm-dialog-custom">
+            {{ message.message }}
+          </div>
+        </ng-template>
+
+      </p-confirmDialog>
+    </div>
+  </div>
+</div>
+
