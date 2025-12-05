@@ -1,5 +1,9 @@
-import { Component, Input, forwardRef } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormsModule } from '@angular/forms';
+import { Component, Input, forwardRef, ViewEncapsulation } from '@angular/core';
+import {
+  NG_VALUE_ACCESSOR,
+  ControlValueAccessor,
+  FormsModule,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -17,16 +21,17 @@ import { InputIconModule } from 'primeng/inputicon';
     FloatLabelModule,
     MessageModule,
     IconFieldModule,
-    InputIconModule
+    InputIconModule,
   ],
   templateUrl: './input.component.html',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => InputComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class InputComponent implements ControlValueAccessor {
   @Input() label: string = '';

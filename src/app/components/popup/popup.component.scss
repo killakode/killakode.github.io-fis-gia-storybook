@@ -1,0 +1,343 @@
+// ============================================
+// ПАНЕЛЬ УПРАВЛЕНИЯ
+// ============================================
+
+.popup-controls {
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 0.75rem;
+  border: 1px solid #e9ecef;
+}
+
+.controls-title {
+  margin: 0 0 1rem 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #0b1f33;
+}
+
+.controls-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+// ============================================
+// ДЕМО-КОНТЕЙНЕР (600x600)
+// ============================================
+
+.popup-demo-container {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  border: 2px dashed #dee2e6;
+  border-radius: 0.75rem;
+  background: linear-gradient(90deg, #f8f9fa 1px, transparent 1px),
+    linear-gradient(180deg, #f8f9fa 1px, transparent 1px);
+  background-size: 50px 50px;
+  overflow: hidden;
+
+  // КРИТИЧЕСКИ ВАЖНО для изоляции позиционирования
+  isolation: isolate;
+  contain: layout style paint;
+}
+
+.demo-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 0;
+}
+
+.demo-info {
+  text-align: center;
+  color: #6c757d;
+
+  i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.3;
+  }
+
+  p {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .demo-position,
+  .demo-life {
+    display: block;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+
+    strong {
+      color: #495057;
+      font-weight: 600;
+    }
+  }
+}
+
+// ============================================
+// TOAST WRAPPER - УСИЛЕННОЕ ПОЗИЦИОНИРОВАНИЕ
+// ============================================
+
+.p-toast-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+
+  .p-toast {
+    --p-toast-border-radius: 0.75rem;
+    --p-toast-content-padding: 1rem;
+    --p-toast-content-gap: 0.75rem;
+    --p-toast-icon-size: 1.5rem;
+    --p-toast-title-font-size: 1rem;
+    --p-toast-title-font-weight: 600;
+    --p-toast-detail-font-size: 0.875rem;
+    --p-toast-detail-font-weight: 400;
+    --p-toast-shadow: 0 0.25rem 1rem rgba(11, 31, 51, 0.15);
+
+    font-family: var(
+      --global-main-font,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif
+    );
+    max-width: 25rem;
+  }
+// ============================================
+// БАЗОВЫЕ СТИЛИ TOAST
+// ============================================
+
+:host ::ng-deep {
+  // Переопределяем ВЕСЬ контейнер toast
+  .p-toast-wrapper .p-toast {
+    position: absolute !important;
+    pointer-events: all;
+    width: auto !important;
+    margin: 0 !important;
+    inset: auto !important; // Сбрасываем все top/right/bottom/left
+  }
+
+
+
+  .p-toast-message {
+    border-radius: var(--p-toast-border-radius);
+    box-shadow: var(--p-toast-shadow);
+    margin: 0 0 1rem 0;
+    backdrop-filter: blur(8px);
+  }
+
+  // ============================================
+  // ЦВЕТОВЫЕ СХЕМЫ
+  // ============================================
+
+  .p-toast-message-success {
+    background: rgba(76, 175, 80, 0.95);
+    border-left: 4px solid #4caf50;
+    color: #fff;
+
+    .p-toast-message-icon,
+    .p-toast-icon-close-icon {
+      color: #fff;
+    }
+  }
+
+  .p-toast-message-info {
+    background: rgba(33, 150, 243, 0.95);
+    border-left: 4px solid #2196f3;
+    color: #fff;
+
+    .p-toast-message-icon,
+    .p-toast-icon-close-icon {
+      color: #fff;
+    }
+  }
+
+  .p-toast-message-warn {
+    background: rgba(255, 152, 0, 0.95);
+    border-left: 4px solid #ff9800;
+    color: #fff;
+
+    .p-toast-message-icon,
+    .p-toast-icon-close-icon {
+      color: #fff;
+    }
+  }
+
+  .p-toast-message-error {
+    background: rgba(244, 67, 54, 0.95);
+    border-left: 4px solid #f44336;
+    color: #fff;
+
+    .p-toast-message-icon,
+    .p-toast-icon-close-icon {
+      color: #fff;
+    }
+  }
+
+  // ============================================
+  // КНОПКА ЗАКРЫТИЯ
+  // ============================================
+
+  .p-toast-icon-close {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    &:active,
+    &:focus-visible {
+      background: rgba(255, 255, 255, 0.3);
+      outline: none;
+    }
+  }
+
+  .p-toast-icon-close-icon {
+    font-size: 1rem;
+  }
+
+  // ============================================
+  // КОНТЕНТ
+  // ============================================
+
+  .p-toast-message-content {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--p-toast-content-gap);
+    padding: var(--p-toast-content-padding);
+  }
+
+  .p-toast-message-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .p-toast-summary {
+    font-size: var(--p-toast-title-font-size);
+    font-weight: var(--p-toast-title-font-weight);
+    line-height: 1.5;
+  }
+
+  .p-toast-detail {
+    font-size: var(--p-toast-detail-font-size);
+    font-weight: var(--p-toast-detail-font-weight);
+    line-height: 1.4;
+    opacity: 0.9;
+  }
+
+  // ============================================
+  // ПОЗИЦИИ ВНУТРИ КОНТЕЙНЕРА - МАКСИМАЛЬНЫЙ ПРИОРИТЕТ
+  // ============================================
+
+  .p-toast-wrapper {
+    // Top positions
+    .p-toast.p-toast-top-right {
+      top: 1.25rem !important;
+      right: 1.25rem !important;
+      bottom: auto !important;
+      left: auto !important;
+      transform: none !important;
+    }
+
+    .p-toast.p-toast-top-left {
+      top: 1.25rem !important;
+      left: 1.25rem !important;
+      bottom: auto !important;
+      right: auto !important;
+      transform: none !important;
+    }
+
+    .p-toast.p-toast-top-center {
+      top: 1.25rem !important;
+      left: 50% !important;
+      bottom: auto !important;
+      right: auto !important;
+      transform: translateX(-50%) !important;
+    }
+
+    // Bottom positions
+    .p-toast.p-toast-bottom-right {
+      bottom: 1.25rem !important;
+      right: 1.25rem !important;
+      top: auto !important;
+      left: auto !important;
+      transform: none !important;
+    }
+
+    .p-toast.p-toast-bottom-left {
+      bottom: 1.25rem !important;
+      left: 1.25rem !important;
+      top: auto !important;
+      right: auto !important;
+      transform: none !important;
+    }
+
+    .p-toast.p-toast-bottom-center {
+      bottom: 1.25rem !important;
+      left: 50% !important;
+      top: auto !important;
+      right: auto !important;
+      transform: translateX(-50%) !important;
+    }
+
+    // Center position
+    .p-toast.p-toast-center {
+      top: 50% !important;
+      left: 50% !important;
+      bottom: auto !important;
+      right: auto !important;
+      transform: translate(-50%, -50%) !important;
+    }
+  }
+
+  // ============================================
+  // АНИМАЦИИ
+  // ============================================
+
+  .p-toast-message-enter-from {
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+
+  .p-toast-message-enter-active {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .p-toast-message-leave-from {
+    max-height: 10rem;
+  }
+
+  .p-toast-message-leave-active {
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 1, 1);
+  }
+
+  .p-toast-message-leave-to {
+    max-height: 0;
+    opacity: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}

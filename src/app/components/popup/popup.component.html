@@ -1,0 +1,64 @@
+<!-- Панель управления -->
+<div class="popup-controls">
+  <h3 class="controls-title">Управление уведомлениями</h3>
+
+  <div class="controls-buttons">
+    <p-button
+      label="Success"
+      icon="pi pi-check"
+      severity="success"
+      (onClick)="showSuccess()"
+    ></p-button>
+
+    <p-button
+      label="Info"
+      icon="pi pi-info-circle"
+      severity="info"
+      (onClick)="showInfo()"
+    ></p-button>
+
+    <p-button
+      label="Warning"
+      icon="pi pi-exclamation-triangle"
+      severity="warn"
+      (onClick)="showWarn()"
+    ></p-button>
+
+    <p-button
+      label="Error"
+      icon="pi pi-times-circle"
+      severity="danger"
+      (onClick)="showError()"
+    ></p-button>
+
+    <p-button
+      label="Очистить все"
+      icon="pi pi-trash"
+      severity="secondary"
+      outlined="true"
+      (onClick)="clear()"
+    ></p-button>
+  </div>
+</div>
+
+<!-- Контейнер для демонстрации позиционирования -->
+<div class="popup-demo-container">
+  <div class="demo-placeholder">
+    <div class="demo-info">
+      <i class="pi pi-map-marker"></i>
+      <p>Область для отображения уведомлений</p>
+      <span class="demo-position"
+        >Позиция: <strong>{{ position }}</strong></span
+      >
+      <span class="demo-life"
+        >Время жизни:
+        <strong>{{ life === 0 ? "бесконечно" : life + " мс" }}</strong></span
+      >
+    </div>
+  </div>
+
+  <!-- Toast компонент БЕЗ атрибута life (он игнорируется) -->
+  <div class="p-toast-wrapper">
+    <p-toast [key]="key" [position]="position"></p-toast>
+  </div>
+</div>
