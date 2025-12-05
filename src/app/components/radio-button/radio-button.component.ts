@@ -1,5 +1,5 @@
 // radio-button.component.ts
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RadioButtonModule } from 'primeng/radiobutton';
@@ -10,6 +10,7 @@ export type RadioButtonState =
   | 'disabled'
   | 'disabled-checked'
   | 'hover'
+  | 'hover-checked' // ← Добавили
   | 'focus';
 
 @Component({
@@ -18,6 +19,7 @@ export type RadioButtonState =
   imports: [CommonModule, FormsModule, RadioButtonModule],
   templateUrl: './radio-button.component.html',
   styleUrls: ['./radio-button.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class RadioButtonComponent {
   @Input() label: string = 'Radio option';
@@ -25,7 +27,7 @@ export class RadioButtonComponent {
   @Input() name: string = 'radioGroup';
   @Input() disabled: boolean = false;
   @Input() selectedValue: string = '';
-  @Input() state: RadioButtonState = 'default'; // ← Добавили
+  @Input() state: RadioButtonState = 'default';
 
   @Output() selectedValueChange = new EventEmitter<string>();
 
@@ -33,15 +35,19 @@ export class RadioButtonComponent {
     this.selectedValueChange.emit(newValue);
   }
 
-  // Вычисляемые свойства для состояний
-  get isChecked(): boolean {
-    return (
+  // Для демонстрации: если state установлен в checked/disabled-checked/hover-checked, показываем checked
+  get effectiveSelectedValue(): string {
+    if (
       this.state === 'checked' ||
       this.state === 'disabled-checked' ||
-      this.selectedValue === this.value
-    );
+      this.state === 'hover-checked'
+    ) {
+      return this.value;
+    }
+    return this.selectedValue;
   }
 
+  // Вычисляемые свойства для состояний
   get isDisabled(): boolean {
     return (
       this.state === 'disabled' ||
@@ -52,6 +58,7 @@ export class RadioButtonComponent {
 
   get stateClass(): string {
     if (this.state === 'hover') return 'forced-hover';
+    if (this.state === 'hover-checked') return 'forced-hover-checked'; // ← Добавили
     if (this.state === 'focus') return 'forced-focus';
     return '';
   }

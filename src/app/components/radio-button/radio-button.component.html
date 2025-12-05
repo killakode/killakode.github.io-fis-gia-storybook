@@ -3,10 +3,11 @@
   <p-radiobutton
     [name]="name"
     [value]="value"
-    [(ngModel)]="selectedValue"
+    [ngModel]="effectiveSelectedValue"
     (ngModelChange)="onValueChange($event)"
     [disabled]="isDisabled"
-    [inputId]="value">
+    [inputId]="value"
+  >
   </p-radiobutton>
   <label [for]="value" class="p-radio-label">{{ label }}</label>
 </div>

@@ -44,10 +44,27 @@
   display: flex;
   align-items: center;
 
-  // Forced hover state
+  // Forced hover state (unchecked)
   &.forced-hover .p-radiobutton-box {
     --p-radiobutton-background: var(--global-light-gray-4-color) !important;
     --p-radiobutton-border-color: var(--global-blue-3-color) !important;
+  }
+
+  // Forced hover state (checked) ← Новое
+  &.forced-hover-checked .p-radiobutton-box {
+    --p-radiobutton-checked-background: var(--global-white-color) !important;
+    --p-radiobutton-checked-hover-background: var(
+      --global-white-color
+    ) !important;
+    --p-radiobutton-background: var(--global-light-gray-4-color) !important;
+    --p-radiobutton-checked-hover-border-color: var(
+      --global-blue-3-color
+    ) !important;
+    --p-radiobutton-border-color: var(--global-blue-3-color) !important;
+    --p-radiobutton-icon-checked-hover-color: var(
+      --global-blue-3-color
+    ) !important;
+    --p-radiobutton-icon-checked-color: var(--global-blue-3-color) !important;
   }
 
   // Forced focus state
