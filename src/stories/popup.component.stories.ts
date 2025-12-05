@@ -4,7 +4,7 @@ import { PopupComponent } from '../app/components/popup/popup.component';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 const meta: Meta<PopupComponent> = {
-  title: 'Components/Popup (Toast)',
+  title: 'Components/Popup (p-toast)',
   component: PopupComponent,
   tags: ['autodocs'],
   decorators: [
@@ -16,7 +16,7 @@ const meta: Meta<PopupComponent> = {
     docs: {
       description: {
         component: `
-# Popup (Toast) — Всплывающие уведомления
+
 
 Компонент для отображения временных уведомлений пользователю.
 
