@@ -9,6 +9,8 @@ import {
   ElementRef,
   AfterViewInit,
   OnDestroy,
+  OnChanges,
+  SimpleChanges,
   ChangeDetectorRef,
   Inject,
 } from '@angular/core';
@@ -28,10 +30,10 @@ export interface SelectOption {
   standalone: true,
   imports: [CommonModule, FormsModule, SelectModule, TooltipModule],
   templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss'],
+  styleUrls: ['./select.component.scss', '../../styles/input.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class SelectComponent implements AfterViewInit, OnDestroy {
+export class SelectComponent implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('selectElement', { read: ElementRef }) selectElement!: ElementRef;
 
   @Input() options: SelectOption[] = [];
@@ -64,6 +66,14 @@ export class SelectComponent implements AfterViewInit, OnDestroy {
     this.setupWindowListeners();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    // Проверяем переполнение при изменении value или options
+    if (changes['value'] || changes['options']) {
+      // Используем setTimeout для ожидания рендера
+      setTimeout(() => this.checkOverflow(), 0);
+    }
+  }
+
   ngOnDestroy() {
     this.resizeObserver?.disconnect();
     this.removeWindowListeners();
@@ -77,13 +87,14 @@ export class SelectComponent implements AfterViewInit, OnDestroy {
       if (this.overlayElement) {
         this.updateOverlayWidth();
       }
+      // Также проверяем переполнение при изменении размера
+      this.checkOverflow();
     });
 
     this.resizeObserver.observe(selectElement);
   }
 
   private setupWindowListeners() {
-    // Отслеживаем скролл и ресайз окна для обновления позиции
     this.scrollListener = () => {
       if (this.overlayElement) {
         this.updateOverlayPosition();
@@ -116,7 +127,6 @@ export class SelectComponent implements AfterViewInit, OnDestroy {
 
     const width = selectElement.offsetWidth;
 
-    // Устанавливаем ТОЛЬКО ширину
     this.overlayElement.style.width = `${width}px`;
     this.overlayElement.style.minWidth = `${width}px`;
     this.overlayElement.style.maxWidth = `${width}px`;
@@ -126,7 +136,6 @@ export class SelectComponent implements AfterViewInit, OnDestroy {
     const selectElement = this.selectElement?.nativeElement;
     if (!selectElement || !this.overlayElement) return;
 
-    // Полностью сбрасываем позиционирование PrimeNG
     this.overlayElement.style.transform = 'none !important';
     this.overlayElement.style.inset = 'unset';
 
@@ -136,31 +145,24 @@ export class SelectComponent implements AfterViewInit, OnDestroy {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
 
-    // Высота overlay
     const overlayHeight =
       overlayRect.height || this.overlayElement.offsetHeight;
 
-    // Доступное пространство
     const spaceBelow = windowHeight - rect.bottom;
     const spaceAbove = rect.top;
 
-    // Отступ
     const gap = 3;
 
     let top: number;
 
-    // Логика позиционирования
     if (spaceBelow >= overlayHeight || spaceBelow >= spaceAbove) {
-      // Вниз
       top = rect.bottom + scrollTop + gap;
     } else {
-      // Вверх
       top = rect.top + scrollTop - overlayHeight - gap;
     }
 
     const left = rect.left + scrollLeft;
 
-    // Применяем стили с высоким приоритетом
     Object.assign(this.overlayElement.style, {
       position: 'absolute',
       top: `${top}px`,
@@ -184,10 +186,8 @@ export class SelectComponent implements AfterViewInit, OnDestroy {
       if (overlays.length > 0) {
         this.overlayElement = overlays[overlays.length - 1] as HTMLElement;
 
-        // Добавляем класс для нашего кастомного позиционирования
         this.overlayElement.classList.add('custom-positioned');
 
-        // Многократное применение позиции для перебивания PrimeNG
         const applyPosition = () => {
           this.updateOverlayWidth();
           this.updateOverlayPosition();
@@ -209,7 +209,6 @@ export class SelectComponent implements AfterViewInit, OnDestroy {
   }
 
   onHide() {
-    // Очищаем observer если он был создан
     if (this.overlayElement && (this.overlayElement as any).__resizeObserver) {
       (this.overlayElement as any).__resizeObserver.disconnect();
       delete (this.overlayElement as any).__resizeObserver;

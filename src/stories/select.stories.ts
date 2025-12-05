@@ -58,7 +58,8 @@ const defaultOptions: SelectOption[] = [
   { label: 'Вариант 2', value: 2 },
   { label: 'Вариант 3', value: 3 },
   {
-    label: 'Очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень длинный текст опции, который должен переноситься на несколько строк и корректно отображаться в выпадающем списке',
+    label:
+      'Очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень длинный текст опции, который должен переноситься на несколько строк и корректно отображаться в выпадающем списке',
     value: 4,
   },
   { label: 'Вариант 5', value: 5, disabled: true },
@@ -84,15 +85,16 @@ export const Playground: Story = {
 };
 
 // ========================================
-// ALL STATES - Все состояния
+// STATES - Все состояния
 // ========================================
-export const AllStates: Story = {
+export const States: Story = {
   render: () => ({
     props: {
       defaultOptions,
+      manyOptions,
     },
     template: `
-      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+      <div style="display: flex; flex-direction: column; gap: 2rem;">
         <div>
           <h3>Default</h3>
           <app-select [options]="defaultOptions" placeholder="Выберите значение" />
@@ -114,13 +116,18 @@ export const AllStates: Story = {
         </div>
 
         <div>
+          <h3>Disabled with Value</h3>
+          <app-select [options]="defaultOptions" placeholder="Выберите значение" [disabled]="true" [value]="1" />
+        </div>
+
+        <div>
           <h3>With Clear Button</h3>
           <app-select [options]="defaultOptions" placeholder="Выберите значение" [showClear]="true" [value]="1" />
         </div>
 
         <div>
           <h3>With Filter</h3>
-          <app-select [options]="defaultOptions" placeholder="Выберите значение" [filter]="true" />
+          <app-select [options]="manyOptions" placeholder="Выберите значение" [filter]="true" />
         </div>
       </div>
     `,
@@ -129,96 +136,7 @@ export const AllStates: Story = {
     docs: {
       description: {
         story:
-          'Демонстрация всех состояний: default, with value, invalid, disabled, with clear, with filter',
-      },
-    },
-  },
-};
-
-// ========================================
-// BASIC VARIANTS - Базовые варианты
-// ========================================
-export const Default: Story = {
-  args: {
-    options: defaultOptions,
-    placeholder: 'Выберите значение',
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Стандартный выпадающий список',
-      },
-    },
-  },
-};
-
-export const WithValue: Story = {
-  args: {
-    options: defaultOptions,
-    placeholder: 'Выберите значение',
-    value: 2,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Выпадающий список с предвыбранным значением',
-      },
-    },
-  },
-};
-
-export const LongText: Story = {
-  args: {
-    options: [
-      { label: 'Короткий текст', value: 1 },
-      {
-        label:
-          'Очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень длинный текст опции, который должен переноситься на несколько строк и корректно отображаться в выпадающем списке',
-        value: 2,
-      },
-      { label: 'Обычная опция', value: 3 },
-    ],
-    placeholder: 'Выберите значение',
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'Список с длинными текстами, которые переносятся на несколько строк',
-      },
-    },
-  },
-};
-
-// ========================================
-// STATES - Состояния
-// ========================================
-export const Disabled: Story = {
-  args: {
-    options: defaultOptions,
-    placeholder: 'Выберите значение',
-    disabled: true,
-    value: 1,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Отключенное состояние списка',
-      },
-    },
-  },
-};
-
-export const Invalid: Story = {
-  args: {
-    options: defaultOptions,
-    placeholder: 'Выберите значение',
-    invalid: true,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Состояние ошибки валидации (красная рамка)',
+          'Демонстрация всех состояний: default, with value, invalid, disabled, with clear, with filter, long text',
       },
     },
   },
@@ -252,27 +170,32 @@ export const WithFilter: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Список с поиском/фильтрацией опций',
+        story: 'Список с поиском/фильтрацией опций (50 элементов)',
       },
     },
   },
 };
 
-export const ManyOptions: Story = {
+export const LongText: Story = {
   args: {
-    options: manyOptions,
+    options: [
+      { label: 'Короткий текст', value: 1 },
+      {
+        label:
+          'Очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень длинный текст опции, который должен переноситься на несколько строк и корректно отображаться в выпадающем списке',
+        value: 2,
+      },
+      { label: 'Обычная опция', value: 3 },
+    ],
     placeholder: 'Выберите значение',
-    filter: true,
-    showClear: true,
+    value: 2,
   },
   parameters: {
     docs: {
       description: {
         story:
-          'Список с большим количеством опций, поиском и кастомным скроллбаром',
+          'Список с длинными текстами, которые переносятся на несколько строк',
       },
     },
   },
 };
-
-

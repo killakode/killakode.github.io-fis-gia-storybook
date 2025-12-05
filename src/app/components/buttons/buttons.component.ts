@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding } from '@angular/core';
+import { Component, Input, HostBinding,ViewEncapsulation } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 
@@ -12,7 +12,8 @@ type ButtonState = 'default' | 'hover' | 'active' | 'focus' | 'focus-active';
   standalone: true,
   imports: [CommonModule, ButtonModule],
   templateUrl: './buttons.component.html',
-  styleUrl: './buttons.component.scss'
+  styleUrl: './buttons.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class ButtonComponent {
   @Input() label = 'Button';
