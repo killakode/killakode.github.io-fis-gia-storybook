@@ -1,3 +1,6 @@
+@import '../styles/select';
+
+
 :root,
 .p-table,
 p-table {
@@ -8,7 +11,9 @@ p-table {
   --p-toolbar-gap: 0;
   --p-datatable-row-selected-background: inherit;
   --p-datatable-row-selected-color: inherit;
-  --p-datatable-body-cell-selected-border-color: var(--p-datatable-body-cell-border-color);
+  --p-datatable-body-cell-selected-border-color: var(
+    --p-datatable-body-cell-border-color
+  );
   --p-datatable-header-cell-focus-ring-color: var(--global-blue-color);
   --p-datatable-body-cell-border-color: var(--global-light-gray-2-color);
 
@@ -17,14 +22,24 @@ p-table {
   --p-treetable-header-cell-padding: 0.5rem;
   --p-treetable-row-selected-background: inherit;
   --p-treetable-row-selected-color: inherit;
-  --p-treetable-body-cell-selected-border-color: var(--p-datatable-body-cell-border-color);
-  --p-treetable-body-cell-border-color: var(--p-datatable-body-cell-border-color);
+  --p-treetable-body-cell-selected-border-color: var(
+    --p-datatable-body-cell-border-color
+  );
+  --p-treetable-body-cell-border-color: var(
+    --p-datatable-body-cell-border-color
+  );
 
-  --p-treetable-node-toggle-button-hover-background: var(--p-content-hover-background);
-  --p-treetable-node-toggle-button-selected-hover-background: var(--p-content-background);
+  --p-treetable-node-toggle-button-hover-background: var(
+    --p-content-hover-background
+  );
+  --p-treetable-node-toggle-button-selected-hover-background: var(
+    --p-content-background
+  );
   --p-treetable-node-toggle-button-color: var(--global-blue-color);
   --p-treetable-node-toggle-button-hover-color: var(--global-blue-3-color);
-  --p-treetable-node-toggle-button-selected-hover-color: var(--global-blue-3-color);
+  --p-treetable-node-toggle-button-selected-hover-color: var(
+    --global-blue-3-color
+  );
   --p-treetable-node-toggle-button-size: 1.5rem;
   --p-treetable-node-toggle-button-border-radius: 0.5rem;
 }
@@ -128,9 +143,7 @@ p-table {
       }
     }
 
-
     & > .column-th > th {
-
       --p-datatable-header-cell-padding: 0.25rem 0.5rem;
       --p-treetable-header-cell-padding: 0.25rem 0.5rem;
     }
@@ -145,7 +158,8 @@ p-table {
       border-radius: 0 0.25rem 0 0;
       overflow: hidden;
     }
-    & > tr > th.p-datatable-column-sorted, & > tr > th.p-treetable-column-sorted {
+    & > tr > th.p-datatable-column-sorted,
+    & > tr > th.p-treetable-column-sorted {
       background-color: #e5eaf5;
       color: #0b1f33;
     }
@@ -275,7 +289,8 @@ p-table {
   }
 }
 
-p-sorticon, p-treeTableSortIcon {
+p-sorticon,
+p-treeTableSortIcon {
   height: fit-content;
   width: fit-content;
   display: inline-block;
@@ -290,7 +305,7 @@ p-sorticon, p-treeTableSortIcon {
     vertical-align: middle;
     line-height: 24px;
     &::before {
-      font-family: 'icomoon' !important;
+      font-family: "icomoon" !important;
       font-size: 25px;
       content: $icon-menu;
       color: #0b1f33;
@@ -301,7 +316,7 @@ p-sorticon, p-treeTableSortIcon {
     vertical-align: middle;
     line-height: 24px;
     &::before {
-      font-family: 'icomoon' !important;
+      font-family: "icomoon" !important;
       font-size: 25px;
       content: $icon-menu;
       color: #0d4cd3;
@@ -313,7 +328,7 @@ p-sorticon, p-treeTableSortIcon {
     vertical-align: middle;
     line-height: 24px;
     &::before {
-      font-family: 'icomoon' !important;
+      font-family: "icomoon" !important;
       font-size: 25px;
       content: $icon-menu;
       color: #0d4cd3;
@@ -343,7 +358,7 @@ p-columnFilter,
   & > div:has(p-columnfilterformelement > p-multiselect) {
     position: relative;
     &::before {
-      font-family: 'icomoon' !important;
+      font-family: "icomoon" !important;
       font-size: 24px;
       content: $icon-search;
       color: #0d4cd3;
@@ -367,7 +382,7 @@ p-columnFilter,
     position: absolute;
     right: 16px;
     z-index: 99;
-    font-family: 'icomoon' !important;
+    font-family: "icomoon" !important;
     font-size: 24px;
     pointer-events: none;
   }
@@ -400,7 +415,7 @@ p-columnFilter,
           display: none;
         }
         &::before {
-          font-family: 'icomoon' !important;
+          font-family: "icomoon" !important;
           font-size: 24px;
           content: $icon-remove-filter;
           color: #0d4cd3;
@@ -421,7 +436,9 @@ p-columnFilter,
     height: 2.25rem !important;
   }
 }
-.p-datatable.p-datatable-gridlines:has(.p-datatable-thead):has(.p-datatable-tbody)
+.p-datatable.p-datatable-gridlines:has(.p-datatable-thead):has(
+    .p-datatable-tbody
+  )
   .p-datatable-tbody
   > tr
   > td:last-child {
@@ -472,7 +489,6 @@ p-columnFilter,
     line-height: 24px;
 
     .small-table & {
-
       font-size: 14px;
       line-height: 24px;
       --p-treetable-body-cell-padding: 0.375rem 0.5rem;
@@ -760,7 +776,7 @@ p-toolbar.transparent + p-fluid .p-datatable {
   // height: calc(100% - 96px) !important;
   height: calc(100% - 2rem) !important;
   top: 1rem !important;
-  cursor: url('../assets/images/svg/unfold-horizontal.cur') 12 12, col-resize;
+  // cursor: url('../assets/images/svg/unfold-horizontal.cur') 12 12, col-resize;
 
   // top: 0 !important;
   // height: 100% !important;
@@ -794,7 +810,7 @@ p-toolbar.transparent + p-fluid .p-datatable {
   }
 }
 .p-datatable-column-resizer {
-  cursor: url('../assets/images/svg/unfold-horizontal.cur') 12 12, col-resize;
+  // cursor: url('../assets/images/svg/unfold-horizontal.cur') 12 12, col-resize;
 }
 
 .p-fieldset:has(.audiences-table-custom) {
@@ -898,7 +914,7 @@ p-toolbar.transparent + p-fluid .p-datatable {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'icomoon';
+    font-family: "icomoon";
     content: $icon-check;
     width: 0.875rem;
     height: 0.875rem;
@@ -980,7 +996,9 @@ p-toolbar.transparent + p-fluid .p-datatable {
       padding: 0;
 
       &:hover {
-        --p-button-primary-hover-background: var(--global-light-gray-color-header);
+        --p-button-primary-hover-background: var(
+          --global-light-gray-color-header
+        );
         border-color: var(--global-blue-3-color);
 
         .p-button-icon::before {
@@ -990,7 +1008,9 @@ p-toolbar.transparent + p-fluid .p-datatable {
       &:active,
       &:focus-visible {
         --p-button-primary-background: var(--global-light-gray-color-header);
-        --p-button-primary-active-background: var(--global-light-gray-color-header);
+        --p-button-primary-active-background: var(
+          --global-light-gray-color-header
+        );
         border-color: var(--global-blue-2-color);
         outline: none;
 
@@ -1076,7 +1096,7 @@ p-toolbar.transparent + p-fluid .p-datatable {
   --p-datatable-row-color: var(--global-dark-blue-color);
   --p-datatable-footer-cell-color: var(--global-dark-blue-color);
 
-  font-family: 'Lato';
+  font-family: "Lato";
   font-size: 1rem;
   line-height: 1.5rem;
   font-weight: var(--global-main-font-weight);
@@ -1242,7 +1262,7 @@ p-toolbar.transparent + p-fluid .p-datatable {
     &::before {
       content: $icon-sort;
       color: #0b1f33;
-      font-family: '#{$icomoon-font-family}' !important;
+      font-family: "#{$icomoon-font-family}" !important;
       font-style: normal;
       font-weight: normal;
       font-variant: normal;
@@ -1269,17 +1289,16 @@ th:not(.p-datatable-column-sorted) {
   }
 }
 th:not(.p-treetable-column-sorted) {
-  p-treeTableSortIcon{
+  p-treeTableSortIcon {
     display: none;
   }
 }
 
-
-
 .p-datatable {
   @supports (scrollbar-color: gray white) and (-moz-appearance: none) {
     .p-datatable-table-container {
-      scrollbar-color: var(--global-light-gray-3-color) var(--global-white-color);
+      scrollbar-color: var(--global-light-gray-3-color)
+        var(--global-white-color);
       scrollbar-width: auto;
     }
   }
@@ -1346,7 +1365,7 @@ p-tree-table {
 }
 
 .icons-container {
- padding: 0.5rem;
+  padding: 0.5rem;
 }
 
 .p-datatable-tbody > tr > td:has(.custom-button) {
@@ -1354,7 +1373,6 @@ p-tree-table {
 }
 
 p-columnfilter {
-
   .pcColumnfilterClearButton {
     position: absolute;
     right: 12px;
@@ -1365,7 +1383,7 @@ p-columnfilter {
     transform: translateY(-50%);
 
     &::before {
-      font-family: 'icomoon' !important;
+      font-family: "icomoon" !important;
       font-size: 24px;
       content: $icon-close;
       color: var(--global-blue-color);
@@ -1384,21 +1402,127 @@ p-columnfilter {
       }
     }
     &:active {
-      background-color: transparent!important;
-      border-color: transparent!important;
-      color: var(--global-blue-2-color)!important;
+      background-color: transparent !important;
+      border-color: transparent !important;
+      color: var(--global-blue-2-color) !important;
       &:before {
-        color: var(--global-blue-2-color)!important;
+        color: var(--global-blue-2-color) !important;
       }
     }
   }
 
-  &:has(.pcColumnfilterClearButton) > div:has(.p-inputtext):not(:has(p-datepicker))::before {
+  &:has(.pcColumnfilterClearButton)
+    > div:has(.p-inputtext):not(:has(p-datepicker))::before {
     display: none;
   }
 
   p-button:has(.pcColumnfilterClearButton) {
     position: absolute;
     right: 0;
+  }
+}
+
+:root,
+.p-paginator,
+p-paginator {
+  --p-paginator-padding: 0.5rem 1rem 1.5rem;
+  --p-paginator-gap: 0.5rem;
+  --p-paginator-border-radius: var(--p-content-border-radius);
+  --p-paginator-background: var(--p-content-background);
+  --p-paginator-color: var(--p-content-color);
+  --p-paginator-transition-duration: var(--p-transition-duration);
+
+  --p-paginator-nav-button-background: transparent;
+  --p-paginator-nav-button-hover-background: var(--global-lighter-gray);
+  --p-paginator-nav-button-selected-background: var(--global-blue-3-color);
+  --p-paginator-nav-button-color: var(--global-blue-color);
+  --p-paginator-nav-button-hover-color: var(--global-blue-color);
+  --p-paginator-nav-button-selected-color: var(--global-white-color);
+
+  --p-paginator-nav-button-border-radius: 0.5rem;
+  --p-paginator-nav-button-width: 2rem;
+  --p-paginator-nav-button-height: 2rem;
+  --p-paginator-border-radius: 0 0 0.75rem 0.75rem;
+}
+
+.p-paginator-page,
+.p-paginator-next,
+.p-paginator-last,
+.p-paginator-first,
+.p-paginator-prev {
+  font-size: 0.875rem;
+
+  .icon {
+    font-size: 0.563rem;
+    line-height: 0.563rem;
+    display: block;
+    &:before {
+      color: var(--p-paginator-nav-button-color);
+    }
+  }
+}
+
+.p-paginator-last,
+.p-paginator-first {
+  font-size: 2rem;
+
+  .icon {
+    font-size: 2rem;
+    line-height: 2rem;
+    display: block;
+    &:before {
+      color: var(--p-paginator-nav-button-color);
+    }
+  }
+}
+
+.p-ripple.p-disabled {
+  opacity: 1;
+
+  .icon {
+    &:before {
+      color: var(--global-light-gray-3-color);
+    }
+  }
+}
+
+.p-paginator,
+p-paginator {
+  color: var(--global-dark-blue-color);
+  > * {
+    order: 2;
+  }
+
+  .p-paginator-content-start {
+    order: 0;
+    margin: 0 10px 0 0;
+  }
+  .p-paginator-content-end {
+    order: 1;
+    font-size: 0.875rem;
+    margin-right: 0.625rem;
+  }
+  .p-paginator-current {
+    font-size: 0.875rem;
+    margin-right: 0.625rem;
+
+    --p-paginator-current-page-report-color: var(--global-dark-blue-color);
+  }
+  .p-select {
+    order: 1;
+    margin-right: auto;
+    flex: none;
+    &.p-select-open .p-select-dropdown {
+      transform: rotate(180deg);
+      transition: transform 0.3s;
+      //  z-index: calc(var(--gia-paginator-z-index) + 1);
+      z-index: 3000;
+    }
+    &.p-select-open .p-select-dropdown-icon {
+      transform: rotate(0deg);
+    }
+    .p-select-dropdown {
+      transition: transform 0.3s;
+    }
   }
 }
