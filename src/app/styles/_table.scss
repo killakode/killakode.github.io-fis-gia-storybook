@@ -182,6 +182,7 @@ p-table {
 
   .p-datatable-tbody > tr > td {
     border-width: 1px;
+    font-family: var(--global-main-font);
   }
 
   &:has(.p-datatable-thead),

@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import "../src/app/fonts/Lato/Lato.css";
 @import "../node_modules/primeicons/primeicons.css";
 @import "../src/app/fonts/icomoon/icomoon-icons-font.scss";
 @import "../src/app/fonts/icomoon/variables.scss";
@@ -13,3 +13,10 @@
 @import "../src/app/styles/radio-buttons";
 @import "../src/app/styles/table";
 
+html {
+  font-family: var(--global-main-font), sans-serif !important;
+}
+
+* {
+  box-sizing: border-box;
+}
