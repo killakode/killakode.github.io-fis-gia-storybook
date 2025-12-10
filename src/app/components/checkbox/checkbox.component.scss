@@ -12,29 +12,40 @@
     color: var(--global-text-color, #1d2129);
   }
 
-  // Состояния для демонстрации в Storybook
+  // ========================================
+  // UNCHECKED STATES
+  // ========================================
+
+  // Hover (unchecked)
   &.state-hover {
     .p-checkbox:not(.p-disabled):not(.p-checkbox-checked) .p-checkbox-box {
       background: var(--global-light-gray-4-color) !important;
-    }
-
-    .p-checkbox-checked:not(.p-disabled) .p-checkbox-box {
-      background: var(--global-white-color) !important;
-      border-color: var(--global-blue-3-color) !important;
-
-      .p-checkbox-icon,
-      .p-iconwrapper {
-        background-color: var(--global-blue-3-color) !important;
-      }
+      border-color: var(--p-checkbox-border-color) !important;
     }
   }
 
+  // Focus (unchecked)
   &.state-focus {
     .p-checkbox:not(.p-disabled):not(.p-checkbox-checked) .p-checkbox-box {
       background: var(--global-light-gray-4-color) !important;
       border-color: var(--global-blue-3-color) !important;
     }
+  }
 
+  // Active (unchecked) - клик/нажатие
+  &.state-active {
+    .p-checkbox:not(.p-disabled):not(.p-checkbox-checked) .p-checkbox-box {
+      background: var(--global-light-gray-4-color) !important;
+      border-color: var(--global-blue-color) !important;
+    }
+  }
+
+  // ========================================
+  // CHECKED STATES
+  // ========================================
+
+  // Hover (checked)
+  &.state-hover-checked {
     .p-checkbox-checked:not(.p-disabled) .p-checkbox-box {
       background: var(--global-white-color) !important;
       border-color: var(--global-blue-3-color) !important;
@@ -42,21 +53,35 @@
       .p-checkbox-icon,
       .p-iconwrapper {
         background-color: var(--global-blue-3-color) !important;
+
+        &:before {
+          color: var(--global-white-color) !important;
+        }
       }
     }
   }
 
-  &.state-active {
+  // Active (checked) - клик/нажатие на отмеченном чекбоксе
+  &.state-active-checked {
     .p-checkbox-checked:not(.p-disabled) .p-checkbox-box {
+      background: var(--global-white-color) !important;
       border-color: var(--global-blue-color) !important;
 
       .p-checkbox-icon,
       .p-iconwrapper {
         background-color: var(--global-blue-color) !important;
+
+        &:before {
+          color: var(--global-white-color) !important;
+        }
       }
     }
   }
 }
+
+// ========================================
+// DISABLED & READONLY LABELS
+// ========================================
 
 // Disabled label
 .checkbox-wrapper:has(.p-checkbox.p-disabled) .checkbox-label {
@@ -70,15 +95,5 @@
 
   .checkbox-label {
     color: var(--global-gray-4-color, #86909c);
-  }
-}
-
-// Indeterminate state
-:deep(.p-checkbox[data-indeterminate="true"]) {
-  .p-checkbox-box {
-    .p-iconwrapper::before {
-      content: "−";
-      font-family: Arial, sans-serif;
-    }
   }
 }

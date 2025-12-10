@@ -73,6 +73,17 @@ export class CheckboxComponent implements ControlValueAccessor {
   }
 
   getStateClass(): string {
-    return this.state ? `state-${this.state}` : '';
+    if (!this.state) return '';
+
+    const stateMap: Record<string, string> = {
+      default: '',
+      hover: 'state-hover',
+      focus: 'state-focus',
+      active: 'state-active',
+      'hover-checked': 'state-hover-checked',
+      'active-checked': 'state-active-checked',
+    };
+
+    return stateMap[this.state] || '';
   }
 }
