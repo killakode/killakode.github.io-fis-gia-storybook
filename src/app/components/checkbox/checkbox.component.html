@@ -1,16 +1,18 @@
 <!-- checkbox.component.html -->
-<div class="checkbox-wrapper" [class]="getStateClass()">
-  <p-checkbox
-    [(ngModel)]="checked"
-    [binary]="true"
-    [disabled]="disabled"
-    [readonly]="readonly"
-    (onChange)="onCheckboxChange($event)"
-    [attr.data-indeterminate]="indeterminate ? true : null"
-    checkboxIcon="icon-check"
-    [inputId]="uniqueId"
-  />
-  <label *ngIf="label" [for]="uniqueId" class="checkbox-label">
-    {{ label }}
-  </label>
-</div>
+<p-card>
+  <div class="checkbox-wrapper" [class]="getStateClass()">
+    <p-checkbox
+      [(ngModel)]="checked"
+      [binary]="true"
+      [disabled]="disabled"
+      [readonly]="readonly"
+      (onChange)="onCheckboxChange($event)"
+      [attr.data-indeterminate]="indeterminate ? true : null"
+      checkboxIcon="icon-check"
+      [inputId]="uniqueId"
+    />
+    <label *ngIf="label" [for]="uniqueId" class="checkbox-label">
+      {{ label }}
+    </label>
+  </div>
+</p-card>

@@ -28,24 +28,27 @@
     "zone.js": "~0.14.10"
   },
   "devDependencies": {
+    "@angular-devkit/architect": "^0.1802.0",
     "@angular-devkit/build-angular": "^18.2.21",
+    "@angular-devkit/core": "^18.2.0",
     "@angular/cli": "^18.2.21",
     "@angular/compiler-cli": "^18.2.0",
+    "@compodoc/compodoc": "^1.1.32",
+    "@storybook/addon-a11y": "^10.1.4",
+    "@storybook/addon-docs": "^10.1.4",
+    "@storybook/addon-onboarding": "^10.1.4",
+    "@storybook/angular": "^10.1.4",
     "@types/jasmine": "~5.1.0",
+    "css-loader": "^7.1.2",
     "jasmine-core": "~5.2.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.5.2",
+    "sass": "^1.95.0",
+    "sass-loader": "^16.0.6",
     "storybook": "^10.1.4",
-    "@storybook/angular": "^10.1.4",
-    "@storybook/addon-a11y": "^10.1.4",
-    "@storybook/addon-docs": "^10.1.4",
-    "@storybook/addon-onboarding": "^10.1.4",
-    "@angular-devkit/architect": "^0.1802.0",
-    "@angular-devkit/core": "^18.2.0",
-    "@compodoc/compodoc": "^1.1.32"
+    "typescript": "~5.5.2"
   }
 }

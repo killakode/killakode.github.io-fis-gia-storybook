@@ -1,0 +1,51 @@
+:root {
+  --p-textarea-color: var(--global-dark-blue-color);
+  --p-textarea-background: var(--global-light-gray-color-header);
+  --p-textarea-padding-y: 0.875rem;
+  --p-textarea-padding-x: 1rem;
+  --p-textarea-border-color: var(--global-light-gray-3-color);
+  --p-textarea-border-radius: 0.25rem;
+  --p-textarea-shadow: none;
+
+  --p-textarea-focus-border-color: var(--global-light-blue-3-color);
+  --p-textarea-focus-ring-shadow: none;
+  --p-textarea-focus-ring-style: none;
+
+  --p-textarea-disabled-background: var(--global-light-gray-3-color);
+}
+
+//TODO: на странице ППЭ убрать лишний отступ где загрузка файла
+.p-fieldset:has(.textarea-add) {
+  .p-fieldset-legend {
+    display: none;
+  }
+  .p-floatlabel {
+    display: flex;
+    margin-top: 0;
+
+    label {
+      top: 0;
+    }
+  }
+  .p-textarea {
+    padding-bottom: 2.0625rem;
+  }
+}
+.p-fieldset:has(.textarea-add:disabled) {
+  border: none;
+}
+
+.p-textarea {
+  min-height: 4.625rem;
+  padding-bottom: 2.0625rem;
+}
+p-floatlabel:focus-visible {
+  outline: none;
+}
+.p-textarea:focus-visible {
+  --p-textarea-border-color: var(--global-light-blue-3-color);
+  outline: none;
+}
+.p-textarea.is-invalid {
+  --p-textarea-background: var(--global-light-pink-color);
+}

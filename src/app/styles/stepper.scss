@@ -1,0 +1,48 @@
+.p-stepper.step-to-progressbar {
+    .p-step-number {
+        display: none;
+    }
+    .p-step:not(.p-step-active) {
+        display: none;
+    }
+    .p-stepper-separator {
+        display: none;
+    }
+    .p-step {
+        width: 100%;
+        display: block;
+        padding: 0;
+    }
+    .p-step-header {
+        display: block;
+        width: 100%;
+    }
+    .p-step-title {
+        text-align: left;
+        font-weight: 700;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        color: var(--global-dark-blue-color);
+
+        .p-step-status {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        span {
+            font-weight: 400;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            color: var(--global-gray-color);
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+
+            i:before {
+                font-size: 24px;
+                color: var(--global-dark-blue-color);
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+:root {
+    --p-splitter-background: var(--p-content-background);
+    --p-splitter-border-color: transparent;
+    --p-splitter-color: var(--p-content-color);
+    --p-splitter-transition-duration: var(--p-transition-duration);
+    --p-splitter-gutter-background: var(--global-light-blue-2-color);
+    --p-splitter-handle-size: 24px;
+    --p-splitter-handle-background: transparent;
+    --p-splitter-handle-border-radius: var(--p-content-border-radius);
+    --p-splitter-handle-focus-ring-width: var(--p-focus-ring-width);
+    --p-splitter-handle-focus-ring-style: var(--p-focus-ring-style);
+    --p-splitter-handle-focus-ring-color: var(--p-focus-ring-color);
+    --p-splitter-handle-focus-ring-offset: var(--p-focus-ring-offset);
+    --p-splitter-handle-focus-ring-shadow: var(--p-focus-ring-shadow);
+}
+
+.p-splitter-horizontal > .p-splitter-gutter {
+    margin: 0 0.625rem;
+    // cursor: url('../assets/images/svg/unfold-horizontal.cur') 12 12, col-resize;
+    > .p-splitter-gutter-handle {
+        width: 0.125rem!important;
+    }
+}

@@ -3,6 +3,8 @@ import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angu
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { CardModule } from 'primeng/card';
+
 
 export type RadioButtonState =
   | 'default'
@@ -16,7 +18,7 @@ export type RadioButtonState =
 @Component({
   selector: 'app-radio-button',
   standalone: true,
-  imports: [CommonModule, FormsModule, RadioButtonModule],
+  imports: [CommonModule, FormsModule, RadioButtonModule, CardModule],
   templateUrl: './radio-button.component.html',
   styleUrls: ['./radio-button.component.scss'],
   encapsulation: ViewEncapsulation.None,

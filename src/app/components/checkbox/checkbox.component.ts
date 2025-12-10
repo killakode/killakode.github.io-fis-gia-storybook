@@ -7,13 +7,14 @@ import {
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
+import { CardModule } from 'primeng/card';
 
 let nextUniqueId = 0; // ← Счётчик для уникальных ID
 
 @Component({
   selector: 'app-checkbox',
   standalone: true,
-  imports: [CommonModule, FormsModule, CheckboxModule],
+  imports: [CommonModule, FormsModule, CheckboxModule, CardModule],
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.scss'],
   providers: [

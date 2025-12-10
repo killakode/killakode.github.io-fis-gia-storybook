@@ -1,0 +1,47 @@
+:root {
+  --p-message-error-background: var(--global-light-pink-color);
+  --p-message-error-color: var(--global-dark-blue-color);
+  --p-message-error-shadow: none;
+  --p-message-border-radius: 0.75rem;
+  --p-message-content-padding: 1rem;
+  --p-message-content-gap: 0.5rem;
+  --p-message-text-font-size: 1.125rem;
+  --p-message-text-font-weight: var(--global-bold-font-weight);
+
+  --p-message-error-simple-color: var(--global-dark-blue-color);
+  --p-message-simple-content-padding: 0.5rem 1rem;
+  --p-message-text-font-size: 1rem;
+  --p-message-text-font-weight: var(--global-main-font-weight);
+  --p-message-border-radius: 0.5rem;
+
+  --p-message-warn-simple-color: var(--global-dark-blue-color);
+}
+
+.p-message {
+  order: 1;
+  width: 100%;
+  margin-top: 1.5rem;
+}
+.p-message:has(.p-message-text:empty) {
+  display: none;
+}
+.p-message-error {
+  background-color: var(--global-light-pink-2-color);
+}
+.p-message-warn {
+  background-color: var(--global-yellow-color);
+}
+.p-floatlabel {
+  .p-message {
+    background-color: unset;
+    padding: unset;
+    margin-top: unset;
+  }
+  .p-message-content {
+    padding: unset;
+  }
+}
+
+.p-message-error {
+  outline: none;
+}

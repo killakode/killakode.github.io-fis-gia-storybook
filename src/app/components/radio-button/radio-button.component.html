@@ -1,13 +1,15 @@
 <!-- radio-button.component.html -->
-<div class="radio-wrapper" [ngClass]="stateClass">
-  <p-radiobutton
-    [name]="name"
-    [value]="value"
-    [ngModel]="effectiveSelectedValue"
-    (ngModelChange)="onValueChange($event)"
-    [disabled]="isDisabled"
-    [inputId]="value"
-  >
-  </p-radiobutton>
-  <label [for]="value" class="p-radio-label">{{ label }}</label>
-</div>
+<p-card>
+  <div class="radio-wrapper" [ngClass]="stateClass">
+    <p-radiobutton
+      [name]="name"
+      [value]="value"
+      [ngModel]="effectiveSelectedValue"
+      (ngModelChange)="onValueChange($event)"
+      [disabled]="isDisabled"
+      [inputId]="value"
+    >
+    </p-radiobutton>
+    <label [for]="value" class="p-radio-label">{{ label }}</label>
+  </div>
+</p-card>

@@ -18,6 +18,7 @@ import { DOCUMENT, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SelectModule } from 'primeng/select';
 import { TooltipModule } from 'primeng/tooltip';
+import { CardModule } from 'primeng/card';
 
 export interface SelectOption {
   label: string;
@@ -28,7 +29,7 @@ export interface SelectOption {
 @Component({
   selector: 'app-select',
   standalone: true,
-  imports: [CommonModule, FormsModule, SelectModule, TooltipModule],
+  imports: [CommonModule, FormsModule, SelectModule, TooltipModule, CardModule],
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss', '../../styles/input.scss'],
   encapsulation: ViewEncapsulation.None,

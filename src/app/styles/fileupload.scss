@@ -1,0 +1,308 @@
+:root {
+  --p-fileupload-border-color: var(--global-blue-color);
+  --p-fileupload-border-radius: 0.75rem;
+  --p-fileupload-background: var(--global-white-color);
+  --p-fileupload-color: var(--global-dark-blue-color);
+
+  --p-fileupload-content-padding: 0;
+  --p-fileupload-content-gap: 0;
+  --p-fileupload-header-padding: 0;
+  --p-fileupload-header-background: transparent;
+  --p-fileupload-header-color: var(--global-dark-blue-color);
+  --p-fileupload-header-gap: 0;
+
+  --p-fileupload-filelist-gap: 1.25rem;
+  --p-fileupload-file-padding: 0.6875rem 0.75rem 0.6875rem 1.25rem;
+  --p-fileupload-file-gap: 1rem;
+  --p-fileupload-file-border-color: var(--global-light-gray-2-color);
+}
+
+.p-fieldset:has(.p-fileupload),
+.p-dialog:has(.p-fileupload),
+.uploader-row:has(.p-fileupload) {
+  .p-fileupload-advanced {
+    border: none;
+  }
+  .p-fileupload {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .p-fileupload-header {
+      justify-content: center;
+    }
+    p-button {
+      max-height: 1.5rem;
+      outline: none;
+    }
+    .p-button {
+      --p-button-primary-color: var(--global-blue-color);
+      --p-button-primary-background: transparent;
+      --p-button-padding-y: 0;
+      --p-button-padding-x: 0;
+      --p-button-border-radius: 0;
+      --p-button-gap: 0.5rem;
+      --p-button-label-font-weight: var(--global-main-font-weight);
+
+      --p-button-primary-hover-background: transparent;
+      --p-button-primary-hover-color: var(--global-blue-3-color);
+
+      --p-button-primary-active-background: transparent;
+      --p-button-primary-active-color: var(--global-blue-2-color);
+      border: none;
+
+      .icon-paperclip {
+        font-size: 1.5rem;
+
+        &::before {
+          color: var(--global-blue-color);
+        }
+      }
+      &:hover {
+        .icon-paperclip::before {
+          color: var(--global-blue-3-color);
+        }
+      }
+      &:active {
+        .icon-paperclip::before {
+          color: var(--global-blue-2-color);
+        }
+      }
+      &:focus-visible {
+        --p-button-primary-color: var(--global-blue-2-color);
+
+        .icon-paperclip::before {
+          color: var(--global-blue-2-color);
+        }
+      }
+    }
+  }
+
+  .white-button .p-fileupload p-button {
+    max-height: none;
+  }
+
+  .white-button .p-fileupload .p-button {
+    --p-button-primary-background: var(--global-white-color);
+    --p-button-primary-border-color: var(--global-blue-color);
+    --p-button-primary-color: var(--global-blue-color);
+
+    --p-button-primary-hover-background: var(--global-light-gray-color-header);
+    --p-button-primary-hover-border-color: var(--global-blue-3-color);
+    --p-button-primary-hover-color: var(--global-blue-3-color);
+
+    --p-button-primary-active-background: var(--global-light-gray-color-header);
+    --p-button-primary-active-border-color: var(--global-blue-2-color);
+    --p-button-primary-active-color: var(--global-blue-2-color);
+
+    --p-button-padding-y: 0.688rem;
+    --p-button-padding-x: 2.5rem;
+    --p-button-border-radius: 0.5rem;
+    --p-button-label-font-weight: var(--global-main-font-weight);
+
+    border: 0.125rem solid;
+    max-height: none;
+
+    &:focus-visible {
+      --p-button-secondary-background: var(--global-light-gray-color-header);
+      --p-button-secondary-border-color: var(--global-blue-2-color);
+      --p-button-secondary-color: var(--global-blue-2-color);
+    }
+    &:disabled {
+      opacity: 1;
+      --p-button-secondary-background: var(--global-light-gray-4-color);
+      --p-button-secondary-border-color: var(--global-light-gray-4-color);
+      --p-button-secondary-color: var(--global-gray-4-color);
+    }
+  }
+  .p-fileupload-header:has(.file-list-container:empty) {
+      display: none;
+    }
+  .p-fileupload-content {
+    --p-button-text-danger-hover-background: transparent;
+    --p-button-text-danger-active-background: transparent;
+    --p-button-icon-only-width: 1.5rem;
+
+    padding: 1.5rem 1.5rem 1.125rem;
+    border: 2px dashed var(--global-blue-color);
+    border-radius: 0.75rem;
+
+    .p-fileupload-file-list {
+      flex-direction: row;
+    }
+    .p-fileupload-file {
+      display: flex;
+      flex-wrap: nowrap;
+      width: 19.375rem;
+      border: 0.0625rem solid var(--p-fileupload-file-border-color);
+      border-radius: 0.25rem;
+
+      &:hover {
+        border-color: var(--global-blue-color);
+      }
+    }
+    .p-fileupload-file-size {
+      display: none;
+    }
+    .p-fileupload-file-info {
+      padding: 0.5rem 0;
+    }
+    .p-button {
+      .icon-delete {
+        font-size: 1.5rem;
+
+        &::before {
+          color: var(--global-blue-color);
+        }
+      }
+      &:hover {
+        .icon-delete::before {
+          color: var(--global-blue-3-color);
+        }
+      }
+      &:active,
+      &:focus-visible {
+        .icon-delete::before {
+          color: var(--global-blue-2-color);
+        }
+      }
+    }
+    .p-fileupload-file-actions {
+      display: flex;
+    }
+    .p-fileupload-file-info,
+    .p-fileupload-file-name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .file-upload-content {
+      gap: 0.625rem;
+
+      p {
+        color: var(--global-gray-color);
+        margin: 0;
+      }
+      button {
+        padding: 0.375rem 0.625rem;
+        &:focus-visible {
+          outline: none;
+        }
+      }
+    }
+  }
+  .file-upload-content-table {
+    margin: 0;
+    padding: 0.625rem 1.5rem;
+  }
+}
+
+.p-fieldset:has(.p-fileupload) .p-datatable-table .p-fileupload {
+  border: none !important;
+  background: none;
+  .p-fileupload-header {
+    padding: 0;
+    width: 100%;
+    border: none;
+  }
+  .p-fileupload-content {
+    padding: 0;
+  }
+  .p-fileupload-file-size {
+    display: none;
+  }
+  p-button {
+    width: 100%;
+    max-height: none;
+  }
+  .p-fileupload-choose-button {
+    --p-button-primary-background: var(--global-white-color);
+    --p-button-primary-border-color: var(--global-blue-color);
+    --p-button-primary-color: var(--global-blue-color);
+
+    --p-button-primary-hover-background: var(--global-light-gray-color-header);
+    --p-button-primary-hover-border-color: var(--global-blue-3-color);
+    --p-button-primary-hover-color: var(--global-blue-3-color);
+
+    --p-button-primary-active-background: var(--global-light-gray-color-header);
+    --p-button-primary-active-border-color: var(--global-blue-2-color);
+    --p-button-primary-active-color: var(--global-blue-2-color);
+
+    .p-iconwrapper {
+      display: none;
+    }
+    padding: 0.8rem 1.5rem;
+    border: 2px dashed;
+    border-radius: 0.75rem;
+    width: 100%;
+  }
+  .p-fileupload-file-remove-button {
+    position: relative;
+    &:before {
+      font-family: 'icomoon' !important;
+      content: $icon-del-ring;
+      font-weight: normal;
+    }
+    .p-iconwrapper {
+      display: none;
+    }
+  }
+  .p-fileupload-file {
+    padding: 0;
+    border: none !important;
+  }
+}
+// p-progressbar {
+//   display: none;
+// }
+.margin-bottom-2-5rem-custom {
+  margin-bottom: 2.5rem;
+}
+p-fileupload {
+  // .p-progressbar {
+  //   display: none;
+  //   top: unset;
+  //   bottom: 8.25rem;
+  // }
+  .p-fileupload {
+    gap: 0;
+  }
+  .p-fileupload-file-list {
+    flex-wrap: wrap;
+  }
+  .p-fileupload-header {
+    border-radius:0;
+    border: none;
+
+    div p {
+      color: var(--global-gray-color);
+      margin: 0;
+    }
+    div p:first-child {
+      margin-bottom: 0.25rem;
+    }
+
+    // &::before {
+    //   content: "Перетащите файл или нажмите для загрузки\A docx. Не более 10 MB";
+    //   display: block;
+    //   white-space: pre-wrap;
+    //   text-align: center;
+    //   color: var(--global-gray-color);
+    // }
+  }
+  &:has(.p-fileupload-file-list) {
+    .p-fileupload {
+      gap: 1rem;
+      // gap: 1.25rem;
+    }
+  }
+  &.upload_file {
+    .p-fileupload-header {
+      display: none;
+    }
+    .p-fileupload-file-list {
+      padding: 20px 0;
+    }
+  }
+}

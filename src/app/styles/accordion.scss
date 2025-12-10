@@ -1,0 +1,188 @@
+.accordion {
+  --p-fieldset-background: var(--global-white-color);
+  --p-fieldset-border-color: var(--p-content-border-color);
+  // --p-fieldset-border-radius: var(--p-content-border-radius);
+  // --p-fieldset-color: var(--p-content-color);
+  // --p-fieldset-padding: 0 1.125rem 1.125rem 1.125rem;
+  --p-fieldset-transition-duration: var(--p-transition-duration);
+  --p-fieldset-legend-background: var(--global-white-color);
+  --p-fieldset-legend-hover-background: var(--global-white-color);
+  --p-fieldset-legend-color: var(--p-content-color);
+  --p-fieldset-legend-hover-color: var(--p-content-hover-color);
+  --p-fieldset-legend-border-radius: 0.75rem;
+  --p-fieldset-legend-border-width: 0;
+  --p-fieldset-legend-border-color: transparent;
+  // --p-fieldset-legend-padding: 0.5rem 0.75rem;
+  --p-fieldset-legend-gap: 0.5rem;
+  // --p-fieldset-legend-font-weight: 600;
+  // --p-fieldset-legend-focus-ring-width: var(--p-focus-ring-width);
+  // --p-fieldset-legend-focus-ring-style: var(--p-focus-ring-style);
+  // --p-fieldset-legend-focus-ring-color: var(--p-focus-ring-color);
+  // --p-fieldset-legend-focus-ring-offset: var(--p-focus-ring-offset);
+  // --p-fieldset-legend-focus-ring-shadow: var(--p-focus-ring-shadow);
+  --p-fieldset-toggle-icon-color: var(--p-text-muted-color);
+  --p-fieldset-toggle-icon-hover-color: var(--p-text-hover-muted-color);
+  --p-fieldset-content-padding: 0;
+
+  // --p-fieldset-legend-padding: 0 0 1rem;
+  --p-fieldset-padding: 1rem;
+  --p-fieldset-legend-font-weight: var(--global-bold-font-weight);
+  --p-fieldset-color: var(--global-dark-blue-color);
+  --p-fieldset-border-radius: 0.75rem;
+
+  .p-divider-horizontal {
+    margin-top: 0;
+  }
+
+  .p-fieldset-toggleable {
+    padding: 0;
+
+    .p-fieldset-content {
+      padding: 0 1rem 1.125rem;
+    }
+  }
+
+  .p-fieldset-legend {
+    width: 100%;
+    margin: 0;
+  }
+
+  .p-fieldset-toggle-button {
+    width: 100%;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    padding: 1.125rem 1rem;
+
+    .p-iconwrapper svg {
+      display: none;
+    }
+
+    .p-iconwrapper {
+      position: relative;
+      // display: block;
+      width: 1.5rem;
+      height: 1.5rem;
+      font-size: 1.5rem;
+      border-radius: 100%;
+      overflow: hidden;
+      background: var(--global-lighter-gray);
+      transition: transform 0.35s ease;
+
+      &:before {
+        font-family: 'icomoon' !important;
+        content: $icon-accordion;
+        color: var(--global-blue-color);
+        font-weight: normal;
+      }
+    }
+  }
+
+  .p-fieldset-expanded .p-fieldset-toggle-button {
+    color: var(--global-blue-color);
+    .p-iconwrapper {
+      transform: rotate(-180deg);
+    }
+  }
+}
+.p-accordion.p-component {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  .p-accordionpanel {
+    border: none;
+    &:not(.p-accordionpanel-active) .p-accordionheader {
+      --p-accordion-header-border-radius: 12px;
+      transition: all 0.7s ease;
+      color: #0b1f33;
+      border: none;
+      chevronupicon {
+        position: relative;
+        height: 24px;
+        width: 24px;
+        border-radius: 100%;
+        background-color: #edf2fe;
+        svg {
+          display: none;
+        }
+        &::before {
+          position: absolute;
+          content: $icon-arrow;
+          color: #0d4cd3;
+          font-family: '#{$icomoon-font-family}' !important;
+          font-size: 20px;
+          font-style: normal;
+          font-weight: normal;
+          font-variant: normal;
+          text-transform: none;
+          line-height: 1;
+        }
+      }
+    }
+    &.p-accordionpanel-active {
+      .p-accordionheader {
+        border-bottom: 1px solid #e1e1e1;
+      }
+    }
+    .p-accordionheader {
+      --p-accordion-header-border-radius: 12px 12px 0 0;
+      --p-accordion-header-first-top-border-radius: 12px;
+      --p-accordion-header-last-bottom-border-radius: 12px;
+      --p-accordion-header-padding: 18px 20px;
+
+      color: #0d4cd3;
+      font-size: 20px;
+      line-height: 28px;
+      chevrondownicon {
+        position: relative;
+        height: 24px;
+        width: 24px;
+        border-radius: 100%;
+        background-color: #edf2fe;
+        svg {
+          display: none;
+        }
+        &::before {
+          position: absolute;
+          content: $icon-arrow;
+          transform: rotate(180deg);
+          color: #0d4cd3;
+          font-family: '#{$icomoon-font-family}' !important;
+          font-size: 20px;
+          font-style: normal;
+          font-weight: normal;
+          font-variant: normal;
+          text-transform: none;
+          line-height: 1;
+        }
+      }
+    }
+    .p-accordioncontent-content {
+      border-radius: 0 0 12px 12px;
+      --p-accordion-content-padding: 20px 20px 0;
+    }
+  }
+}
+
+
+.p-accordion.accordion-dialog {
+  .p-accordionpanel.p-accordionpanel-active .p-accordionheader,
+  .p-accordionpanel .p-accordionheader {
+    border-bottom: none;
+    --p-accordion-header-padding: 0.75rem 0.5rem;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    color: #13151A;
+  }
+  .p-accordioncontent {
+    border-bottom: 1px solid #e1e1e1;
+  }
+  .p-accordionpanel .p-accordioncontent-content {
+    --p-accordion-content-padding: 20px 1px 0;
+  }
+  .p-accordionpanel .p-accordionheader chevrondownicon,
+  .p-accordionpanel:not(.p-accordionpanel-active) .p-accordionheader chevronupicon {
+    background: transparent;
+  }
+}

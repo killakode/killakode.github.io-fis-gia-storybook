@@ -1,0 +1,116 @@
+:root {
+  --p-chip-padding-y: 0.4375rem;
+  --p-chip-padding-x: 0.75rem;
+  --p-chip-background: var(--global-white-color);
+  --p-chip-border-radius: 0.5rem;
+  --p-chip-gap: 0;
+  --p-chip-color: var(--global-dark-blue-color);
+}
+
+app-input-phone-multi {
+  --p-inputtext-padding-y: 0;
+  --p-inputtext-padding-x: 0;
+  --p-inputgroup-addon-padding: 0.1875rem 1rem;
+  --p-inputgroup-addon-border-radius: 0.25rem;
+  --p-inputgroup-addon-background: var(--global-light-gray-color-header);
+  --p-inputtext-background: var(--global-white-color);
+
+  .p-inputgroup {
+    gap: 0.75rem;
+  }
+  .p-inputgroupaddon {
+    max-width: calc(100% - 3.75rem);
+    display: flex;
+    gap: 0.625rem;
+  }
+  &.is-invalid {
+    --p-inputgroup-addon-border-color: var(--global-red-color);
+  }
+  .p-chip {
+    border: 0.0625rem solid var(--global-white-color);
+
+    p-inputmask {
+      .p-inputtext {
+        height: 1.5rem;
+        margin-left: 0.25rem;
+        border: none;
+      }
+      &.ng-valid {
+        .p-filled {
+          --p-inputtext-background: var(--global-white-color);
+        }
+      }
+    }
+    &:has(.ng-pristine):not(:has(.p-filled)) {
+       --p-chip-background: var(--global-light-gray-color-header);
+       --p-inputtext-background: var(--global-light-gray-color-header);
+    }
+  }
+  .p-chip-remove-icon {
+    &:hover {
+      span::before {
+        color: var(--global-blue-3-color);
+      }
+    }
+    &:active,
+    &:focus-visible {
+      outline: none;
+
+      span::before {
+        color: var(--global-blue-2-color);
+      }
+    }
+    &:disabled {
+      span::before {
+        color: var(--global-gray-4-color);
+      }
+    }
+  }
+  .addPhone {
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .p-button {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 0.5rem;
+      border: 0.125rem solid var(--global-blue-color);
+      --p-button-primary-background: var(--global-white-color);
+      font-size: 1.5rem;
+      padding: 0;
+      
+      &:hover {
+        --p-button-primary-hover-background: var(--global-light-gray-color-header);
+        border-color: var(--global-blue-3-color);
+
+        .p-button-icon::before {
+          color: var(--global-blue-3-color);
+        }
+      }
+      &:active,
+      &:focus-visible {
+        --p-button-primary-background: var(--global-light-gray-color-header);
+        --p-button-primary-active-background: var(--global-light-gray-color-header);
+        border-color: var(--global-blue-2-color);
+        outline: none;
+
+        .p-button-icon::before {
+          color: var(--global-blue-2-color);
+        }
+      }
+      &:disabled {
+        --p-button-primary-background: var(--global-light-gray-4-color);
+        border-color: var(--global-light-gray-4-color);
+        opacity: 1;
+
+        .p-button-icon::before {
+          color: var(--global-gray-4-color);
+        }
+      }
+    }
+  }
+}

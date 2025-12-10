@@ -1,11 +1,8 @@
 import type { Preview } from '@storybook/angular';
-import { setCompodocJson } from '@storybook/addon-docs/angular';
 import { applicationConfig } from '@storybook/angular';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
-
-
 
 const preview: Preview = {
   decorators: [
@@ -18,10 +15,13 @@ const preview: Preview = {
             options: {
               prefix: 'p',
               darkModeSelector: false,
-              cssLayer: false
-            }
-          }
-        })
+              cssLayer: {
+                name: 'primeng',
+                order: 'reset, primeng, custom-overrides',
+              },
+            },
+          },
+        }),
       ],
     }),
   ],

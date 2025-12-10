@@ -10,6 +10,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { MessageModule } from 'primeng/message';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-input',
@@ -22,6 +23,7 @@ import { InputIconModule } from 'primeng/inputicon';
     MessageModule,
     IconFieldModule,
     InputIconModule,
+    CardModule
   ],
   templateUrl: './input.component.html',
   providers: [

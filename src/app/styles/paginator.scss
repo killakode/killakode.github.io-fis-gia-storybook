@@ -1,0 +1,100 @@
+:root {
+  --p-paginator-padding: 0.5rem 1rem 1.5rem;
+  --p-paginator-gap: 0.5rem;
+  --p-paginator-border-radius: var(--p-content-border-radius);
+  --p-paginator-background: var(--p-content-background);
+  --p-paginator-color: var(--p-content-color);
+  --p-paginator-transition-duration: var(--p-transition-duration);
+
+  --p-paginator-nav-button-background: transparent;
+  --p-paginator-nav-button-hover-background: var(--global-lighter-gray);
+  --p-paginator-nav-button-selected-background: var(--global-blue-3-color);
+  --p-paginator-nav-button-color: var(--global-blue-color);
+  --p-paginator-nav-button-hover-color: var(--global-blue-color);
+  --p-paginator-nav-button-selected-color: var(--global-white-color);
+
+  --p-paginator-nav-button-border-radius: 0.5rem;
+  --p-paginator-nav-button-width: 2rem;
+  --p-paginator-nav-button-height: 2rem;
+  --p-paginator-border-radius: 0 0 0.75rem 0.75rem;
+}
+
+.p-paginator-page,
+.p-paginator-next,
+.p-paginator-last,
+.p-paginator-first,
+.p-paginator-prev {
+  font-size: 0.875rem;
+
+  .icon {
+    font-size: 0.563rem;
+    line-height: 0.563rem;
+    display: block;
+    &:before {
+      color: var(--p-paginator-nav-button-color);
+    }
+  }
+}
+
+.p-paginator-last,
+.p-paginator-first {
+  font-size: 2rem;
+
+  .icon {
+    font-size: 2rem;
+    line-height: 2rem;
+    display: block;
+    &:before {
+      color: var(--p-paginator-nav-button-color);
+    }
+  }
+}
+
+.p-ripple.p-disabled {
+  opacity: 1;
+
+  .icon {
+    &:before {
+      color: var(--global-light-gray-3-color);
+    }
+  }
+}
+
+.p-paginator {
+  color: var(--global-dark-blue-color);
+  > * {
+    order: 2;
+  }
+
+  .p-paginator-content-start {
+    order: 0;
+    margin: 0 10px 0 0;
+  }
+  .p-paginator-content-end {
+    order: 1;
+    font-size: 0.875rem;
+    margin-right: 0.625rem;
+  }
+  .p-paginator-current {
+    font-size: 0.875rem;
+    margin-right: 0.625rem;
+
+    --p-paginator-current-page-report-color: var(--global-dark-blue-color);
+  }
+  .p-select {
+    order: 1;
+    margin-right: auto;
+    &.p-select-open .p-select-dropdown {
+      transform: rotate(180deg);
+      transition: transform 0.3s;
+      //  z-index: calc(var(--gia-paginator-z-index) + 1);
+      z-index: 3000;
+    }
+    &.p-select-open .p-select-dropdown-icon {
+      transform: rotate(0deg);
+    }
+    .p-select-dropdown {
+      transition: transform 0.3s;
+    }
+  }
+}

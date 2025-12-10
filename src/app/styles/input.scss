@@ -1,11 +1,4 @@
-.p-floatlabel {
-  --p-message-content-padding: 0;
-  --p-message-error-color: rgba(225, 20, 50, 1);
-  --p-message-error-background: transparent;
-  --p-message-error-shadow: none;
-  --p-message-error-border-color: transparent;
-  --p-message-text-font-size: .875rem;
-
+:root {
   --p-floatlabel-font-weight: var(--global-main-font-weight);
   --p-floatlabel-color: var(--global-dark-blue-color);
   --p-floatlabel-focus-color: var(--global-dark-blue-color);
@@ -32,8 +25,9 @@
   --p-message-text-font-weight: var(--global-main-font-weight);
 
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   gap: 0.25rem;
+  margin-top: 1rem;
 
   &.nomargin {
     margin-top: 0;
@@ -65,10 +59,8 @@
       opacity: 1;
     }
   }
-  & > .is-invalid {
+  & > .is-invalid.ng-dirty {
     --p-inputtext-background: var(--global-light-pink-color);
-    --p-inputtext-border-color: rgba(238, 63, 88, 1);
-
   }
   .p-message {
     max-width: fit-content;
@@ -78,8 +70,8 @@
     width: 100%;
   }
 }
-.p-dropdown.is-invalid,
-.p-select.is-invalid {
+.p-dropdown.is-invalid.ng-dirty,
+.p-select.is-invalid.ng-dirty {
   --p-select-background: var(--global-light-pink-color);
   --p-inputtext-background: var(--global-light-gray-color-header);
 }

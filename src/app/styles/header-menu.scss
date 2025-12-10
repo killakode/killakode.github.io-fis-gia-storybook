@@ -1,0 +1,80 @@
+header-menu {
+  --p-menu-border-radius: 0;
+  --p-menu-background: var(--global-white-color);
+  --p-menu-color: var(--global-blue-color);
+  --p-menu-item-color: var(--global-blue-color);
+  --p-menu-list-padding: 0;
+  --p-menu-list-gap: 1.25rem;
+  --bs-nav-link-font-size: inherit;
+  --bs-nav-link-font-weight: inherit;
+  --p-menu-item-border-radius: 100%;
+  --p-menu-item-padding: 0;
+
+  .header-right-side {
+    font-family: var(--global-main-font);
+    font-size: 1rem;
+    font-weight: var(--global-main-font-weight);
+    line-height: 1.25rem;
+    letter-spacing: var(--global-main-letter-spacing);
+    color: var(--global-dark-blue-color);
+
+    small {
+      display: flex;
+      align-items: center;
+      font-size: inherit;
+      line-height: inherit;
+      font-weight: inherit;
+      letter-spacing: inherit;
+      color: inherit;
+    }
+    .user-name {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 0.125rem;
+      margin: 0.1875rem 1rem 0.1875rem 0;
+    }
+    .user-name-level {
+      font-size: 0.875rem;
+      color: var(--global-gray-2-color);
+    }
+    .header-menu {
+      border: none;
+      min-width: unset;
+    }
+    .p-menu-list {
+      flex-direction: row;
+    }
+    .p-menu-item-content {
+      background-color: var(--global-light-gray-color-header);
+
+      &:hover,
+      &:active,
+      &:focus-visible {
+        background-color: var(--global-light-gray-color);
+      }
+      &:focus-visible {
+        outline: none;
+      }
+    }
+    .p-menu-item-link {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 3rem;
+      height: 3rem;
+    }
+    .header-menu-icon {
+      font-size: 1.5rem;
+    }
+  }
+  .header-login {
+    font-family: var(--global-main-font);
+    font-size: 1rem;
+    font-weight: var(--global-main-font-weight);
+    line-height: 1.25rem;
+    letter-spacing: var(--global-main-letter-spacing);
+    color: var(--global-dark-blue-color);
+  }
+}

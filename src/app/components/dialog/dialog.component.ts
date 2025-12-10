@@ -20,7 +20,7 @@ export type DialogSize = 'default' | 'big' | 'fullwidth';
   imports: [CommonModule, DialogModule, ButtonModule, ConfirmDialogModule],
   providers: [ConfirmationService],
   templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.scss', '../../styles/_buttons.scss'],
+  styleUrls: ['./dialog.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class DialogComponent {

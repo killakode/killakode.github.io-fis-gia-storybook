@@ -1,0 +1,23 @@
+:root {
+  --p-progressbar-background: var(--global-light-gray-4-color);
+  --p-progressbar-border-radius: 0.5rem;
+  --p-progressbar-height: 0.5rem;
+  --p-progressbar-value-background: var(--global-green);
+}
+
+.p-progressbar {
+  margin: 1rem 0;
+  &[aria-valuenow]:not([aria-valuenow='0']) {
+    position: relative;
+  }
+  &[aria-valuenow='0'] {
+    display: none;
+  }
+}
+.p-progressbar-value {
+  border-radius: var(--p-progressbar-border-radius);
+
+  .blocked & {
+    --p-progressbar-value-background: var(--global-red-color);
+  }
+}

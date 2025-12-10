@@ -1,12 +1,8 @@
-<div class="p-floatlabel">
-  @if (label) {
-    <label [for]="inputId">{{ label }}</label>
-  }
-   @if (invalid) {
+<p-card>
+  <div class="p-floatlabel">
+    @if (invalid) {
     <p-message severity="error" [text]="displayErrorMessage" />
-  }
-
-  @if (showIcon) {
+    } @if (showIcon) {
     <p-iconfield>
       <p-inputicon styleClass="pi pi-search" />
       <input
@@ -23,7 +19,7 @@
         pInputText
       />
     </p-iconfield>
-  } @else {
+    } @else {
     <input
       [id]="inputId"
       [type]="type"
@@ -37,7 +33,9 @@
       (blur)="onTouched()"
       pInputText
     />
-  }
-
-
-</div>
+    }
+    @if (label) {
+    <label [for]="inputId">{{ label }}</label>
+    }
+  </div>
+</p-card>

@@ -1,0 +1,45 @@
+:root {
+  --p-tooltip-max-width: 10rem;
+  --p-tooltip-gutter: 0.1875rem;
+
+  --p-tooltip-background: var(--global-white-color);
+  --p-tooltip-color: var(--global-dark-blue-color);
+  --p-tooltip-padding: 0.375rem 0.75rem;
+  --p-tooltip-shadow: none;
+  --p-tooltip-border-radius: 0.25rem;
+}
+
+.global-tooltip,
+.p-tooltip.p-component {
+  font-family: var( --global-main-font);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: var(--global-main-font-weight);
+  letter-spacing: var(--global-main-letter-spacing);
+  filter: drop-shadow(0 0 0.375rem var(--global-black-color));
+}
+
+.p-tooltip.p-component {
+  --p-tooltip-max-width: 20rem;
+  --p-tooltip-gutter: 0.1875rem;
+
+  --p-tooltip-background: var(--global-white-color);
+  --p-tooltip-color: var(--global-dark-blue-color);
+  --p-tooltip-padding: 0.375rem 0.75rem;
+  --p-tooltip-shadow: none;
+  --p-tooltip-border-radius: 0.25rem;
+
+  width: fit-content;
+  
+  .p-tooltip-arrow {
+    display: none;
+  }
+}
+
+.p-tooltip-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 20; /* количество строк */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

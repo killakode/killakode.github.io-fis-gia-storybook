@@ -1,0 +1,25 @@
+:root {
+  --p-panel-color: var(--global-gray-color);
+  --p-panel-header-padding: 0.75rem 0;
+  --p-panel-content-padding: 1.5rem 0;
+  --p-panel-header-border-radius: inherit;
+}
+
+p-panel {
+  border-radius: inherit;
+
+  .p-panel {
+    border: none;
+    border-radius: inherit;
+  }
+  .p-panel-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+ .activity-areas-content-container:has(> .p-tabs) {
+  --p-panel-header-padding: 1rem 0;
+ }

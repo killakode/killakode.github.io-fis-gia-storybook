@@ -57,11 +57,11 @@
   --p-button-label-font-weight: var(--global-main-font-weight);
 
   outline: none;
-  border-width: 0.125rem !important;
+  border-width: 0.125rem;
 
   button {
     outline: none;
-    border-width: 0.125rem !important;
+    border-width: 0.125rem;
     white-space: nowrap;
 
     &:focus-visible {
@@ -386,11 +386,11 @@
   --p-button-label-font-weight: var(--global-main-font-weight);
 
   outline: none;
-  border-width: 0.125rem !important;
+  border-width: 0.125rem;
 
   button {
     outline: none;
-    border-width: 0.125rem !important;
+    border-width: 0.125rem;
 
     &:focus-visible {
       --p-button-secondary-background: var(--global-light-gray-color-header);
@@ -566,7 +566,7 @@
   --p-button-label-font-weight: var(--global-main-font-weight);
 
   button {
-    border-width: 0.125rem !important;
+    border-width: 0.125rem;
 
     &:focus-visible {
       --p-button-secondary-background: var(--global-light-gray-color-header);
@@ -685,7 +685,7 @@
 
   button {
     width: unset;
-    border-width: 0.125rem !important;
+    border-width: 0.125rem;
     gap: var(--p-button-gap);
 
     .p-button-icon {
@@ -789,7 +789,7 @@
   --p-button-secondary-active-color: var(--global-white-color);
 
   button {
-    border-width: 0.125rem !important;
+    border-width: 0.125rem;
 
     .p-button-icon {
       transition: transform 0.35s ease;

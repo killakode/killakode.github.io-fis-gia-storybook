@@ -1,0 +1,183 @@
+:root {
+  --p-menu-shadow: 0px 6px 16px 0px var(--global-light-gray-5-color), 0px 1px 4px 0px var(--global-light-gray-6-color);
+  --p-menu-background: var(--global-white-color);
+  --p-menu-color: var(--global-dark-blue-color);
+  --p-menu-border-radius: 0.25rem;
+  --p-menu-list-padding: 0 0 0.5rem;
+  --p-menu-list-gap: 0;
+  --p-menu-item-border-radius: 0;
+  --p-menu-item-color: var(--global-blue-color);
+  --p-menu-item-padding: 0.5rem 1rem;
+
+  --p-menu-item-focus-background: var(--global-light-gray-color);
+  --p-menu-item-focus-color: var(--global-dark-blue-color);
+
+  --p-listbox-shadow: 0px 6px 16px 0px var(--global-light-gray-5-color), 0px 1px 4px 0px var(--global-light-gray-6-color);
+  --p-listbox-background: var(--global-white-color);
+  --p-listbox-color: var(--global-dark-blue-color);
+  --p-listbox-border-radius: 0.25rem;
+  --p-listbox-list-padding: 0 0 0.4rem 0;
+  --p-listbox-list-gap: 0;
+  --p-listbox-list-header-padding: 1rem 1rem 0.5rem;
+
+  --p-listbox-option-border-radius: 0;
+  --p-listbox-option-color: var(--global-blue-color);
+  --p-listbox-option-padding: 0.5rem 1rem;
+
+  --p-listbox-option-focus-background: var(--global-light-gray-color);
+  --p-listbox-option-focus-color: var(--global-dark-blue-color);
+}
+
+.p-menu-overlay {
+  width: 15rem;
+  padding-top: 0.5rem;
+  border: none;
+  left: -48% !important;
+  margin-top: 0.5rem;
+
+  .big-width & {
+    width: 16rem;
+    left: auto !important;
+    right: 12px;
+  }
+
+  .right-menu & {
+    left: auto !important;
+    right: 0;
+  }
+
+  .publication-menu + & {
+    left: auto !important;
+    right: 0;
+    font-size: 1rem;
+    width: 12rem;
+  }
+
+  .p-menu-item-label {
+    line-height: 1.5rem;
+  }
+  .p-menu-item-content {
+    &:active,
+    &:focus-visible {
+      background: var(--global-light-gray-color);
+      color: var(--global-dark-blue-color);
+      outline: none;
+    }
+  }
+  .p-menu-start {
+    display: flex;
+    justify-content: space-between;
+    height: 2.5rem;
+    padding: 0.5rem 1rem;
+
+    --p-button-primary-color: var(--global-blue-color);
+    --p-button-primary-background: transparent;
+    --p-button-border-radius: 0.25rem;
+    --p-button-icon-only-width: 1.5rem;
+    --p-button-primary-active-background: transparent;
+    --p-button-primary-hover-background: transparent;
+
+    .p-button {
+      height: 1.5rem;
+      border: none;
+
+      &:hover {
+        .p-button-icon::before {
+          color: var(--global-blue-3-color);
+        }
+      }
+      &:active,
+      &:focus-visible {
+        .p-button-icon::before {
+          color: var(--global-blue-2-color);
+        }
+      }
+    }
+    .p-button-icon {
+      font-size: 1.5rem;
+
+      &::before {
+        color: var(--global-blue-color);
+      }
+    }
+  }
+}
+
+p-listbox {
+  width: 15rem;
+  padding-top: 0.5rem;
+  border: none;
+  left: 50% !important;
+  transform: translateX(-50%);
+  margin-top: 0.5rem;
+
+  @supports (scrollbar-color: gray white) and (-moz-appearance: none) {
+    .p-listbox-list-container {
+      scrollbar-color: var(--global-light-gray-3-color) var(--global-white-color);
+      scrollbar-width: auto;
+    }
+  }
+  .p-listbox-list-container {
+    &::-webkit-scrollbar {
+      width: 1rem;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 0.5rem;
+      background-color: var(--global-light-gray-3-color);
+      background-clip: padding-box;
+      border: solid transparent 0.3125rem;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+  }
+
+  .p-listbox-option {
+    &:active,
+    &:focus-visible {
+      background: var(--global-light-gray-color);
+      color: var(--global-dark-blue-color);
+      outline: none;
+    }
+    &.p-disabled {
+      color: #66727F;
+    }
+  }
+  .p-menu-start {
+    display: flex;
+    justify-content: space-between;
+    height: 2.5rem;
+    padding: 0.5rem 1rem;
+
+    --p-button-primary-color: var(--global-blue-color);
+    --p-button-primary-background: transparent;
+    --p-button-border-radius: 0.25rem;
+    --p-button-icon-only-width: 1.5rem;
+    --p-button-primary-active-background: transparent;
+    --p-button-primary-hover-background: transparent;
+
+    .p-button {
+      height: 1.5rem;
+      border: none;
+
+      &:hover {
+        .p-button-icon::before {
+          color: var(--global-blue-3-color);
+        }
+      }
+      &:active,
+      &:focus-visible {
+        .p-button-icon::before {
+          color: var(--global-blue-2-color);
+        }
+      }
+    }
+    .p-button-icon {
+      font-size: 1.5rem;
+
+      &::before {
+        color: var(--global-blue-color);
+      }
+    }
+  }
+}
