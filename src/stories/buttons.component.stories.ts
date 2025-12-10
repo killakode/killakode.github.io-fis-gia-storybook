@@ -1,5 +1,98 @@
+// buttons.stories.ts
 import type { Meta, StoryObj } from '@storybook/angular';
 import { ButtonComponent } from '../app/components/buttons/buttons.component';
+
+// Валидные комбинации
+const VALID_COMBINATIONS: Record<string, string[]> = {
+  'blue-button': ['primary'],
+  'white-button': ['secondary'],
+  'noborder-button': ['secondary'],
+  'link-button': [],
+  'white-button-chevron-action': [],
+  'button-icon': ['success', 'secondary', 'danger', 'warn', 'help', 'primary'],
+  'button-icon-no-border-custom': ['success'],
+  'p-button-collapse': [],
+  'button-ellipsis': ['primary', 'secondary'],
+};
+
+// Декоратор для валидации и синхронизации
+const validationDecorator = (story: any, context: any) => {
+  const styleClass = context.args['styleClass'] as string;
+  const severity = context.args['severity'] as string;
+  const validSeverities = VALID_COMBINATIONS[styleClass] || [];
+
+  let wasFixed = false;
+  let originalSeverity = severity;
+
+  // Если severity недопустим для данного styleClass — сбрасываем на первый валидный
+  if (validSeverities.length > 0 && !validSeverities.includes(severity)) {
+    context.args['severity'] = validSeverities[0];
+    wasFixed = true;
+  } else if (validSeverities.length === 0 && severity) {
+    context.args['severity'] = undefined;
+    wasFixed = true;
+  }
+
+  // Если комбинация была исправлена — показываем предупреждение
+  if (wasFixed) {
+    const newSeverity = context.args['severity'];
+    return {
+      template: `
+        <div style="padding: 1rem; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 4px; margin-bottom: 1rem; font-family: system-ui, -apple-system, sans-serif;">
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+            <span style="font-size: 20px;">⚠️</span>
+            <strong style="color: #856404;">Комбинация автоматически исправлена</strong>
+          </div>
+          <p style="margin: 0; color: #856404; line-height: 1.5;">
+            <code style="background: #fff; padding: 2px 6px; border-radius: 3px;">styleClass="${styleClass}"</code>
+            не совместим с
+            <code style="background: #fff; padding: 2px 6px; border-radius: 3px; text-decoration: line-through;">severity="${
+              originalSeverity || 'undefined'
+            }"</code>
+          </p>
+          <p style="margin: 0.5rem 0 0; color: #856404;">
+            ✅ Установлено:
+            <code style="background: #d4edda; padding: 2px 6px; border-radius: 3px; color: #155724; font-weight: bold;">
+              severity="${newSeverity || 'не используется'}"
+            </code>
+          </p>
+          <details style="margin-top: 0.75rem; color: #856404;">
+            <summary style="cursor: pointer; user-select: none;">📋 Допустимые комбинации для ${styleClass}</summary>
+            <ul style="margin: 0.5rem 0 0; padding-left: 1.5rem;">
+              ${
+                validSeverities.length > 0
+                  ? validSeverities
+                      .map((s) => `<li><code>${s}</code></li>`)
+                      .join('')
+                  : '<li><em>severity не используется</em></li>'
+              }
+            </ul>
+          </details>
+        </div>
+        <app-button
+          [label]="label"
+          [severity]="severity"
+          [styleClass]="styleClass"
+          [icon]="icon"
+          [iconPos]="iconPos"
+          [disabled]="disabled"
+          [loading]="loading"
+        />
+      `,
+      props: {
+        label: context.args['label'],
+        severity: context.args['severity'],
+        styleClass: context.args['styleClass'],
+        icon: context.args['icon'],
+        iconPos: context.args['iconPos'],
+        disabled: context.args['disabled'],
+        loading: context.args['loading'],
+      },
+    };
+  }
+
+  return story();
+};
 
 const meta: Meta<ButtonComponent> = {
   title: 'Components/Buttons',
@@ -22,8 +115,6 @@ const meta: Meta<ButtonComponent> = {
 - \`.button-icon\` — с иконкой
 - \`.button-icon-no-border-custom\` — иконка без обводки
 - \`.p-button-collapse\` — кнопка сворачивания
-- \`.button-no-border\` — без border (inline-block)
-- \`.circle-arrow-button\` — с круговой стрелкой
 - \`.button-ellipsis\` — с многоточием при переполнении
         `,
       },
@@ -219,47 +310,6 @@ export const NoBorderButton: Story = {
 
 **Кастомный класс:** \`.noborder-button\`
 **Severity:** \`secondary\`
-        `,
-      },
-    },
-  },
-};
-
-// ========================================
-// 4. LINK BUTTON
-// ========================================
-export const LinkButton: Story = {
-  render: () => ({
-    template: `
-      <div style="display: flex; gap: 1rem; flex-direction: column;">
-        <p-button styleClass="link-button">
-          <i class="pi pi-plus"></i>
-          <span>Добавить экзамен</span>
-        </p-button>
-
-        <p-button styleClass="link-button" [disabled]="true">
-          <i class="pi pi-plus"></i>
-          <span>Disabled state</span>
-        </p-button>
-      </div>
-    `,
-  }),
-  parameters: {
-    docs: {
-      description: {
-        story: `
-**Кнопка-ссылка**
-
-\`\`\`html
-<p-button class="link-button">
-  <i class="pi pi-plus"></i>
-  <span>Добавить экзамен</span>
-</p-button>
-\`\`\`
-
-**Кастомный класс:** \`.link-button\`
-**Severity:** не используется
-**Особенность:** Использует нативную структуру с вложенными элементами
         `,
       },
     },
@@ -493,61 +543,6 @@ export const CollapseButton: Story = {
 };
 
 // ========================================
-// 9. BUTTON ELLIPSIS
-// ========================================
-export const ButtonEllipsis: Story = {
-  args: {
-    label: 'Очень длинный текст кнопки который должен обрезаться многоточием',
-    severity: 'primary',
-    styleClass: 'blue-button button-ellipsis',
-    disabled: false,
-  },
-  argTypes: {
-    severity: {
-      control: false,
-      table: { category: 'PrimeNG Props' },
-    },
-    styleClass: {
-      control: false,
-      description: 'Кастомные классы: `.blue-button .button-ellipsis`',
-      table: {
-        category: 'Custom Classes',
-        defaultValue: { summary: 'blue-button button-ellipsis' },
-      },
-    },
-    label: {
-      control: 'text',
-      table: { category: 'Content' },
-    },
-    disabled: {
-      control: 'boolean',
-      table: { category: 'State' },
-    },
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: `
-**Кнопка с многоточием при переполнении**
-
-\`\`\`html
-<p-button
-  label="Очень длинный текст..."
-  severity="primary"
-  class="blue-button button-ellipsis"
-/>
-\`\`\`
-
-**Кастомный класс:** \`.button-ellipsis\`
-**Комбинируется с:** \`.blue-button\`, \`.white-button\` и др.
-**Особенность:** Текст обрезается с \`text-overflow: ellipsis\`
-        `,
-      },
-    },
-  },
-};
-
-// ========================================
 // 10. ALL STATES
 // ========================================
 export const AllStates: Story = {
@@ -735,9 +730,10 @@ export const AllStates: Story = {
 };
 
 // ========================================
-// 11. PLAYGROUND
+// 11. PLAYGROUND с валидацией
 // ========================================
 export const Playground: Story = {
+  decorators: [validationDecorator],
   args: {
     label: 'Click me',
     severity: 'primary',
@@ -749,20 +745,6 @@ export const Playground: Story = {
     label: {
       control: 'text',
       table: { category: 'Content' },
-    },
-    severity: {
-      control: 'select',
-      options: [
-        'primary',
-        'secondary',
-        'success',
-        'info',
-        'danger',
-        'warn',
-        'help',
-      ],
-      description: '⚠️ Комбинируйте с правильным styleClass!',
-      table: { category: 'PrimeNG Props' },
     },
     styleClass: {
       control: 'select',
@@ -777,11 +759,27 @@ export const Playground: Story = {
         'p-button-collapse',
         'button-ellipsis',
       ],
-      description: 'Выберите кастомный класс кнопки',
+      description:
+        '📦 Выберите кастомный класс кнопки (severity автоматически подстроится)',
       table: {
         category: 'Custom Classes',
         type: { summary: 'string' },
       },
+    },
+    severity: {
+      control: 'select',
+      options: [
+        'primary',
+        'secondary',
+        'success',
+        'info',
+        'danger',
+        'warn',
+        'help',
+      ],
+      description:
+        '⚠️ Автоматически синхронизируется с styleClass через декоратор',
+      table: { category: 'PrimeNG Props' },
     },
     icon: {
       control: 'text',
@@ -807,14 +805,27 @@ export const Playground: Story = {
         story: `
 ## Песочница для экспериментов
 
-**⚠️ Валидные комбинации:**
-- \`blue-button\` + \`severity="primary"\`
-- \`white-button\` + \`severity="secondary"\`
-- \`noborder-button\` + \`severity="secondary"\`
-- \`button-icon\` + \`severity="success|secondary|danger|warn|help|primary"\`
-- \`button-icon-no-border-custom\` + \`severity="success"\`
-- \`link-button\` — без severity
-- \`white-button-chevron-action\` — без severity (или \`severity="primary|secondary"\`)
+**✅ Валидные комбинации контролируются автоматически через декоратор:**
+- При выборе \`styleClass\` автоматически устанавливается правильный \`severity\`
+
+**Таблица валидных комбинаций:**
+
+| styleClass | Допустимые severity |
+|------------|---------------------|
+| \`blue-button\` | \`primary\` |
+| \`white-button\` | \`secondary\` |
+| \`noborder-button\` | \`secondary\` |
+| \`link-button\` | не используется |
+| \`white-button-chevron-action\` | не используется |
+| \`button-icon\` | \`success\`, \`secondary\`, \`danger\`, \`warn\`, \`help\`, \`primary\` |
+| \`button-icon-no-border-custom\` | \`success\` |
+| \`p-button-collapse\` | не используется |
+| \`button-ellipsis\` | \`primary\`, \`secondary\` |
+
+**Попробуйте:**
+1. Выберите \`styleClass="white-button"\` → \`severity\` автоматически станет \`secondary\`
+2. Выберите \`styleClass="link-button"\` → \`severity\` исчезнет
+3. Выберите \`styleClass="button-icon"\` → можете выбрать любой из 6 допустимых severity
         `,
       },
     },
