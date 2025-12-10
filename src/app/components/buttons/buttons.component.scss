@@ -2,55 +2,90 @@
   display: inline-block;
 }
 
+// ========================================
 // Принудительные состояния для Storybook
-// Используем ::ng-deep для проникновения в PrimeNG компоненты
+// ========================================
 
-:host(.force-state-hover) ::ng-deep button:not(:disabled) {
-  // Эмуляция hover
-  --p-button-success-background: var(--global-blue-3-color) !important;
-  --p-button-success-border-color: var(--global-blue-3-color) !important;
-  --p-button-primary-background: var(--global-blue-3-color) !important;
-  --p-button-primary-border-color: var(--global-blue-3-color) !important;
-
-  --p-button-secondary-background: var(--global-light-gray-color-header) !important;
-  --p-button-secondary-border-color: var(--global-blue-3-color) !important;
-  --p-button-secondary-color: var(--global-blue-3-color) !important;
+// Блокировка интерактивности для демо
+:host(.demo-state-locked),
+:host(.demo-state-locked) ::ng-deep .p-button {
+  pointer-events: none !important;
+  cursor: default !important;
 }
 
-:host(.force-state-active) ::ng-deep button:not(:disabled) {
-  // Эмуляция active
-  --p-button-success-background: var(--global-blue-2-color) !important;
-  --p-button-success-border-color: var(--global-blue-2-color) !important;
-  --p-button-primary-background: var(--global-blue-2-color) !important;
-  --p-button-primary-border-color: var(--global-blue-2-color) !important;
+// ========================================
+// BLUE BUTTON STATES
+// ========================================
 
-  --p-button-secondary-background: var(--global-light-gray-color-header) !important;
-  --p-button-secondary-border-color: var(--global-blue-2-color) !important;
-  --p-button-secondary-color: var(--global-blue-2-color) !important;
+// Hover
+.demo-hover-blue .blue-button button:not(:disabled) {
+  background: var(--global-blue-3-color) !important;
+  border-color: var(--global-blue-3-color) !important;
+  color: var(--global-white-color) !important;
 }
 
-:host(.force-state-focus) ::ng-deep button:not(:disabled) {
-  // Эмуляция focus
-  outline: 2px solid var(--global-blue-2-color) !important;
-  outline-offset: 2px !important;
-
-  --p-button-success-background: var(--global-blue-2-color) !important;
-  --p-button-success-border-color: var(--global-blue-2-color) !important;
-  --p-button-primary-background: var(--global-blue-2-color) !important;
-  --p-button-primary-border-color: var(--global-blue-2-color) !important;
-
-  --p-button-secondary-background: var(--global-light-gray-color-header) !important;
-  --p-button-secondary-border-color: var(--global-blue-2-color) !important;
-  --p-button-secondary-color: var(--global-blue-2-color) !important;
+// Active
+.demo-active-blue .blue-button button:not(:disabled) {
+  background: var(--global-blue-2-color) !important;
+  border-color: var(--global-blue-2-color) !important;
+  color: var(--global-white-color) !important;
 }
 
-:host(.force-state-focus-active) ::ng-deep button:not(:disabled) {
-  // Эмуляция focus + active
-  outline: 2px solid var(--global-blue-2-color) !important;
-  outline-offset: 2px !important;
+// Focus
+.demo-focus-blue .blue-button button:not(:disabled) {
+  background: var(--global-blue-2-color) !important;
+  border-color: var(--global-blue-2-color) !important;
+  color: var(--global-white-color) !important;
+}
 
-  --p-button-success-background: var(--global-blue-2-color) !important;
-  --p-button-success-border-color: var(--global-blue-2-color) !important;
-  --p-button-primary-background: var(--global-blue-2-color) !important;
-  --p-button-primary-border-color: var(--global-blue-2-color) !important;
+// ========================================
+// WHITE BUTTON STATES
+// ========================================
+
+// Hover
+.demo-hover-white .white-button button:not(:disabled) {
+  background: var(--global-light-gray-color-header) !important;
+  border-color: var(--global-blue-3-color) !important;
+  color: var(--global-blue-3-color) !important;
+}
+
+// Active
+.demo-active-white .white-button button:not(:disabled) {
+  background: var(--global-light-gray-color-header) !important;
+  border-color: var(--global-blue-2-color) !important;
+  color: var(--global-blue-2-color) !important;
+}
+
+// Focus
+.demo-focus-white .white-button button:not(:disabled) {
+  background: var(--global-light-gray-color-header) !important;
+  border-color: var(--global-blue-2-color) !important;
+  color: var(--global-blue-2-color) !important;
+}
+
+// ========================================
+// NO BORDER BUTTON STATES
+// ========================================
+
+// Hover
+.demo-hover-noborder .noborder-button button:not(:disabled) {
+  background: var(--global-white-color) !important;
+  border-color: var(--global-white-color) !important;
+  color: var(--global-blue-3-color) !important;
+}
+
+// ========================================
+// LINK BUTTON STATES
+// ========================================
+
+// Hover
+.demo-hover-link .link-button button,
+.demo-hover-link .link-button i::before {
+  color: var(--global-blue-3-color) !important;
+}
+
+// Active
+.demo-active-link .link-button button,
+.demo-active-link .link-button i::before {
+  color: var(--global-blue-2-color) !important;
 }

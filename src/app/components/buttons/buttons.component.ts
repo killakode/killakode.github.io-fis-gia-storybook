@@ -1,61 +1,66 @@
-import { Component, Input, HostBinding,ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  Input,
+  HostBinding,
+  ViewEncapsulation,
+} from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
+import { CardModule } from 'primeng/card';
 
-type ButtonSeverity = 'primary' | 'secondary' | 'success' | 'info' | 'danger' | 'warn' | 'help';
-type ButtonVariant = 'default' | 'link' | 'noborder' | 'chevron';
+type ButtonSeverity =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'info'
+  | 'danger'
+  | 'warn'
+  | 'help';
 type IconPosition = 'left' | 'right';
-type ButtonState = 'default' | 'hover' | 'active' | 'focus' | 'focus-active';
 
 @Component({
   selector: 'app-button',
   standalone: true,
-  imports: [CommonModule, ButtonModule],
+  imports: [CommonModule, ButtonModule, CardModule],
   templateUrl: './buttons.component.html',
   styleUrl: './buttons.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class ButtonComponent {
-  @Input() label = 'Button';
+  @Input() label?: string;
   @Input() icon?: string;
   @Input() iconPos: IconPosition = 'left';
-  @Input() severity: ButtonSeverity = 'primary';
-  @Input() outlined = false;
+  @Input() severity?: ButtonSeverity;
   @Input() loading = false;
   @Input() disabled = false;
-  @Input() variant: ButtonVariant = 'default';
-  @Input() state: ButtonState = 'default';
+  @Input() styleClass?: string;
 
-  // Добавляем класс на :host для управления состоянием
+  // Для демо-состояний в Storybook
+  @Input() demoState?: 'hover' | 'active' | 'focus' | 'locked';
+
   @HostBinding('class')
   get hostClasses(): string {
-    return this.state !== 'default' ? `force-state-${this.state}` : '';
-  }
-
-  get buttonClass(): string {
     const classes: string[] = [];
 
-    // Базовые стили по severity
-    if (this.severity === 'primary' && this.variant === 'default') {
-      classes.push('blue-button');
-    }
-    if (this.severity === 'secondary' && this.variant === 'default') {
-      classes.push('white-button');
-    }
+    if (this.demoState) {
+      if (this.styleClass?.includes('blue-button')) {
+        classes.push(`demo-${this.demoState}-blue`);
+      } else if (this.styleClass?.includes('white-button')) {
+        classes.push(`demo-${this.demoState}-white`);
+      } else if (this.styleClass?.includes('noborder-button')) {
+        classes.push(`demo-${this.demoState}-noborder`);
+      } else if (this.styleClass?.includes('link-button')) {
+        classes.push(`demo-${this.demoState}-link`);
+      }
 
-    // Варианты
-    if (this.variant === 'link') {
-      classes.push('link-button');
-    }
-    if (this.variant === 'noborder') {
-      classes.push('noborder-button');
-    }
-    if (this.variant === 'chevron') {
-      classes.push(
-        this.severity === 'primary'
-          ? 'blue-button-chevron-action'
-          : 'white-button-chevron-action'
-      );
+      if (
+        this.demoState === 'locked' ||
+        this.demoState === 'hover' ||
+        this.demoState === 'active' ||
+        this.demoState === 'focus'
+      ) {
+        classes.push('demo-state-locked');
+      }
     }
 
     return classes.join(' ');
