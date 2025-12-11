@@ -1,5 +1,5 @@
 <p-card>
-  <div class="p-floatlabel">
+  <p-floatlabel>
     @if (invalid) {
     <p-message severity="error" [text]="displayErrorMessage" />
     } @if (showIcon) {
@@ -13,6 +13,8 @@
         [readonly]="readonly"
         [class.readonly]="readonly"
         [class.is-invalid]="invalid"
+        [class.ng-dirty]="invalid"
+        [class.ng-invalid]="invalid"
         [value]="value"
         (input)="onInput($event)"
         (blur)="onTouched()"
@@ -28,14 +30,15 @@
       [readonly]="readonly"
       [class.readonly]="readonly"
       [class.is-invalid]="invalid"
+      [class.ng-dirty]="invalid"
+      [class.ng-invalid]="invalid"
       [value]="value"
       (input)="onInput($event)"
       (blur)="onTouched()"
       pInputText
     />
-    }
-    @if (label) {
+    } @if (label) {
     <label [for]="inputId">{{ label }}</label>
     }
-  </div>
+  </p-floatlabel>
 </p-card>

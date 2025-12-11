@@ -1,0 +1,72 @@
+.demo-hover {
+  .p-inputtext {
+    border-color: var(--p-inputtext-hover-border-color) !important;
+    pointer-events: none;
+  }
+}
+
+.demo-focus {
+  .p-inputtext {
+    border-color: var(--p-inputtext-focus-border-color) !important;
+    outline: var(--p-focus-ring);
+    pointer-events: none;
+  }
+}
+
+// ========================================
+// Demo States для Storybook
+// ========================================
+app-input {
+  &.demo-hover {
+    .p-inputtext {
+      border-color: var(--p-inputtext-hover-border-color) !important;
+      pointer-events: none;
+    }
+  }
+
+  &.demo-focus {
+    .p-inputtext {
+      border-color: var(--p-inputtext-focus-border-color) !important;
+      outline: 0 none;
+      outline-offset: 0;
+      box-shadow: var(
+        --p-focus-ring-shadow,
+        0 0 0 0.2rem var(--global-light-blue-3-color)
+      ) !important;
+      pointer-events: none;
+    }
+
+    label {
+      color: var(--p-floatlabel-focus-color) !important;
+    }
+  }
+}
+
+.p-message:has(.p-message-text) {
+  display: block !important;
+}
+
+.p-error {
+  position: relative;
+  //top: 50%;
+  margin-top: 1rem;
+  color: var(--p-form-field-invalid-border-color);
+  margin-left: -1.75rem;
+}
+
+::ng-deep {
+  p-select + * .p-error,
+  p-dropdown + * .p-error,
+  p-multiselect + * .p-error {
+    margin-left: -3.75rem !important;
+  }
+
+  p-date-picker + * .p-error {
+    margin-left: -3.75rem !important;
+    margin-top: 1.75rem;
+  }
+
+  .p-floatlabel > .ng-invalid.ng-dirty + * + label {
+    color: var(--p-form-field-invalid-border-color);
+  }
+}

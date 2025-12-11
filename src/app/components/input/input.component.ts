@@ -23,7 +23,7 @@ import { CardModule } from 'primeng/card';
     MessageModule,
     IconFieldModule,
     InputIconModule,
-    CardModule
+    CardModule,
   ],
   templateUrl: './input.component.html',
   providers: [
