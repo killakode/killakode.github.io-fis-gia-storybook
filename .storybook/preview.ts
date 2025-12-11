@@ -19,6 +19,11 @@ const preview: Preview = {
                 name: 'primeng',
                 order: 'reset, primeng, custom-overrides',
               },
+              csp: {
+                nonce: undefined,
+              },
+
+              unstyled: false,
             },
           },
         }),

@@ -1,0 +1,50 @@
+<p-card>
+  <div
+    #multiselectContainer
+    class="multiselect-container"
+    [pTooltip]="tooltipText"
+    [tooltipPosition]="tooltipPosition"
+    [tooltipDisabled]="!isOverflowing || !showTooltipOnOverflow"
+    tooltipStyleClass="multiselect-overflow-tooltip"
+  >
+    <p-multiselect
+      [options]="options"
+      [optionLabel]="optionLabel"
+      [optionValue]="optionValue"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [showClear]="showClear"
+      [filter]="filter"
+      [appendTo]="appendTo"
+      [display]="display"
+      [maxSelectedLabels]="maxSelectedLabels"
+      [selectionLimit]="selectionLimit"
+      [selectedItemsLabel]="selectedItemsLabel"
+      [showToggleAll]="showToggleAll"
+      [dropdownIcon]="dropdownIcon"
+      [styleClass]="styleClass"
+      [panelStyleClass]="panelStyleClass"
+      [(ngModel)]="value"
+      (onChange)="onValueChange($event)"
+      (onClear)="onValueChange($event)"
+      [panelStyleClass]="!showToggleAll && !filter ? 'hide-ms-header' : ''"
+    >
+      <!-- Кастомная иконка очистки -->
+      <ng-template pTemplate="clearicon">
+        <span class="custom-clear-icon"></span>
+      </ng-template>
+
+      <!-- Кастомная иконка фильтра -->
+      <ng-template *ngIf="filter" pTemplate="filtericon">
+        <span class="icon-search"></span>
+      </ng-template>
+
+      <!-- Кастомный шаблон элемента с переносом текста -->
+      <ng-template let-option pTemplate="item">
+        <div class="multiselect-item-wrapper">
+          <span class="multiselect-item-text">{{ option[optionLabel] }}</span>
+        </div>
+      </ng-template>
+    </p-multiselect>
+  </div>
+</p-card>

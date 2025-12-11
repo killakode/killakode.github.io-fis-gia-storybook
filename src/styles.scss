@@ -14,13 +14,14 @@
 // @import "../src/app/styles/table";
 
 /* You can add global styles to this file, and also import other style files */
-@import '../src/app/fonts/Lato/Lato.css';
+@import "../src/app/fonts/Lato/Lato.css";
 // @import 'bootstrap/dist/css/bootstrap.min.css' layer(bootstrap-dim);
 @import "../node_modules/primeicons/primeicons.css";
 @import "../src/app/fonts/icomoon/icomoon-icons-font.scss";
 // @import 'src/app/styles/primeng-variables.scss';
-@import "../src/app/styles/primeng-variables.scss";
-
+@layer custom-overrides {
+  @import "../src/app/styles/primeng-variables.scss";
+}
 html {
   font-family: var(--global-main-font), sans-serif !important;
 }
