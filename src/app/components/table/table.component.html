@@ -1,67 +1,277 @@
-<p-table
-  [value]="data"
-  [columns]="columns"
-  [showGridlines]="showGridlines"
-  [paginator]="paginator"
-  [rows]="rows"
-  [rowsPerPageOptions]="rowsPerPageOptions"
->
-  <ng-template pTemplate="header" let-columns>
-    <tr>
-      <th
-        *ngFor="let col of columns"
-        [pSortableColumn]="col.sortable ? col.field : null"
-        [style.width]="col.width"
+<p-card>
+  <p-fluid>
+    <!-- ========================================================= -->
+    <!--                          P-TABLE                          -->
+    <!-- ========================================================= -->
+
+    <p-table
+      *ngIf="type === 'table'"
+      [value]="tableValue"
+      [columns]="tableColumns"
+      [frozenColumns]="frozenTableColumns"
+      [paginator]="paginator"
+      [rows]="rows"
+      [rowsPerPageOptions]="rowsPerPageOptions"
+      [totalRecords]="totalRecords"
+      [lazy]="lazy"
+      [loading]="loading"
+      [showCurrentPageReport]="showCurrentPageReport"
+      [currentPageReportTemplate]="currentPageReportTemplate"
+      [showFirstLastIcon]="showFirstLastIcon"
+      [scrollable]="scrollable"
+      [scrollHeight]="scrollHeight"
+      [showGridlines]="showGridlines"
+      [resizableColumns]="resizableColumns"
+      [columnResizeMode]="columnResizeMode"
+      [reorderableColumns]="reorderableColumns"
+      [autoLayout]="autoLayout"
+      [selectionMode]="selectionMode"
+      [(selection)]="selection"
+      [dataKey]="dataKey"
+      styleClass="w-full"
+      pTableTooltip
+    >
+      <!-- HEADER -->
+      <ng-template pTemplate="header" let-cols>
+        <tr>
+          <ng-container *ngFor="let col of cols">
+            <th
+              *ngIf="!resizableColumns"
+              [style.width]="col.width"
+              [pSortableColumn]="col.sortable ? col.field : null"
+            >
+              {{ col.header }}
+              <p-sortIcon *ngIf="col.sortable" [field]="col.field"></p-sortIcon>
+            </th>
+
+            <th
+              *ngIf="resizableColumns"
+              [style.width]="col.width"
+              pResizableColumn
+              [pSortableColumn]="col.sortable ? col.field : null"
+            >
+              {{ col.header }}
+              <p-sortIcon *ngIf="col.sortable" [field]="col.field"></p-sortIcon>
+            </th>
+          </ng-container>
+        </tr>
+
+        <!-- FILTERS -->
+        <tr>
+          <th *ngFor="let col of cols">
+            <ng-container *ngIf="col.filterable">
+              <p-columnFilter
+                [field]="col.field"
+                [type]="col.filterType || 'text'"
+                [showMenu]="false"
+                [showClearButton]="true"
+                matchMode="contains"
+              ></p-columnFilter>
+            </ng-container>
+          </th>
+        </tr>
+      </ng-template>
+
+      <!-- BODY -->
+      <ng-template pTemplate="body" let-row let-cols="columns">
+        <tr>
+          <td *ngFor="let col of cols">
+            <ng-container
+              *ngIf="cellTemplate; else defaultCell"
+              [ngTemplateOutlet]="cellTemplate"
+              [ngTemplateOutletContext]="{ $implicit: row, col: col }"
+            >
+            </ng-container>
+
+            <ng-template #defaultCell>
+              {{ row[col.field] }}
+            </ng-template>
+          </td>
+        </tr>
+      </ng-template>
+
+      <!-- EMPTY -->
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="tableColumns.length" class="text-center">
+            {{ emptyMessage }}
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="paginatorleft" let-state>
+        <div class="paginator-show">Показать:</div>
+      </ng-template>
+      <!-- <ng-template pTemplate="paginatorright" let-state>
+                    <div class="paginator-nums">
+                        {{ state.totalRecords < state.rows ? state.totalRecords : state.rows }} из
+                        {{ state.totalRecords }}
+                    </div>
+          </ng-template> -->
+      <ng-template pTemplate="paginatorfirstpagelinkicon">
+        <span class="icon icon-to-first"></span>
+      </ng-template>
+      <ng-template pTemplate="paginatorlastpagelinkicon">
+        <span class="icon icon-tolast"></span>
+      </ng-template>
+      <ng-template pTemplate="paginatorpreviouspagelinkicon">
+        <span class="icon icon-toleft"></span>
+      </ng-template>
+      <ng-template pTemplate="paginatornextpagelinkicon">
+        <span class="icon icon-toright"></span>
+      </ng-template>
+    </p-table>
+
+    <!-- ========================================================= -->
+    <!--                       P-TREETABLE                         -->
+    <!-- ========================================================= -->
+
+    <p-treeTable
+      *ngIf="type === 'tree'"
+      [value]="treeValue"
+      [columns]="treeColumns"
+      [frozenColumns]="frozenTreeColumns"
+      [paginator]="paginator"
+      [rows]="rows"
+      [rowsPerPageOptions]="rowsPerPageOptions"
+      [totalRecords]="totalRecords"
+      [lazy]="lazy"
+      [loading]="loading"
+      [showCurrentPageReport]="showCurrentPageReport"
+      [currentPageReportTemplate]="currentPageReportTemplate"
+      [showFirstLastIcon]="showFirstLastIcon"
+      [scrollable]="scrollable"
+      [scrollHeight]="scrollHeight"
+      [showGridlines]="showGridlines"
+      [resizableColumns]="resizableColumns"
+      [columnResizeMode]="columnResizeMode"
+      [reorderableColumns]="reorderableColumns"
+      [autoLayout]="autoLayout"
+      [selectionMode]="selectionMode"
+      [(selection)]="selection"
+      [dataKey]="dataKey"
+      styleClass="w-full"
+      pTreeTableTooltip
+    >
+      <!-- HEADER -->
+      <ng-template pTemplate="header" let-cols>
+        <tr>
+          <ng-container *ngFor="let col of cols">
+            <th
+              *ngIf="!resizableColumns"
+              [style.width]="col.width"
+              [ttSortableColumn]="col.sortable ? col.field : null"
+            >
+              {{ col.header }}
+              <p-treeTableSortIcon
+                *ngIf="col.sortable"
+                [field]="col.field"
+              ></p-treeTableSortIcon>
+            </th>
+
+            <th
+              *ngIf="resizableColumns"
+              [style.width]="col.width"
+              pResizableColumn
+              [ttSortableColumn]="col.sortable ? col.field : null"
+            >
+              {{ col.header }}
+              <p-treeTableSortIcon
+                *ngIf="col.sortable"
+                [field]="col.field"
+              ></p-treeTableSortIcon>
+            </th>
+          </ng-container>
+        </tr>
+
+        <!-- FILTERS -->
+        <tr>
+          <th *ngFor="let col of cols">
+            <ng-container *ngIf="col.filterable">
+              <p-columnFilter
+                [field]="col.field"
+                [type]="col.filterType || 'text'"
+                [showMenu]="false"
+                [showClearButton]="true"
+                matchMode="contains"
+              ></p-columnFilter>
+            </ng-container>
+          </th>
+        </tr>
+      </ng-template>
+
+      <!-- BODY -->
+      <ng-template
+        pTemplate="body"
+        let-node
+        let-rowData="rowData"
+        let-cols="columns"
       >
-        {{ col.header }}
-        <p-sortIcon *ngIf="col.sortable" [field]="col.field"></p-sortIcon>
-      </th>
-    </tr>
-    <tr class="column-th" *ngIf="hasFilterableColumns">
-      <th *ngFor="let col of columns">
-        <p-columnFilter
-          *ngIf="col.filterable"
-          [field]="col.field"
-          type="text"
-          [showMenu]="false"
-          matchMode="contains"
-        ></p-columnFilter>
-      </th>
-    </tr>
-  </ng-template>
+        <tr [ttRow]="node">
+          <td *ngFor="let col of cols">
+            <!-- First column: adds toggler -->
+            <ng-container *ngIf="col.field === cols[0].field">
+              <p-treeTableToggler [rowNode]="node">
+                <ng-template pTemplate="togglericon" let-open>
+                  <span
+                    class="p-button-icon-only"
+                    [ngClass]="{ 'to-top': open }"
+                  >
+                    <span class="p-button-icon icon-accordion"></span>
+                  </span>
+                </ng-template>
+              </p-treeTableToggler>
+            </ng-container>
 
-  <ng-template pTemplate="body" let-rowData let-columns="columns">
-    <tr>
-      <td *ngFor="let col of columns">
-        {{ rowData[col.field] }}
-      </td>
-    </tr>
-  </ng-template>
+            <!-- custom cell template -->
+            <ng-container
+              *ngIf="treeCellTemplate; else defaultTreeCell"
+              [ngTemplateOutlet]="treeCellTemplate"
+              [ngTemplateOutletContext]="{
+                $implicit: rowData,
+                col: col,
+                node: node
+              }"
+            >
+            </ng-container>
 
-  <ng-template pTemplate="emptymessage">
-    <tr>
-      <td [attr.colspan]="columns.length" class="text-center">
-        {{ emptyMessage }}
-      </td>
-    </tr>
-  </ng-template>
+            <ng-template #defaultTreeCell>
+              {{ rowData[col.field] }}
+            </ng-template>
+          </td>
+        </tr>
+      </ng-template>
 
-  <ng-template pTemplate="paginatorleft" let-state>
-    <div class="paginator-show">Показать:</div>
-  </ng-template>
-  <!-- <ng-template pTemplate="paginatorright" let-state>
-          <div class="paginator-nums">{{state.rows}} из {{ state.totalRecords }}</div>
-        </ng-template> -->
-  <ng-template pTemplate="paginatorfirstpagelinkicon">
-    <span class="icon icon-to-first"></span>
-  </ng-template>
-  <ng-template pTemplate="paginatorlastpagelinkicon">
-    <span class="icon icon-tolast"></span>
-  </ng-template>
-  <ng-template pTemplate="paginatorpreviouspagelinkicon">
-    <span class="icon icon-toleft"></span>
-  </ng-template>
-  <ng-template pTemplate="paginatornextpagelinkicon">
-    <span class="icon icon-toright"></span>
-  </ng-template>
-</p-table>
+      <!-- EMPTY -->
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="treeColumns.length" class="text-center">
+            {{ emptyMessage }}
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="paginatorleft" let-state>
+        <div class="paginator-show">Показать:</div>
+      </ng-template>
+      <!-- <ng-template pTemplate="paginatorright" let-state>
+                    <div class="paginator-nums">
+                        {{ state.totalRecords < state.rows ? state.totalRecords : state.rows }} из
+                        {{ state.totalRecords }}
+                    </div>
+          </ng-template> -->
+      <ng-template pTemplate="paginatorfirstpagelinkicon">
+        <span class="icon icon-to-first"></span>
+      </ng-template>
+      <ng-template pTemplate="paginatorlastpagelinkicon">
+        <span class="icon icon-tolast"></span>
+      </ng-template>
+      <ng-template pTemplate="paginatorpreviouspagelinkicon">
+        <span class="icon icon-toleft"></span>
+      </ng-template>
+      <ng-template pTemplate="paginatornextpagelinkicon">
+        <span class="icon icon-toright"></span>
+      </ng-template>
+    </p-treeTable>
+  </p-fluid>
+</p-card>
