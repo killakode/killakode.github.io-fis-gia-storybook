@@ -1,0 +1,162 @@
+<!-- accordion.component.html -->
+
+<div class="demo-cont">
+  <p-card>
+    <!-- ОБЫЧНЫЙ АККОРДЕОН -->
+    <p-accordion
+      *ngIf="!config.withExpandableTable"
+      [value]="config.value"
+      [multiple]="config.multiple"
+    >
+      <p-accordion-panel
+        *ngFor="let panel of panels"
+        [value]="panel.value"
+        [disabled]="panel.disabled"
+        [style.pointer-events]="panel.isHeaderOnly ? 'none' : 'auto'"
+      >
+        <p-accordion-header>
+          <ng-container *ngIf="panel.isHeaderOnly; else clickableHeader">
+            <ng-template #toggleicon></ng-template>
+            <span>{{ panel.header }}</span>
+          </ng-container>
+
+          <ng-template #clickableHeader>
+            {{ panel.header }}
+          </ng-template>
+        </p-accordion-header>
+
+        <p-accordion-content>
+          <ng-container
+            *ngIf="panelContent; else defaultContent"
+            [ngTemplateOutlet]="panelContent"
+            [ngTemplateOutletContext]="{ $implicit: panel }"
+          ></ng-container>
+
+          <ng-template #defaultContent>
+            <div style="padding: 0.5rem 0">
+              Контент секции «{{ panel.header }}»
+            </div>
+          </ng-template>
+        </p-accordion-content>
+      </p-accordion-panel>
+    </p-accordion>
+
+    <!-- АККОРДЕОН С ТАБЛИЦЕЙ И РАСКРЫВАЮЩИМИСЯ СТРОКАМИ -->
+    <p-accordion
+      *ngIf="config.withExpandableTable"
+      [value]="config.value"
+      [multiple]="config.multiple"
+    >
+      <p-accordion-panel
+        *ngFor="let group of reportGroups; trackBy: trackByValue"
+        [value]="group.value"
+      >
+        <p-accordion-header>{{ group.name }}</p-accordion-header>
+        <p-accordion-content>
+          <p-table
+            class="accordion-table"
+            [value]="group.reports"
+            dataKey="code"
+            (onRowExpand)="onRowExpand($event)"
+            (onRowCollapse)="onRowCollapse($event)"
+            rowExpandMode="single"
+          >
+            <ng-template pTemplate="body" let-report let-expanded="expanded">
+              <tr>
+                <td class="width-40 nopadding text-center">
+                  <p-button
+                    type="button"
+                    [pRowToggler]="report"
+                    [text]="true"
+                    [icon]="
+                      expanded ? 'icon-accordion to-top' : 'icon-accordion'
+                    "
+                  />
+                </td>
+                <td class="nopadding">{{ report.name }}</td>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="rowexpansion" let-report>
+              <tr>
+                <td class="width-40 nopadding text-center"></td>
+                <td class="nopadding">
+                  <!-- ФОРМА ОТЧЁТА (имитация) -->
+                  <div class="report-form-wrapper">
+                    <h4 class="report-title">
+                      Форма отчёта: {{ report.code }}
+                    </h4>
+
+                    <div class="form-field">
+                      <label>Этап сдачи</label>
+                      <p-select
+                        [(ngModel)]="demoWaveId"
+                        [options]="[
+                          { id: 1, name: 'Этап 1' },
+                          { id: 2, name: 'Этап 2' },
+                          { id: 3, name: 'Этап 3' }
+                        ]"
+                        optionLabel="name"
+                        optionValue="id"
+                        placeholder="Выберите этап"
+                        styleClass="form-select"
+                        [dropdownIcon]="'icon-arrow'"
+                      />
+                    </div>
+
+                    <div class="form-field">
+                      <p class="field-label">
+                        Формировать отчет в разбивке по:
+                      </p>
+                      <div class="radio-group">
+                        <div class="radio-item">
+                          <p-radioButton
+                            [(ngModel)]="demoSeparateBy[report.code]"
+                            [name]="'separateBy_' + report.code"
+                            value="government"
+                            [inputId]="'government_' + report.code"
+                          />
+                          <label [for]="'government_' + report.code">
+                            ОМСУ
+                          </label>
+                        </div>
+                        <div class="radio-item">
+                          <p-radioButton
+                            [(ngModel)]="demoSeparateBy[report.code]"
+                            [name]="'separateBy_' + report.code"
+                            value="area"
+                            [inputId]="'area_' + report.code"
+                          />
+                          <label [for]="'area_' + report.code">АТЕ</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-actions">
+                      <p-button
+                        label="Сформировать"
+                        class="blue-button"
+                        severity="primary"
+                      />
+                      <p-button
+                        label="Сбросить"
+                        severity="secondary"
+                        class="white-button"
+                      />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td [attr.colspan]="2" class="text-center">Нет данных</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-accordion-content>
+      </p-accordion-panel>
+    </p-accordion>
+  </p-card>
+</div>

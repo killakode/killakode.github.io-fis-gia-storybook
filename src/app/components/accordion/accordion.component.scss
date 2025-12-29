@@ -1,0 +1,82 @@
+.p-accordion.p-component .p-accordionpanel .p-accordionheader svg {
+  display: none !important;
+}
+
+.demo-cont {
+  background-color: rgb(236, 240, 248);
+  padding: 1rem;
+}
+
+// accordion.component.scss
+
+.report-form-wrapper {
+  padding: 1rem;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  background: #f8f9fa;
+}
+
+.report-title {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.form-field {
+  margin-bottom: 1rem;
+
+  label,
+  .field-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  .field-label {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.form-select {
+  width: 100%;
+  max-width: 300px;
+}
+
+.radio-group {
+  display: flex;
+  gap: 1rem;
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  label {
+    margin-bottom: 0;
+    cursor: pointer;
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+// Стили для таблицы
+.accordion-table {
+  .width-40 {
+    width: 40px;
+  }
+
+  .nopadding {
+    padding: 0.5rem;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+}
