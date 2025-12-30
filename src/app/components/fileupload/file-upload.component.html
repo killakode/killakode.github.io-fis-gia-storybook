@@ -1,95 +1,92 @@
-<!-- Вариант 1: Upload Field (поле с загрузкой) -->
-<div *ngIf="isUploadField" class="upload-field-container">
-  <p-fileUpload
-    #fileUpload
-    [auto]="false"
-    [multiple]="multiple"
-    [maxFileSize]="maxFileSize"
-    [files]="internalFiles"
-    [chooseIcon]="chooseIcon"
-    [chooseLabel]="chooseLabel"
-    [showUploadButton]="false"
-    [showCancelButton]="false"
-    class="w-100"
-    (onSelect)="handleFileSelect($event)"
-    (onRemove)="handleFileRemove($event, 0)"
-  >
-    <!-- Заголовок с списком файлов -->
-    <ng-template pTemplate="header">
-      <div class="file-list-container" style="width: 100%">
-        @if (files.length > 0) { @for (file of files; track file.name; let i =
-        $index) {
-        <div class="file-row col-auto">
-          <!-- file-info inline -->
-          <div
-            class="d-flex gap-2 align-items-center file-info-file"
-            [pTooltip]="file.name"
-            tooltipPosition="top"
-          >
-            <i
-              class="ext-icon my-2"
-              [ngClass]="getFileIconClass(file.name)"
-            ></i>
-            <div class="d-flex my-2">
-              <div class="file-name">{{ getFileName(file.name) }}</div>
-              <div class="font-weight-light">
-                .{{ getFileExtension(file.name) }}
+<p-card>
+  <div *ngIf="isUploadField" class="upload-field-container">
+    <p-fileUpload
+      #fileUpload
+      [auto]="false"
+      [multiple]="multiple"
+      [maxFileSize]="maxFileSize"
+      [files]="internalFiles"
+      [chooseIcon]="chooseIcon"
+      [chooseLabel]="chooseLabel"
+      [showUploadButton]="false"
+      [showCancelButton]="false"
+      class="w-100"
+      (onSelect)="handleFileSelect($event)"
+      (onRemove)="handleFileRemove($event, 0)"
+    >
+      <ng-template pTemplate="header">
+        <div class="file-list-container" style="width: 100%">
+          @if (files.length > 0) { @for (file of files; track file.name; let i =
+          $index) {
+          <div class="file-row col-auto">
+            <div
+              class="d-flex gap-2 align-items-center file-info-file"
+              [pTooltip]="file.name"
+              tooltipPosition="top"
+            >
+              <i
+                class="ext-icon my-2"
+                [ngClass]="getFileIconClass(file.name)"
+              ></i>
+              <div class="d-flex my-2">
+                <div class="file-name">{{ getFileName(file.name) }}</div>
+                <div class="font-weight-light">
+                  .{{ getFileExtension(file.name) }}
+                </div>
+              </div>
+              <div *ngIf="hasRemove" class="ms-2 d-flex align-items-center">
+                <p-button
+                  [icon]="removeIcon"
+                  [text]="true"
+                  severity="danger"
+                  (onClick)="onRemoveFile($event, i)"
+                />
               </div>
             </div>
-
-            <div *ngIf="hasRemove" class="ms-2 d-flex align-items-center">
-              <p-button
-                [icon]="removeIcon"
-                [text]="true"
-                severity="danger"
-                (onClick)="onRemoveFile($event, i)"
-              />
-            </div>
           </div>
+          } }
         </div>
-        } }
-      </div>
-    </ng-template>
+      </ng-template>
 
-    <!-- Кастомный контент с drag&drop зоной -->
-    <ng-template pTemplate="content">
-      <div
-        class="d-flex align-items-center justify-content-center flex-column file-upload-content"
-      >
-        <span
-          class="d-flex align-items-center justify-content-center flex-column gap-1"
+      <ng-template pTemplate="content">
+        <div
+          class="d-flex align-items-center justify-content-center flex-column file-upload-content"
         >
-          <p>{{ uploadHintText }}</p>
-          <p>{{ maxFileSizeText }}</p>
-        </span>
-        <button type="button" class="p-button" (click)="fileUpload.choose()">
-          <span [class]="chooseIcon"></span> {{ chooseLabel }}
-        </button>
-      </div>
-    </ng-template>
+          <span
+            class="d-flex align-items-center justify-content-center flex-column gap-1"
+          >
+            <p>{{ uploadHintText }}</p>
+            <p>{{ maxFileSizeText }}</p>
+          </span>
+          <button type="button" class="p-button" (click)="fileUpload.choose()">
+            <span [class]="chooseIcon"></span> {{ chooseLabel }}
+          </button>
+        </div>
+      </ng-template>
 
-    <!-- Пустой темплейт file -->
-    <ng-template pTemplate="file"></ng-template>
-  </p-fileUpload>
-</div>
+      <ng-template pTemplate="file"></ng-template>
+    </p-fileUpload>
+  </div>
 
-<!-- Вариант 2: File List (отображение файлов) -->
-<div *ngIf="isFileList" class="file-list-view">
-  <!-- ✅ ВАЖНО: класс change-request-files-list для flex-wrap -->
-  <div class="d-flex flex-wrap gap-3 change-request-files-list" *ngIf="files.length > 0">
-    @for (file of files; track file.name; let i = $index) {
-      <!-- ✅ file-row теперь auto width -->
+  <div *ngIf="isFileList" class="file-list-view">
+    <div
+      class="d-flex flex-wrap gap-3 change-request-files-list"
+      *ngIf="files.length > 0"
+    >
+      @for (file of files; track file.name; let i = $index) {
       <div class="file-row">
-        <!-- file-info inline -->
-        <div class="d-flex gap-2 align-items-center file-info-file"
-             [pTooltip]="file.name"
-             tooltipPosition="top">
+        <div
+          class="d-flex gap-2 align-items-center file-info-file"
+          [pTooltip]="file.name"
+          tooltipPosition="top"
+        >
           <i class="ext-icon my-2" [ngClass]="getFileIconClass(file.name)"></i>
           <div class="d-flex my-2">
             <div class="file-name">{{ getFileName(file.name) }}</div>
-            <div class="font-weight-light">.{{ getFileExtension(file.name) }}</div>
+            <div class="font-weight-light">
+              .{{ getFileExtension(file.name) }}
+            </div>
           </div>
-
           <div *ngIf="hasRemove" class="ms-2 d-flex align-items-center">
             <p-button
               [icon]="removeIcon"
@@ -100,17 +97,15 @@
           </div>
         </div>
       </div>
-    }
+      }
+    </div>
+
+    <div class="empty-state" *ngIf="files.length === 0">
+      <p style="color: #999; margin: 0">Нет файлов для отображения</p>
+    </div>
   </div>
+</p-card>
 
-  <!-- Пустое состояние -->
-  <div class="empty-state" *ngIf="files.length === 0">
-    <p style="color: #999; margin: 0;">Нет файлов для отображения</p>
-  </div>
-</div>
-
-
-<!-- Вариант 3: Button with Dialog -->
 <div *ngIf="isButtonWithDialog" class="button-with-dialog-container">
   <p-button
     [label]="dialogButtonLabel"
@@ -142,13 +137,11 @@
       (onSelect)="handleFileSelect($event)"
       (onRemove)="handleFileRemove($event, 0)"
     >
-      <!-- Заголовок с списком файлов -->
       <ng-template pTemplate="header">
         <div class="file-list-container" style="width: 100%">
           @if (files.length > 0) { @for (file of files; track file.name; let i =
           $index) {
           <div class="file-row col-auto">
-            <!-- file-info inline -->
             <div
               class="d-flex gap-2 align-items-center file-info-file"
               [pTooltip]="file.name"
@@ -164,7 +157,6 @@
                   .{{ getFileExtension(file.name) }}
                 </div>
               </div>
-
               <div *ngIf="hasRemove" class="ms-2 d-flex align-items-center">
                 <p-button
                   [icon]="removeIcon"
@@ -179,7 +171,6 @@
         </div>
       </ng-template>
 
-      <!-- Кастомный контент -->
       <ng-template pTemplate="content">
         <div
           class="d-flex align-items-center justify-content-center flex-column file-upload-content"
@@ -200,7 +191,6 @@
         </div>
       </ng-template>
 
-      <!-- Пустой темплейт file -->
       <ng-template pTemplate="file"></ng-template>
     </p-fileUpload>
   </p-dialog>

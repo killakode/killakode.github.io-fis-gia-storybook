@@ -14,30 +14,17 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { TooltipModule } from 'primeng/tooltip';
 import { Component, Input } from '@angular/core';
 
-// Вспомогательный компонент для демонстрации интерактивности
 @Component({
   selector: 'demo-file-upload-wrapper',
   standalone: true,
   imports: [CommonModule, FileUploadComponent, FieldsetModule, DialogModule],
   template: `
-    <div [innerHTML]="styleTag"></div>
-
+    <!-- Вариант: Button with Dialog -->
     <div *ngIf="variant === 'button-with-dialog'" class="demo-body-container">
       <div class="demo-body-content">
         <div class="demo-body-header">
           <h2>📤 {{ headerTitle }}</h2>
           <p>{{ headerDescription }}</p>
-        </div>
-
-        <!-- ОТЛАДОЧНАЯ ИНФОРМАЦИЯ -->
-        <div
-          style="margin-bottom: 1rem; padding: 1rem; background: #fff3cd; border: 1px solid #ffc107; border-radius: 0.25rem;"
-        >
-          <strong>🐛 Отладка:</strong>
-          <div>
-            Текущий массив uploadedFiles: {{ uploadedFiles.length }} файлов
-          </div>
-          <div *ngIf="uploadedFiles.length > 0">Файлы: {{ fileNames }}</div>
         </div>
 
         <app-file-upload
@@ -68,18 +55,8 @@ import { Component, Input } from '@angular/core';
       </div>
     </div>
 
+    <!-- Вариант: Upload Field -->
     <div *ngIf="variant === 'upload-field'">
-      <!-- ОТЛАДОЧНАЯ ИНФОРМАЦИЯ -->
-      <div
-        style="margin-bottom: 1rem; padding: 1rem; background: #fff3cd; border: 1px solid #ffc107; border-radius: 0.25rem; max-width: 50rem;"
-      >
-        <strong>🐛 Отладка:</strong>
-        <div>
-          Текущий массив uploadedFiles: {{ uploadedFiles.length }} файлов
-        </div>
-        <div *ngIf="uploadedFiles.length > 0">Файлы: {{ fileNames }}</div>
-      </div>
-
       <p-fieldset [legend]="legend" [style]="{ width: '50rem' }">
         <app-file-upload
           [variant]="variant"
@@ -107,18 +84,8 @@ import { Component, Input } from '@angular/core';
       </div>
     </div>
 
+    <!-- Вариант: File List -->
     <div *ngIf="variant === 'file-list'">
-      <!-- ОТЛАДОЧНАЯ ИНФОРМАЦИЯ -->
-      <div
-        style="margin-bottom: 1rem; padding: 1rem; background: #fff3cd; border: 1px solid #ffc107; border-radius: 0.25rem; max-width: 50rem;"
-      >
-        <strong>🐛 Отладка:</strong>
-        <div>
-          Текущий массив uploadedFiles: {{ uploadedFiles.length }} файлов
-        </div>
-        <div *ngIf="uploadedFiles.length > 0">Файлы: {{ fileNames }}</div>
-      </div>
-
       <p-fieldset [legend]="legend" [style]="{ width: '50rem' }">
         <app-file-upload
           [variant]="variant"
@@ -129,6 +96,44 @@ import { Component, Input } from '@angular/core';
       </p-fieldset>
     </div>
   `,
+  styles: [
+    `
+      .demo-body-container {
+        min-height: 600px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        padding: 3rem;
+        border-radius: 0.5rem;
+        box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+
+      .demo-body-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .demo-body-header {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #e0e0e0;
+      }
+
+      .demo-body-header h2 {
+        margin: 0 0 0.5rem 0;
+        color: #333;
+      }
+
+      .demo-body-header p {
+        margin: 0;
+        color: #666;
+        font-size: 0.875rem;
+      }
+    `,
+  ],
 })
 class DemoFileUploadWrapperComponent {
   @Input() variant: 'upload-field' | 'file-list' | 'button-with-dialog' =
@@ -142,86 +147,28 @@ class DemoFileUploadWrapperComponent {
   @Input() legend: string = 'Загрузка файлов';
   @Input() headerTitle: string = 'Загрузка файлов';
   @Input() headerDescription: string = 'Демонстрация компонента';
-  @Input() styleTag: string = '';
 
   uploadedFiles: FileUploadItem[] = [];
 
-  /**
-   * Геттер для отображения списка имён файлов
-   */
-  get fileNames(): string {
-    return this.uploadedFiles.map((f) => f.name).join(', ');
-  }
-
   ngOnInit() {
-    console.log('🎬 [Wrapper] ngOnInit вызван');
-    console.log('📋 [Wrapper] initialFiles:', this.initialFiles);
     this.uploadedFiles = [...this.initialFiles];
-    console.log(
-      '📦 [Wrapper] uploadedFiles после инициализации:',
-      this.uploadedFiles
-    );
   }
 
   handleUpload(event: any) {
-    console.log('📤 [Wrapper] handleUpload вызван');
-    console.log('📦 [Wrapper] Событие:', event);
-    console.log('📁 [Wrapper] Файлы из события:', event.files);
-
-    // ✅ ИСПРАВЛЕНИЕ: Конвертируем FileList в массив
     const filesArray = Array.from(event.files || []) as File[];
-    console.log('📋 [Wrapper] Файлы после конвертации в массив:', filesArray);
-
-    const newFiles = filesArray.map((f: File) => {
-      console.log(
-        '🔄 [Wrapper] Обработка файла:',
-        f.name,
-        'размер:',
-        f.size,
-        'тип:',
-        f.type
-      );
-      return {
-        id: Math.random().toString(36).substr(2, 9),
-        name: f.name,
-        size: f.size,
-        type: f.type,
-      };
-    });
-
-    console.log('📋 [Wrapper] Новые файлы для добавления:', newFiles);
-    console.log(
-      '📋 [Wrapper] uploadedFiles ДО обновления:',
-      this.uploadedFiles
-    );
-
+    const newFiles = filesArray.map((f: File) => ({
+      id: Math.random().toString(36).substr(2, 9),
+      name: f.name,
+      size: f.size,
+      type: f.type,
+    }));
     this.uploadedFiles = [...this.uploadedFiles, ...newFiles];
-
-    console.log(
-      '📋 [Wrapper] uploadedFiles ПОСЛЕ обновления:',
-      this.uploadedFiles
-    );
-    console.log('✅ [Wrapper] handleUpload завершён');
   }
 
   handleRemove(event: any) {
-    console.log('🗑️ [Wrapper] handleRemove вызван');
-    console.log('📦 [Wrapper] Событие:', event);
-    console.log('🔢 [Wrapper] Индекс для удаления:', event.index);
-    console.log('📋 [Wrapper] uploadedFiles ДО удаления:', this.uploadedFiles);
-
     this.uploadedFiles = this.uploadedFiles.filter((_, i) => i !== event.index);
-
-    console.log(
-      '📋 [Wrapper] uploadedFiles ПОСЛЕ удаления:',
-      this.uploadedFiles
-    );
-    console.log('✅ [Wrapper] handleRemove завершён');
   }
 
-  /**
-   * Форматирование размера файла
-   */
   formatFileSize(bytes?: number): string {
     if (!bytes) return '0 B';
     if (bytes < 1024) return bytes + ' B';
@@ -278,7 +225,7 @@ const meta: Meta<FileUploadComponent> = {
     },
     auto: {
       control: 'boolean',
-      table: { category: 'Behavior', defaultValue: { summary: 'true' } },
+      table: { category: 'Behavior', defaultValue: { summary: 'false' } },
     },
     hasRemove: {
       control: 'boolean',
@@ -337,7 +284,6 @@ export default meta;
 type Story = StoryObj<FileUploadComponent>;
 
 const mockFiles: FileUploadItem[] = [
-  // Документы
   {
     id: '1',
     name: 'Приказ_123.pdf',
@@ -352,15 +298,7 @@ const mockFiles: FileUploadItem[] = [
     type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     url: '#',
   },
-  {
-    id: '3',
-    name: 'Заметки.txt',
-    size: 512000,
-    type: 'text/plain',
-    url: '#',
-  },
-
-  // Таблицы
+  { id: '3', name: 'Заметки.txt', size: 512000, type: 'text/plain', url: '#' },
   {
     id: '4',
     name: 'Отчёт_2024.xlsx',
@@ -368,15 +306,7 @@ const mockFiles: FileUploadItem[] = [
     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     url: '#',
   },
-  {
-    id: '5',
-    name: 'Данные.csv',
-    size: 1048576,
-    type: 'text/csv',
-    url: '#',
-  },
-
-  // Изображения
+  { id: '5', name: 'Данные.csv', size: 1048576, type: 'text/csv', url: '#' },
   {
     id: '6',
     name: 'Скан_паспорта.jpg',
@@ -391,8 +321,6 @@ const mockFiles: FileUploadItem[] = [
     type: 'image/png',
     url: '#',
   },
-
-  // Архивы
   {
     id: '8',
     name: 'Документы_2024.zip',
@@ -407,8 +335,6 @@ const mockFiles: FileUploadItem[] = [
     type: 'application/x-rar-compressed',
     url: '#',
   },
-
-  // Презентации
   {
     id: '10',
     name: 'Презентация.pptx',
@@ -416,8 +342,6 @@ const mockFiles: FileUploadItem[] = [
     type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
     url: '#',
   },
-
-  // Видео
   {
     id: '11',
     name: 'Инструкция.mp4',
@@ -427,48 +351,15 @@ const mockFiles: FileUploadItem[] = [
   },
 ];
 
-const demoBodyStyles = `
-  .demo-body-container {
-    min-height: 600px;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    padding: 3rem;
-    border-radius: 0.5rem;
-    box-shadow: inset 0 2px 8px rgba(0,0,0,0.1);
-    position: relative;
-  }
-  .demo-body-content {
-    background: white;
-    padding: 2rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  .demo-body-header {
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid #e0e0e0;
-  }
-  .demo-body-header h2 {
-    margin: 0 0 0.5rem 0;
-    color: #333;
-  }
-  .demo-body-header p {
-    margin: 0;
-    color: #666;
-    font-size: 0.875rem;
-  }
-`;
-
 /**
  * # 🎮 Playground
  */
 export const Playground: Story = {
   args: {
-    variant: 'upload-field',
-    files: [],
+    variant: 'file-list',
+    files: mockFiles,
     multiple: true,
-    auto: true,
+    auto: false,
     hasRemove: true,
     dialogButtonLabel: 'Загрузить файлы',
     dialogHeader: 'Загрузка документов',
@@ -485,7 +376,6 @@ export const Playground: Story = {
         [dialogButtonLabel]="dialogButtonLabel"
         [dialogHeader]="dialogHeader"
         legend="Загрузка файлов"
-        [styleTag]="'<style>${demoBodyStyles}</style>'"
       ></demo-file-upload-wrapper>
     `,
   }),
@@ -499,7 +389,7 @@ export const ButtonWithDialog: Story = {
     variant: 'button-with-dialog',
     files: [],
     multiple: true,
-    auto: true,
+    auto: false,
     hasRemove: true,
     dialogButtonLabel: 'Загрузить документы',
     dialogHeader: 'Загрузка файлов',
@@ -517,7 +407,6 @@ export const ButtonWithDialog: Story = {
         [dialogHeader]="dialogHeader"
         headerTitle="Компактный вариант загрузки файлов"
         headerDescription="Нажмите кнопку ниже, чтобы открыть модальное окно с загрузкой файлов. Модальное окно откроется поверх этого контейнера (в body)"
-        [styleTag]="'<style>${demoBodyStyles}</style>'"
       ></demo-file-upload-wrapper>
     `,
   }),
@@ -531,7 +420,7 @@ export const ButtonWithDialogWithFiles: Story = {
     variant: 'button-with-dialog',
     files: mockFiles,
     multiple: true,
-    auto: true,
+    auto: false,
     hasRemove: true,
     dialogButtonLabel: 'Управление файлами',
     dialogHeader: 'Загруженные документы',
@@ -548,8 +437,7 @@ export const ButtonWithDialogWithFiles: Story = {
         [dialogButtonLabel]="dialogButtonLabel"
         [dialogHeader]="dialogHeader"
         headerTitle="Управление загруженными файлами"
-        headerDescription="Загружено файлов: 3. Откройте диалог, чтобы увидеть список файлов и добавить новые."
-        [styleTag]="'<style>${demoBodyStyles}</style>'"
+        headerDescription="Загружено файлов: ${mockFiles.length}. Откройте диалог, чтобы увидеть список файлов и добавить новые."
       ></demo-file-upload-wrapper>
     `,
   }),
@@ -563,7 +451,7 @@ export const UploadFieldInFieldset: Story = {
     variant: 'upload-field',
     files: [],
     multiple: true,
-    auto: true,
+    auto: false,
     hasRemove: true,
   },
   render: (args) => ({
@@ -589,7 +477,7 @@ export const UploadFieldWithFilesInFieldset: Story = {
     variant: 'upload-field',
     files: mockFiles,
     multiple: true,
-    auto: true,
+    auto: false,
     hasRemove: true,
   },
   render: (args) => ({
@@ -601,7 +489,7 @@ export const UploadFieldWithFilesInFieldset: Story = {
         [multiple]="multiple"
         [auto]="auto"
         [hasRemove]="hasRemove"
-        legend="Загруженные документы (3)"
+        legend="Загруженные документы (${mockFiles.length})"
       ></demo-file-upload-wrapper>
     `,
   }),
@@ -675,12 +563,49 @@ export const FileListEmpty: Story = {
 };
 
 /**
+ * # 📁 Все типы файлов
+ */
+export const AllFileTypes: Story = {
+  args: {
+    variant: 'file-list',
+    files: mockFiles,
+    hasRemove: false,
+  },
+  render: (args) => ({
+    props: args,
+    template: `
+      <p-fieldset
+        legend="Примеры всех типов файлов"
+        [style]="{ width: '50rem' }"
+      >
+        <app-file-upload
+          variant="file-list"
+          [files]="files"
+          [hasRemove]="hasRemove"
+        ></app-file-upload>
+      </p-fieldset>
+
+      <div style="margin-top: 2rem; padding: 1rem; background: #f5f7fa; border-radius: 0.25rem; max-width: 50rem;">
+        <h4 style="margin: 0 0 1rem 0;">Поддерживаемые типы файлов:</h4>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; font-size: 0.875rem;">
+          <div><strong>📄 Документы:</strong> PDF, DOC, DOCX, TXT, RTF</div>
+          <div><strong>📊 Таблицы:</strong> XLS, XLSX, CSV, ODS</div>
+          <div><strong>📽️ Презентации:</strong> PPT, PPTX, PPS, KEY</div>
+          <div><strong>🖼️ Изображения:</strong> JPG, PNG, GIF, BMP, TIF, PCX</div>
+          <div><strong>📦 Архивы:</strong> ZIP, RAR</div>
+          <div><strong>🎥 Видео:</strong> AVI, MP4, FLV, MKV, MOV, MPG</div>
+        </div>
+      </div>
+    `,
+  }),
+};
+
+/**
  * # 📊 Сравнение всех вариантов
  */
 export const AllVariantsComparison: Story = {
   render: () => ({
     template: `
-      <style>${demoBodyStyles}</style>
       <div style="display: flex; flex-direction: column; gap: 3rem; padding: 2rem;">
 
         <div>
@@ -695,7 +620,6 @@ export const AllVariantsComparison: Story = {
             dialogHeader="Загрузка документов"
             headerTitle="Форма заявки"
             headerDescription="Нажмите кнопку для загрузки файлов"
-            [styleTag]="''"
           ></demo-file-upload-wrapper>
         </div>
 
@@ -755,44 +679,6 @@ export const AllVariantsComparison: Story = {
           </p-fieldset>
         </div>
 
-      </div>
-    `,
-  }),
-};
-
-/**
- * # 📁 Все типы файлов
- */
-export const AllFileTypes: Story = {
-  args: {
-    variant: 'file-list',
-    files: mockFiles,
-    hasRemove: false,
-  },
-  render: (args) => ({
-    props: args,
-    template: `
-      <p-fieldset
-        legend="Примеры всех типов файлов"
-        [style]="{ width: '50rem' }"
-      >
-        <app-file-upload
-          variant="file-list"
-          [files]="files"
-          [hasRemove]="hasRemove"
-        ></app-file-upload>
-      </p-fieldset>
-
-      <div style="margin-top: 2rem; padding: 1rem; background: #f5f7fa; border-radius: 0.25rem; max-width: 50rem;">
-        <h4 style="margin: 0 0 1rem 0;">Поддерживаемые типы файлов:</h4>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; font-size: 0.875rem;">
-          <div><strong>📄 Документы:</strong> PDF, DOC, DOCX, TXT, RTF</div>
-          <div><strong>📊 Таблицы:</strong> XLS, XLSX, CSV, ODS</div>
-          <div><strong>📽️ Презентации:</strong> PPT, PPTX, PPS, KEY</div>
-          <div><strong>🖼️ Изображения:</strong> JPG, PNG, GIF, BMP, TIF, PCX</div>
-          <div><strong>📦 Архивы:</strong> ZIP, RAR</div>
-          <div><strong>🎥 Видео:</strong> AVI, MP4, FLV, MKV, MOV, MPG</div>
-        </div>
       </div>
     `,
   }),
