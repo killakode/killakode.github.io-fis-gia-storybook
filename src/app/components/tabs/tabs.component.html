@@ -1,0 +1,179 @@
+<!-- Обёртка в p-card (автоматическая или принудительная) -->
+<ng-container *ngIf="shouldShowCard; else noCard">
+  <p-card>
+    <ng-container *ngTemplateOutlet="tabsContent"></ng-container>
+  </p-card>
+</ng-container>
+
+<ng-template #noCard>
+  <ng-container *ngTemplateOutlet="tabsContent"></ng-container>
+</ng-template>
+
+<!-- ============================================ -->
+<!-- ОСНОВНОЕ СОДЕРЖИМОЕ ТАБОВ -->
+<!-- ============================================ -->
+<ng-template #tabsContent>
+  <!-- ============================================ -->
+  <!-- ВАРИАНТ 1: СТАНДАРТНЫЕ ТАБЫ (p-tabs) -->
+  <!-- Основные табы на странице -->
+  <!-- styleClass="tabview" -->
+  <!-- ============================================ -->
+  <div *ngIf="currentVariant === 'standard'">
+    <p-tabs
+      [class]="containerClass"
+      [value]="activeTab"
+      (onChange)="onTabChange($event)"
+    >
+      <p-tablist>
+        <p-tab
+          *ngFor="let tab of tabs; trackBy: trackByValue"
+          [value]="tab.value"
+          [disabled]="tab.disabled"
+        >
+          <span>
+            <i *ngIf="tab.icon" [class]="tab.icon"></i>
+            {{ tab.label }}
+            <span *ngIf="tab.errorCount" class="p-error p-error-exclamation">
+              {{ tab.errorCount }}
+            </span>
+          </span>
+        </p-tab>
+      </p-tablist>
+
+      <p-tabpanels>
+        <p-tabpanel
+          *ngFor="let tab of tabs; trackBy: trackByValue"
+          [value]="tab.value"
+        >
+          <div class="tab-content-demo">
+            <h3>{{ tab.label }}</h3>
+            <p>Это содержимое вкладки "{{ tab.label }}".</p>
+            <p *ngIf="tab.disabled">⚠️ Эта вкладка заблокирована</p>
+            <p *ngIf="tab.errorCount">
+              🔴 Обнаружено ошибок: {{ tab.errorCount }}
+            </p>
+            <div class="code-example">
+              <strong>Пример использования:</strong>
+              <pre><code>&lt;p-tabs styleClass="tabview" [value]="selectedTabHeader"&gt;
+  &lt;p-tabpanels&gt;
+    &lt;p-tabpanel [value]="0"&gt;...&lt;/p-tabpanel&gt;
+  &lt;/p-tabpanels&gt;
+&lt;/p-tabs&gt;</code></pre>
+            </div>
+          </div>
+        </p-tabpanel>
+      </p-tabpanels>
+    </p-tabs>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- ВАРИАНТ 2: SELECT BUTTON (p-selectButton) -->
+  <!-- Табы внутри карточки, компонент -->
+  <!-- class="datatable-tabs" -->
+  <!-- ============================================ -->
+  <div *ngIf="currentVariant === 'select-button'">
+    <p-selectButton
+      [options]="selectButtonOptions"
+      [(ngModel)]="activeTab"
+      (onChange)="onSelectButtonChange($event)"
+      [class]="containerClass"
+    >
+      <ng-template let-item pTemplate>
+        <span>
+          <i *ngIf="item.icon" [class]="item.icon"></i>
+          {{ item.label }}
+          <span
+            *ngIf="getTabErrorCount(item.value)"
+            class="p-error p-error-exclamation"
+          >
+            {{ getTabErrorCount(item.value) }}
+          </span>
+        </span>
+      </ng-template>
+    </p-selectButton>
+
+    <div class="tab-content-demo mt-3">
+      <ng-container *ngFor="let tab of tabs; trackBy: trackByValue">
+        <div *ngIf="activeTab === tab.value">
+          <h3>{{ tab.label }}</h3>
+          <p>Это содержимое вкладки "{{ tab.label }}".</p>
+          <p *ngIf="tab.disabled">⚠️ Эта вкладка заблокирована</p>
+          <p *ngIf="tab.errorCount">
+            🔴 Обнаружено ошибок: {{ tab.errorCount }}
+          </p>
+          <div class="code-example">
+            <strong>Пример использования:</strong>
+            <pre><code>&lt;p-selectButton
+  class="datatable-tabs"
+  [options]="options"
+  [(ngModel)]="selectedValue"
+&gt;&lt;/p-selectButton&gt;</code></pre>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- ВАРИАНТ 3: ТАБЫ КАК В КАРТОЧКЕ (p-tabs) -->
+  <!-- Табы как в карточке, компонент -->
+  <!-- class="datatable-tabs" на p-tablist -->
+  <!-- ============================================ -->
+  <div *ngIf="currentVariant === 'tabs-in-card'">
+    <p-tabs
+      styleClass="tabview"
+      [value]="activeTab"
+      (onChange)="onTabChange($event)"
+    >
+      <p-tablist [class]="containerClass">
+        <p-tab
+          *ngFor="let tab of tabs; trackBy: trackByValue"
+          [value]="tab.value"
+          [disabled]="tab.disabled"
+        >
+          <ng-container *ngIf="iconOnly; else tabsInCardLabel">
+            <i [class]="tab.icon + ' icon-only'"></i>
+          </ng-container>
+          <ng-template #tabsInCardLabel>
+            <span>
+              <i *ngIf="tab.icon" [class]="tab.icon"></i>
+              {{ tab.label }}
+              <span *ngIf="tab.errorCount" class="p-error p-error-exclamation">
+                {{ tab.errorCount }}
+              </span>
+            </span>
+          </ng-template>
+        </p-tab>
+      </p-tablist>
+
+      <p-tabpanels>
+        <p-tabpanel
+          *ngFor="let tab of tabs; trackBy: trackByValue"
+          [value]="tab.value"
+        >
+          <div class="tab-content-demo">
+            <h3>{{ tab.label }}</h3>
+            <p>Это содержимое вкладки "{{ tab.label }}".</p>
+            <p *ngIf="tab.disabled">⚠️ Эта вкладка заблокирована</p>
+            <p *ngIf="tab.errorCount">
+              🔴 Обнаружено ошибок: {{ tab.errorCount }}
+            </p>
+            <div class="code-example">
+              <strong>Пример использования:</strong>
+              <pre><code>&lt;p-tabs styleClass="tabview" value="0"&gt;
+  &lt;p-tablist class="datatable-tabs"&gt;
+    &lt;p-tab value="0"&gt;Сводные данные&lt;/p-tab&gt;
+    &lt;p-tab value="1"&gt;Предупреждения&lt;/p-tab&gt;
+  &lt;/p-tablist&gt;
+  &lt;p-tabpanels&gt;
+    &lt;p-tabpanel value="0"&gt;&lt;/p-tabpanel&gt;
+    &lt;p-tabpanel value="1"&gt;&lt;/p-tabpanel&gt;
+  &lt;/p-tabpanels&gt;
+&lt;/p-tabs&gt;</code></pre>
+            </div>
+          </div>
+        </p-tabpanel>
+      </p-tabpanels>
+    </p-tabs>
+  </div>
+</ng-template>
