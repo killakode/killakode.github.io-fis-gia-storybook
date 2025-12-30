@@ -1,14 +1,22 @@
 /* ============================================================
    Устанавливаем порядок слоёв (ОБЯЗАТЕЛЬНО ПЕРВОЙ СТРОКОЙ)
    ============================================================ */
-@layer reset, primeng, custom-overrides;
+// @layer reset, bootstrap, primeng, custom-overrides;
 
 /* ============================================================
    Подключаем baseline ресурсы (БЕЗ layer!)
+   Шрифты и иконки обычно не нужно класть в layers
    ============================================================ */
 @import "../src/app/fonts/Lato/Lato.css";
 @import "../node_modules/primeicons/primeicons.css";
 @import "../src/app/fonts/icomoon/icomoon-icons-font.scss";
+
+/* ============================================================
+   Bootstrap в отдельный layer
+   ============================================================ */
+@layer bootstrap {
+  @import "../node_modules/bootstrap/scss/bootstrap.scss";
+}
 
 /* ============================================================
    ВСЕ кастомные стили ДОЛЖНЫ быть строго в layer(custom-overrides)
@@ -18,15 +26,11 @@
 
   html {
     font-family: var(--global-main-font), sans-serif !important;
-  }
-
-  * {
+    font-size: 16px;
     box-sizing: border-box;
   }
 
-  html {
-    font-size: 16px;
-    font-family: "Lato", sans-serif !important;
+  * {
     box-sizing: border-box;
   }
 
@@ -77,9 +81,6 @@
       left: 50%;
       transform: translate(-50%, -50%);
     }
-  }
-
-  .p-tooltip {
   }
 
   legend {

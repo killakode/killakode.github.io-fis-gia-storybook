@@ -1,0 +1,277 @@
+// ========================================
+// File Upload Component Styles
+// ========================================
+
+// Основной контейнер для списка файлов
+.file-list-container {
+  display: flex;
+  flex-wrap: wrap; // ← автоматический перенос на новую строку
+  gap: 0.75rem;
+  width: 100%;
+}
+
+// Строка файла - занимает только необходимое пространство
+.file-row {
+  width: auto; // ← auto вместо 100%
+  display: inline-flex;
+}
+
+// Информация о файле (inline карточка)
+.file-info-file {
+  padding: 0.6875rem 0.75rem 0.6875rem 1.25rem;
+  border: 0.0625rem solid var(--global-light-gray-2-color, #e0e0e0);
+  border-radius: 0.25rem;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:hover {
+    border-color: var(--global-blue-color, #007bff);
+  }
+}
+
+// Имя файла
+.file-name {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 250px;
+}
+
+// Иконка типа файла
+.ext-icon {
+  font-size: 1.5rem;
+  width: 3rem;
+  height: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; // ← не сжимать иконку
+  color: var(--global-blue-color, #007bff);
+
+  // Шрифт иконок icomoon
+  font-family: "icomoon" !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  // Цветовая кодировка по типам файлов
+  &.icon-type-pdf,
+  &.icon-type-doc,
+  &.icon-type-txt,
+  &.icon-type-rtf {
+    color: #2196f3; // Документы - синий
+  }
+
+  &.icon-type-xls,
+  &.icon-type-csv,
+  &.icon-type-ods {
+    color: #4caf50; // Таблицы - зелёный
+  }
+
+  &.icon-type-ppt,
+  &.icon-type-pps,
+  &.icon-type-key {
+    color: #ff9800; // Презентации - оранжевый
+  }
+
+  &.icon-type-jpg,
+  &.icon-type-png,
+  &.icon-type-gif,
+  &.icon-type-bmp,
+  &.icon-type-tif,
+  &.icon-type-pcx {
+    color: #9c27b0; // Изображения - фиолетовый
+  }
+
+  &.icon-type-zip,
+  &.icon-type-rar {
+    color: #795548; // Архивы - коричневый
+  }
+
+  &.icon-type-avi,
+  &.icon-type-mp4,
+  &.icon-type-flv,
+  &.icon-type-mkv,
+  &.icon-type-mov,
+  &.icon-type-mpg {
+    color: #f44336; // Видео - красный
+  }
+
+  &.icon-paperclip {
+    color: #9e9e9e; // По умолчанию - серый
+  }
+}
+
+// ========================================
+// Вариант: File List (просмотр файлов)
+// ========================================
+.file-list-view {
+  .file-info-file {
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(0, 123, 255, 0.05);
+    }
+  }
+
+  // Список файлов с переносом
+  .change-request-files-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+}
+
+// Пустое состояние
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: #999;
+}
+
+// ========================================
+// Вариант: Button with Dialog
+// ========================================
+.button-with-dialog-container {
+  display: inline-flex;
+}
+
+// ========================================
+// Кнопка "Выбрать файл" в зоне загрузки
+// ========================================
+.file-upload-content {
+  button.custom-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.625rem;
+    background: transparent;
+    border: none;
+    color: var(--global-blue-color, #007bff);
+    cursor: pointer;
+    font-weight: var(--global-main-font-weight, 400);
+    transition: all 0.2s;
+
+    &:hover {
+      color: var(--global-blue-3-color, #0056b3);
+
+      .icon-paperclip::before {
+        color: var(--global-blue-3-color, #0056b3);
+      }
+    }
+
+    &:active {
+      color: var(--global-blue-2-color, #004085);
+
+      .icon-paperclip::before {
+        color: var(--global-blue-2-color, #004085);
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--global-blue-2-color, #004085);
+      outline-offset: 2px;
+      color: var(--global-blue-2-color, #004085);
+
+      .icon-paperclip::before {
+        color: var(--global-blue-2-color, #004085);
+      }
+    }
+
+    .icon-paperclip {
+      font-size: 1.5rem;
+
+      &::before {
+        color: var(--global-blue-color, #007bff);
+      }
+    }
+  }
+}
+
+// ========================================
+// Утилитарные классы
+// ========================================
+.ms-2 {
+  margin-left: 0.5rem;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.gap-3 {
+  gap: 0.75rem;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.font-weight-light {
+  font-weight: 300;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+// ========================================
+// Стили только для Storybook (демо)
+// ========================================
+.demo-content {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 0.5rem;
+
+  h4 {
+    margin-top: 0;
+    color: #2c3e50;
+  }
+
+  p {
+    color: #666;
+  }
+
+  .code-example {
+    margin-top: 1rem;
+
+    strong {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #2c3e50;
+    }
+
+    pre {
+      background: white;
+      padding: 1rem;
+      border-radius: 0.25rem;
+      border: 1px solid #dee2e6;
+      overflow-x: auto;
+
+      code {
+        font-family: "Courier New", monospace;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        color: #333;
+      }
+    }
+  }
+}

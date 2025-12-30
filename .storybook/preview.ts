@@ -2,10 +2,7 @@ import type { Preview } from '@storybook/angular';
 import { applicationConfig } from '@storybook/angular';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
-
-// PrimeNG Aura Theme
 import Aura from '@primeng/themes/aura';
-
 
 const preview: Preview = {
   decorators: [
@@ -20,7 +17,7 @@ const preview: Preview = {
               darkModeSelector: false,
               cssLayer: {
                 name: 'primeng',
-                order: 'reset, primeng, custom-overrides',
+                order: 'reset, bootstrap, primeng, custom-overrides',
               },
               csp: {
                 nonce: undefined,
