@@ -1,10 +1,20 @@
-<p-card>
-  <p-floatlabel>
-    @if (invalid) {
-    <p-message severity="error" [text]="displayErrorMessage" />
-    } @if (showIcon) {
+<ng-container *ngIf="needsCardWrapper; else noCardWrapper">
+  <p-card [ngClass]="customClass">
+    <ng-container *ngTemplateOutlet="inputContent"></ng-container>
+  </p-card>
+</ng-container>
+
+<ng-template #noCardWrapper>
+  <div [ngClass]="customClass">
+    <ng-container *ngTemplateOutlet="inputContent"></ng-container>
+  </div>
+</ng-template>
+
+<ng-template #inputContent>
+  <p-floatlabel [class.nomargin]="readonly">
+    @if (variant === 'input') { @if (showIcon) {
     <p-iconfield>
-      <p-inputicon styleClass="pi pi-search" />
+      <p-inputicon styleClass="pi pi-search input-icon" />
       <input
         [id]="inputId"
         [type]="type"
@@ -17,12 +27,15 @@
         [class.ng-invalid]="invalid"
         [value]="value"
         (input)="onInput($event)"
-        (blur)="onTouched()"
+        (blur)="onBlur()"
         pInputText
+        [pTooltip]="showTooltip ? value : ''"
+        tooltipPosition="top"
       />
     </p-iconfield>
     } @else {
     <input
+      #inputElement
       [id]="inputId"
       [type]="type"
       [placeholder]="placeholder"
@@ -34,11 +47,155 @@
       [class.ng-invalid]="invalid"
       [value]="value"
       (input)="onInput($event)"
-      (blur)="onTouched()"
+      (blur)="onBlur()"
       pInputText
+      [pTooltip]="showTooltip ? value : ''"
+      tooltipPosition="top"
+    />
+    } } @if (variant === 'inputnumber') {
+    <p-inputNumber
+      #numberInput
+      [id]="inputId"
+      [readonly]="readonly"
+      [disabled]="disabled"
+      [useGrouping]="useGrouping"
+      [min]="min"
+      [max]="max"
+      [step]="step"
+      [placeholder]="placeholder"
+      [(ngModel)]="value"
+      (ngModelChange)="onNumberChange($event)"
+      (onBlur)="onBlur()"
+      [class.is-invalid]="invalid"
+      [class.ng-dirty]="invalid"
+      [pTooltip]="showTooltip ? value?.toString() || '' : ''"
+      tooltipPosition="top"
+    />
+    } @if (variant === 'gar-address') {
+    <p-autoComplete
+      [id]="inputId"
+      [readonly]="readonly"
+      [disabled]="disabled"
+      [suggestions]="addressSuggestions"
+      [(ngModel)]="addressValue"
+      (completeMethod)="onAddressSearch($event)"
+      (onSelect)="onAddressSelect($event)"
+      (onBlur)="onBlur()"
+      optionLabel="fullName"
+      [forceSelection]="true"
+      [class.is-invalid]="invalid"
+      [class.ng-dirty]="invalid"
+      placeholder="Начните вводить адрес..."
+      appendTo="body"
+      [showEmptyMessage]="true"
+      emptyMessage="Адреса не найдены"
+      styleClass="autocomplete"
+    >
+      <ng-template pTemplate="loadingicon">
+        <i class="pi-spin icon-spinner"></i>
+      </ng-template>
+    </p-autoComplete>
+    } @if (variant === 'phone-multi') {
+    <div [formGroup]="phoneFormGroup" class="app-input-phone-multi">
+      <p-inputgroup
+        [id]="inputId"
+        [class.is-invalid]="invalid || hasInvalidPhones"
+        [class.ng-dirty]="hasAnyPhoneTouched"
+      >
+        <p-inputgroup-addon [class.is-invalid]="invalid || hasInvalidPhones">
+          <ng-container formArrayName="phoneControls">
+            @for (phone of phones; track trackByIndex($index); let i = $index) {
+            <p-chip
+              (onRemove)="removePhone(i)"
+              [removable]="!readonly && phones.length > 1"
+              [class.is-invalid]="isPhoneInvalid(i)"
+              [class.ng-dirty]="isPhoneDirty(i)"
+              [class.ng-touched]="isPhoneTouched(i)"
+            >
+              <ng-template pTemplate="removeicon">
+                <span class="icon-close"></span>
+              </ng-template>
+              <p-inputMask
+                [formControlName]="i"
+                [mask]="phoneMask"
+                [autoClear]="false"
+                [placeholder]="phonePlaceholder"
+                [readonly]="readonly"
+                (onBlur)="markPhoneTouched(i); onBlur()"
+                styleClass="phone-input-mask"
+              />
+            </p-chip>
+            }
+          </ng-container>
+        </p-inputgroup-addon>
+
+        <p-inputgroup-addon>
+          <p-button
+            [disabled]="!canAddPhone"
+            class="addPhone white-button"
+            icon="icon-plus"
+            (onClick)="addPhone()"
+          ></p-button>
+        </p-inputgroup-addon>
+      </p-inputgroup>
+    </div>
+    } @if (variant === 'textarea') {
+    <div class="textarea-container">
+      <textarea
+        [id]="inputId"
+        [rows]="rows"
+        [maxlength]="maxlength"
+        [disabled]="disabled"
+        [readonly]="readonly"
+        [class.readonly]="readonly"
+        [class.is-invalid]="invalid"
+        [class.ng-dirty]="invalid"
+        [(ngModel)]="value"
+        (ngModelChange)="onTextareaChange($event)"
+        (blur)="onBlur()"
+        pTextarea
+        [autoResize]="autoResize"
+        [pTooltip]="showTooltip ? value : ''"
+        tooltipPosition="top"
+      ></textarea>
+      @if (showCharCount && !readonly) {
+      <div class="textarea-panel text-end">
+        @if (value?.length > 0) {
+        <span class="textarea-clear" (click)="onClearTextarea()">Очистить</span>
+        }
+        <span class="textarea-length"
+          >{{ maxlength - (value?.length ?? 0) }} / {{ maxlength }}</span
+        >
+      </div>
+      }
+    </div>
+    } @if (variant === 'datepicker') {
+    <p-date-picker
+      [id]="inputId"
+      appendTo="body"
+      [(ngModel)]="value"
+      (ngModelChange)="onDateChange($event)"
+      (onBlur)="onBlur()"
+      [readonlyInput]="readonlyInput"
+      [disabled]="disabled"
+      [showOnFocus]="showOnFocus"
+      [iconDisplay]="'input'"
+      [showIcon]="showCalendarIcon"
+      [maxDate]="maxDate"
+      [minDate]="minDate"
+      panelStyleClass="narrow-datepicker-custom"
+      [class.is-invalid]="invalid"
+      [class.ng-dirty]="invalid"
+    />
+    } @if (invalid || (variant === 'phone-multi' && hasInvalidPhones)) {
+    <p-message
+      severity="error"
+      size="small"
+      variant="simple"
+      [text]="displayErrorMessage"
     />
     } @if (label) {
-    <label [for]="inputId">{{ label }}</label>
+    <label [for]="inputId" [class]="labelClass">{{ label }}</label>
     }
   </p-floatlabel>
-</p-card>
+</ng-template>

@@ -70,3 +70,275 @@ app-input {
     color: var(--p-form-field-invalid-border-color);
   }
 }
+
+:root {
+  --p-chip-remove-icon-size: 24px;
+  --p-chip-remove-icon-font-size: 1.5rem;
+}
+
+.p-inputgroupaddon {
+  &:not(:first-child) {
+    border: none;
+    background: none;
+  }
+
+  &:first-child {
+    border: 1px solid var(--p-inputgroup-addon-border-color);
+    border-radius: var(--p-inputgroup-addon-border-radius);
+    justify-content: start;
+    flex-grow: 1;
+    flex-wrap: wrap;
+
+    &.is-invalid {
+      border: 1px solid #ee3f58;
+    }
+  }
+}
+.p-inputmask {
+  width: 100%;
+}
+
+:root {
+  --p-chip-padding-y: 0.4375rem;
+  --p-chip-padding-x: 0.75rem;
+  --p-chip-background: var(--global-white-color);
+  --p-chip-border-radius: 0.5rem;
+  --p-chip-gap: 0;
+  --p-chip-color: var(--global-dark-blue-color);
+}
+
+.app-input-phone-multi {
+  --p-inputtext-padding-y: 0;
+  --p-inputtext-padding-x: 0;
+  --p-inputgroup-addon-padding: 0.1875rem 1rem;
+  --p-inputgroup-addon-border-radius: 0.25rem;
+  --p-inputgroup-addon-background: var(--global-light-gray-color-header);
+  --p-inputtext-background: var(--global-white-color);
+
+  .p-inputgroup {
+    gap: 0.75rem;
+  }
+  .p-inputgroupaddon {
+    max-width: calc(100% - 3.75rem);
+    display: flex;
+    gap: 0.625rem;
+  }
+  &.is-invalid {
+    --p-inputgroup-addon-border-color: var(--global-red-color);
+  }
+  .p-chip {
+    border: 0.0625rem solid var(--global-white-color);
+
+    p-inputmask {
+      .p-inputtext {
+        height: 1.5rem;
+        margin-left: 0.25rem;
+        border: none;
+      }
+      &.ng-valid {
+        .p-filled {
+          --p-inputtext-background: var(--global-white-color);
+        }
+      }
+    }
+    &:has(.ng-pristine):not(:has(.p-filled)) {
+      --p-chip-background: var(--global-light-gray-color-header);
+      --p-inputtext-background: var(--global-light-gray-color-header);
+    }
+  }
+  .p-chip-remove-icon {
+    &:hover {
+      span::before {
+        color: var(--global-blue-3-color);
+      }
+    }
+    &:active,
+    &:focus-visible {
+      outline: none;
+
+      span::before {
+        color: var(--global-blue-2-color);
+      }
+    }
+    &:disabled {
+      span::before {
+        color: var(--global-gray-4-color);
+      }
+    }
+  }
+  .addPhone {
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .p-button {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 0.5rem;
+      border: 0.125rem solid var(--global-blue-color);
+      --p-button-primary-background: var(--global-white-color);
+      font-size: 1.5rem;
+      padding: 0;
+
+      &:hover {
+        --p-button-primary-hover-background: var(
+          --global-light-gray-color-header
+        );
+        border-color: var(--global-blue-3-color);
+
+        .p-button-icon::before {
+          color: var(--global-blue-3-color);
+        }
+      }
+      &:active,
+      &:focus-visible {
+        --p-button-primary-background: var(--global-light-gray-color-header);
+        --p-button-primary-active-background: var(
+          --global-light-gray-color-header
+        );
+        border-color: var(--global-blue-2-color);
+        outline: none;
+
+        .p-button-icon::before {
+          color: var(--global-blue-2-color);
+        }
+      }
+      &:disabled {
+        --p-button-primary-background: var(--global-light-gray-4-color);
+        border-color: var(--global-light-gray-4-color);
+        opacity: 1;
+
+        .p-button-icon::before {
+          color: var(--global-gray-4-color);
+        }
+      }
+    }
+  }
+}
+
+.p-inputwrapper {
+  width: 100%;
+}
+
+.p-overlay {
+  --p-anchor-gutter: 0.125rem;
+}
+
+.textarea-panel {
+  height: 0;
+  position: relative;
+  top: -33px;
+  padding-right: 15px;
+  display: inline;
+  float: right;
+  overflow-x: visible;
+}
+
+.textarea-clear {
+  cursor: pointer;
+  margin-right: 10px;
+  color: #0d4cd3;
+}
+
+.textarea-length {
+  font-family: Lato;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0%;
+  text-align: right;
+  color: #9dacce;
+}
+
+.textarea-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.p-datepicker-input-icon .p-icon,
+.p-datepicker-input-icon-container .p-icon {
+  display: none !important;
+}
+
+.p-floatlabel {
+  & > .is-invalid.ng-dirty {
+    --p-inputtext-background: var(--global-light-pink-color);
+  }
+
+  p-inputmask.ng-invalid.ng-dirty .phone-input-mask {
+    background: var(--global-light-pink-color);
+  }
+}
+
+// Дополнительные стили для чипов
+// .p-chip {
+//   display: inline-flex;
+//   align-items: center;
+//   gap: 0.5rem;
+//   padding: 0.25rem 0.75rem;
+//   background: var(--p-chip-background, #e0e0e0);
+//   border-radius: var(--p-chip-border-radius, 1rem);
+//   border: 1px solid transparent;
+//   transition: all 0.2s;
+
+//   &.is-invalid {
+//     background: var(--global-light-pink-color, #ffebee) !important;
+//     border-color: var(--global-red-color, #f44336);
+//   }
+
+//   &.ng-dirty.ng-touched {
+//     &.is-invalid {
+//       background: var(--global-light-pink-color, #ffebee) !important;
+//     }
+//   }
+
+//   ::ng-deep .p-inputmask,
+//   .phone-input-mask {
+//     border: none;
+//     background: transparent;
+//     padding: 0;
+//     height: auto;
+//     min-height: auto;
+//     outline: none;
+//     box-shadow: none;
+//     width: 150px;
+
+//     &:focus {
+//       box-shadow: none;
+//       border: none;
+//     }
+//   }
+
+//   .icon-close {
+//     cursor: pointer;
+//     font-size: 0.875rem;
+
+//     &:hover {
+//       opacity: 0.7;
+//     }
+//   }
+// }
+
+// .p-inputgroup {
+//   .addPhone {
+//     width: 2.5rem;
+//     height: 2.5rem;
+
+//     &.white-button {
+//       background: white;
+//       border: 1px solid var(--p-inputgroup-addon-border-color);
+
+//       &:hover:not(:disabled) {
+//         background: var(--p-button-text-hover-background, #f5f5f5);
+//       }
+
+//       &:disabled {
+//         opacity: 0.5;
+//         cursor: not-allowed;
+//       }
+//     }
+//   }
+// }
