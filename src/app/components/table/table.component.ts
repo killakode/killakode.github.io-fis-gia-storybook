@@ -13,7 +13,8 @@ import { TreeTableModule } from 'primeng/treetable';
 import { TreeNode } from 'primeng/api';
 import { CardModule } from 'primeng/card';
 import { FluidModule } from 'primeng/fluid';
-
+import {  MultiSelectModule } from 'primeng/multiselect';
+import { FormsModule } from '@angular/forms';
 
 export interface TableColumnConfig {
   field: string;
@@ -21,7 +22,8 @@ export interface TableColumnConfig {
   width?: string;
   sortable?: boolean;
   filterable?: boolean;
-  filterType?: 'text' | 'number' | 'date' | 'select';
+  filterType?: 'text' | 'numeric' | 'date' | 'boolean' | 'multiselect';
+  filterOptions?: { label: string; value: any }[];
 }
 
 export interface TreeColumnConfig {
@@ -30,7 +32,8 @@ export interface TreeColumnConfig {
   width?: string;
   sortable?: boolean;
   filterable?: boolean;
-  filterType?: 'text' | 'number' | 'date' | 'select';
+  filterType?: 'text' | 'numeric' | 'date' | 'boolean' | 'multiselect';
+  filterOptions?: { label: string; value: any }[];
 }
 
 export type DemoState = 'hover' | 'active' | 'focus' | 'disabled';
@@ -38,7 +41,15 @@ export type DemoState = 'hover' | 'active' | 'focus' | 'disabled';
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [CommonModule, TableModule, TreeTableModule, CardModule, FluidModule],
+  imports: [
+    CommonModule,
+    TableModule,
+    TreeTableModule,
+    CardModule,
+    FluidModule,
+    MultiSelectModule,
+    FormsModule
+  ],
   encapsulation: ViewEncapsulation.None,
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
@@ -117,6 +128,7 @@ export class TableComponent {
   // =======================================================
   @Input() styleClass?: string;
   @Input() demoState?: DemoState;
+  @Input() filterOptions?: { [field: string]: { label: string; value: any }[] };
 
   @HostBinding('class')
   get hostClasses() {

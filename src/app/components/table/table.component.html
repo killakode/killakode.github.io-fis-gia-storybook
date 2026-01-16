@@ -62,11 +62,40 @@
             <ng-container *ngIf="col.filterable">
               <p-columnFilter
                 [field]="col.field"
-                [type]="col.filterType || 'text'"
+                [type]="
+                  col.filterType === 'multiselect'
+                    ? null
+                    : col.filterType || 'text'
+                "
                 [showMenu]="false"
-                [showClearButton]="true"
-                matchMode="contains"
-              ></p-columnFilter>
+                [showClearButton]="col.filterType !== 'multiselect'"
+                [matchMode]="
+                  col.filterType === 'multiselect' ? 'in' : 'contains'
+                "
+              >
+                <!-- Для multiselect -->
+                <ng-container
+                  *ngIf="col.filterType === 'multiselect' && col.filterOptions"
+                >
+                  <ng-template
+                    pTemplate="filter"
+                    let-value
+                    let-filter="filterCallback"
+                  >
+                    <p-multiSelect
+                      [ngModel]="value"
+                      [options]="col.filterOptions"
+                      optionLabel="label"
+                      optionValue="value"
+                      [showClear]="true"
+                      (onChange)="filter($event.value)"
+                      styleClass="w-full"
+                      appendTo="body"
+                    >
+                    </p-multiSelect>
+                  </ng-template>
+                </ng-container>
+              </p-columnFilter>
             </ng-container>
           </th>
         </tr>

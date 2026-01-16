@@ -1,188 +1,431 @@
-import type { Meta, StoryObj } from '@storybook/angular';
-import { TableComponent } from '../app/components/table/table.component';
+import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { CommonModule } from '@angular/common';
+import { CardModule } from 'primeng/card';
+import { FluidModule } from 'primeng/fluid';
+import { TableModule } from 'primeng/table';
+import { TreeTableModule } from 'primeng/treetable';
+import {
+  TableComponent,
+  TableColumnConfig,
+} from '../app/components/table/table.component';
 
-const bigTableData = Array.from({ length: 120 }).map((_, i) => ({
-  name: 'Документ ' + (i + 1),
-  count: Math.round(Math.random() * 50),
-  code: 'C' + (1000 + i),
-}));
+// Конфигурации колонок для демонстрации фильтров
+const filterDemoColumns: TableColumnConfig[] = [
+  {
+    field: 'name',
+    header: 'Название',
+    sortable: true,
+    filterable: true,
+    filterType: 'text',
+  },
+  {
+    field: 'count',
+    header: 'Кол-во',
+    sortable: true,
+    filterable: true,
+    filterType: 'numeric',
+    width: '120px',
+  },
+  {
+    field: 'date',
+    header: 'Дата создания',
+    filterable: true,
+    filterType: 'date',
+    width: '150px',
+  },
+  {
+    field: 'status',
+    header: 'Статус',
+    filterable: true,
+    filterType: 'multiselect',
+    width: '140px',
+    filterOptions: [
+      { label: 'Активный', value: 'active' },
+      { label: 'В ожидании', value: 'pending' },
+      { label: 'Завершен', value: 'completed' },
+      { label: 'Отклонен', value: 'rejected' },
+    ],
+  },
+  {
+    field: 'category',
+    header: 'Категория',
+    filterable: true,
+    filterType: 'multiselect',
+    width: '160px',
+    filterOptions: [
+      { label: 'Документ', value: 'doc' },
+      { label: 'Договор', value: 'contract' },
+      { label: 'Счет', value: 'invoice' },
+      { label: 'Акт', value: 'act' },
+      { label: 'Отчет', value: 'report' },
+    ],
+  },
+  {
+    field: 'active',
+    header: 'Активный',
+    filterable: true,
+    filterType: 'boolean',
+    width: '120px',
+  },
+  {
+    field: 'code',
+    header: 'Код',
+    filterable: true,
+    filterType: 'text',
+    width: '100px',
+  },
+];
 
-const bigTreeData = Array.from({ length: 30 }).map((_, i) => ({
-  data: { name: 'Раздел ' + (i + 1), count: 10 + i, code: 'R' + i },
-  children: Array.from({ length: 5 }).map((_, j) => ({
-    data: {
-      name: `Подраздел ${i + 1}.${j + 1}`,
-      count: j * 2,
-      code: `R${i}-${j}`,
-    },
-  })),
-}));
+// Данные для демонстрации фильтров
+const filterDemoData = [
+  {
+    name: 'Документ 1',
+    count: 10,
+    date: '2024-01-15',
+    status: 'active',
+    category: 'doc',
+    active: true,
+    code: 'A1',
+  },
+  {
+    name: 'Договор 2',
+    count: 5,
+    date: '2024-01-20',
+    status: 'pending',
+    category: 'contract',
+    active: false,
+    code: 'B2',
+  },
+  {
+    name: 'Счет 3',
+    count: 8,
+    date: '2024-01-25',
+    status: 'completed',
+    category: 'invoice',
+    active: true,
+    code: 'C3',
+  },
+  {
+    name: 'Акт 4',
+    count: 15,
+    date: '2024-01-30',
+    status: 'active',
+    category: 'act',
+    active: true,
+    code: 'D4',
+  },
+  {
+    name: 'Отчет 5',
+    count: 3,
+    date: '2024-02-01',
+    status: 'rejected',
+    category: 'report',
+    active: false,
+    code: 'E5',
+  },
+  {
+    name: 'Заявка 6',
+    count: 12,
+    date: '2024-02-05',
+    status: 'pending',
+    category: 'doc',
+    active: true,
+    code: 'F6',
+  },
+  {
+    name: 'Документ 7',
+    count: 7,
+    date: '2024-02-10',
+    status: 'completed',
+    category: 'contract',
+    active: true,
+    code: 'G7',
+  },
+  {
+    name: 'Соглашение 8',
+    count: 20,
+    date: '2024-02-15',
+    status: 'active',
+    category: 'invoice',
+    active: false,
+    code: 'H8',
+  },
+  {
+    name: 'Протокол 9',
+    count: 6,
+    date: '2024-02-20',
+    status: 'pending',
+    category: 'act',
+    active: true,
+    code: 'I9',
+  },
+  {
+    name: 'Решение 10',
+    count: 14,
+    date: '2024-02-25',
+    status: 'completed',
+    category: 'report',
+    active: true,
+    code: 'J10',
+  },
+];
 
 const meta: Meta<TableComponent> = {
   title: 'Components/Table',
   component: TableComponent,
+  decorators: [
+    moduleMetadata({
+      imports: [
+        CommonModule,
+        CardModule,
+        FluidModule,
+        TableModule,
+        TreeTableModule,
+      ],
+    }),
+  ],
   tags: ['autodocs'],
-
   argTypes: {
+    // =======================================================
+    // MODE
+    // =======================================================
     type: {
       control: 'select',
       options: ['table', 'tree'],
-      description: 'Тип таблицы',
-      table: { category: 'Mode' },
+      description: 'Тип таблицы: обычная или древовидная',
+      table: {
+        category: 'Mode',
+      },
     },
 
-    tableColumns: { control: false, table: { disable: true } },
-    tableValue: { control: false, table: { disable: true } },
+    // =======================================================
+    // TABLE DATA
+    // =======================================================
+    tableColumns: {
+      control: 'object',
+      description: 'Конфигурация колонок для обычной таблицы',
+      table: {
+        category: 'Table Data',
+      },
+    },
+    tableValue: {
+      control: 'object',
+      description: 'Данные для обычной таблицы',
+      table: {
+        category: 'Table Data',
+      },
+    },
+    frozenTableColumns: {
+      control: 'object',
+      description: 'Замороженные колонки (PrimeNG 18 API)',
+      table: {
+        category: 'Table Data',
+      },
+    },
 
-    treeColumns: { control: false, table: { disable: true } },
-    treeValue: { control: false, table: { disable: true } },
+    // =======================================================
+    // TREE TABLE DATA
+    // =======================================================
+    treeColumns: {
+      control: 'object',
+      description: 'Конфигурация колонок для древовидной таблицы',
+      table: {
+        category: 'Tree Table Data',
+      },
+    },
+    treeValue: {
+      control: 'object',
+      description: 'Данные для древовидной таблицы',
+      table: {
+        category: 'Tree Table Data',
+      },
+    },
+    frozenTreeColumns: {
+      control: 'object',
+      description: 'Замороженные колонки для древовидной таблицы',
+      table: {
+        category: 'Tree Table Data',
+      },
+    },
 
-    paginator: { control: 'boolean', table: { category: 'Pagination' } },
-    rows: { control: 'number', table: { category: 'Pagination' } },
+    // =======================================================
+    // PAGINATION
+    // =======================================================
+    paginator: {
+      control: 'boolean',
+      description: 'Включить пагинацию',
+      table: {
+        category: 'Pagination',
+      },
+    },
+    rows: {
+      control: 'number',
+      description: 'Количество строк на странице',
+      table: {
+        category: 'Pagination',
+      },
+    },
     rowsPerPageOptions: {
       control: 'object',
-      table: { category: 'Pagination' },
+      description: 'Опции для выбора количества строк',
+      table: {
+        category: 'Pagination',
+      },
     },
-    totalRecords: { control: 'number', table: { category: 'Pagination' } },
+    totalRecords: {
+      control: 'number',
+      description: 'Общее количество записей (для lazy loading)',
+      table: {
+        category: 'Pagination',
+      },
+    },
+    showCurrentPageReport: {
+      control: 'boolean',
+      description: 'Показывать отчет о текущей странице',
+      table: {
+        category: 'Pagination',
+      },
+    },
+    showFirstLastIcon: {
+      control: 'boolean',
+      description: 'Показывать иконки первой/последней страницы',
+      table: {
+        category: 'Pagination',
+      },
+    },
 
-    scrollable: { control: 'boolean', table: { category: 'Layout' } },
-    scrollHeight: { control: 'text', table: { category: 'Layout' } },
-    resizableColumns: { control: 'boolean', table: { category: 'Layout' } },
+    // =======================================================
+    // SCROLL / RESIZE / LAYOUT
+    // =======================================================
+    scrollable: {
+      control: 'boolean',
+      description: 'Включить скроллирование',
+      table: {
+        category: 'Scroll & Layout',
+      },
+    },
+    scrollHeight: {
+      control: 'text',
+      description: 'Высота для скролла (например: "200px")',
+      table: {
+        category: 'Scroll & Layout',
+      },
+    },
+    resizableColumns: {
+      control: 'boolean',
+      description: 'Разрешить изменение ширины колонок',
+      table: {
+        category: 'Scroll & Layout',
+      },
+    },
     columnResizeMode: {
       control: 'select',
       options: ['fit', 'expand'],
-      table: { category: 'Layout' },
+      description: 'Режим изменения ширины колонок',
+      table: {
+        category: 'Scroll & Layout',
+      },
     },
-    reorderableColumns: { control: 'boolean', table: { category: 'Layout' } },
-    autoLayout: { control: 'boolean', table: { category: 'Layout' } },
+    reorderableColumns: {
+      control: 'boolean',
+      description: 'Разрешить перетаскивание колонок',
+      table: {
+        category: 'Scroll & Layout',
+      },
+    },
+    autoLayout: {
+      control: 'boolean',
+      description:
+        'Автоматическая раскладка таблицы (лучше оставить false с нашими стилями)',
+      table: {
+        category: 'Scroll & Layout',
+      },
+    },
 
+    // =======================================================
+    // SELECTION
+    // =======================================================
     selectionMode: {
       control: 'select',
-      options: ['single', 'multiple', undefined],
-      table: { category: 'Selection' },
+      options: [undefined, 'single', 'multiple'],
+      description: 'Режим выбора строк',
+      table: {
+        category: 'Selection',
+      },
     },
-    emptyMessage: { control: 'text', table: { category: 'Content' } },
-  },
+    dataKey: {
+      control: 'text',
+      description: 'Ключ данных для выборки (используется с selectionMode)',
+      table: {
+        category: 'Selection',
+      },
+    },
 
-  parameters: {
-    docs: {
-      description: {
-        component: `
-# Table Component
+    // =======================================================
+    // LOADING
+    // =======================================================
+    loading: {
+      control: 'boolean',
+      description: 'Показать индикатор загрузки',
+      table: {
+        category: 'Loading',
+      },
+    },
+    lazy: {
+      control: 'boolean',
+      description: 'Ленивая загрузка данных',
+      table: {
+        category: 'Loading',
+      },
+    },
 
-Универсальная таблица с поддержкой:
-
-- p-table
-- p-treeTable
-- сортировки
-- фильтров
-- ресайза колонок
-- скролла
-- пагинации
-- шаблонов ячеек
-- frozenColumns
-- Lazy Loading
-
-Стили Storybook не влияют на продакшен.
-        `,
+    // =======================================================
+    // CONTENT
+    // =======================================================
+    emptyMessage: {
+      control: 'text',
+      description: 'Сообщение при пустой таблице',
+      table: {
+        category: 'Content',
       },
     },
   },
 };
 
 export default meta;
-
 type Story = StoryObj<TableComponent>;
 
-// ----------------------------------------------------------
-// PLAYGROUND
-// ----------------------------------------------------------
-export const Playground: Story = {
+export const Sandbox: Story = {
   args: {
+    // Тип и данные (используем демо с фильтрами по умолчанию)
     type: 'table',
+    tableColumns: filterDemoColumns,
+    tableValue: filterDemoData,
 
-    tableColumns: TableComponent.defaultTableColumns,
-    tableValue: bigTableData,
-
-    treeColumns: TableComponent.defaultTreeColumns,
-    treeValue: bigTreeData,
-
+    // Пагинация
     paginator: true,
-    rows: 10,
-    rowsPerPageOptions: [10, 20, 50, 100],
-    totalRecords: bigTableData.length,
+    rows: 5,
+    rowsPerPageOptions: [5, 10, 20],
 
-    scrollable: false,
-    resizableColumns: false,
-    columnResizeMode: 'fit',
-    reorderableColumns: false,
+    // Стили проекта
+    showGridlines: true,
+
+    // Редко используемые
     autoLayout: false,
+    selectionMode: undefined,
 
+    // Состояния
+    loading: false,
+
+    // Контент
     emptyMessage: 'Нет данных',
   },
-
+  name: 'Песочница',
   parameters: {
     docs: {
       description: {
-        story: `
-# 🎮 Playground
-
-Интерактивная песочница, в которой можно переключать режимы таблиц,
-тестировать пагинацию, ресайз колонок, скролл и т.д.
-        `,
-      },
-    },
-  },
-};
-
-// ----------------------------------------------------------
-// TABLE BASIC
-// ----------------------------------------------------------
-export const TableBasic: Story = {
-  args: {
-    type: 'table',
-    tableColumns: TableComponent.defaultTableColumns,
-    tableValue: bigTableData,
-    paginator: true,
-    rows: 10,
-    totalRecords: bigTableData.length,
-  },
-
-  parameters: {
-    docs: {
-      description: {
-        story: `
-# 📝 Базовая таблица
-
-Плоская таблица с сортировкой и фильтрами.
-        `,
-      },
-    },
-  },
-};
-
-// ----------------------------------------------------------
-// TREETABLE BASIC
-// ----------------------------------------------------------
-export const TreeTableBasic: Story = {
-  args: {
-    type: 'tree',
-    treeColumns: TableComponent.defaultTreeColumns,
-    treeValue: bigTreeData,
-    paginator: true,
-    rows: 10,
-    totalRecords: bigTreeData.length,
-  },
-
-  parameters: {
-    docs: {
-      description: {
-        story: `
-# 🌳 Дерево-таблица (p-treeTable)
-
-Поддерживает вложенные узлы, сортировку,
-фильтры и пагинацию.
-        `,
+        story:
+          'Таблица с разными типами фильтров: текстовый, числовой, дата, мультиселект, булевый. Используйте Controls для настройки.',
       },
     },
   },
