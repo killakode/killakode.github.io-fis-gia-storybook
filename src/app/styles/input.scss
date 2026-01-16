@@ -96,6 +96,11 @@
         color: var(--global-gray-color) !important;
       }
     }
+
+    &.readonly-input {
+      background: var(--p-select-disabled-background);
+      border: 1px solid var(--p-select-border-color);
+    }
   }
   .p-floatlabel {
     label {
@@ -140,4 +145,13 @@
 
 .p-inputnumber-input:enabled:focus {
   border-color: var(--p-inputtext-border-color);
+}
+
+.p-iconfield {
+  .p-inputicon {
+    font-family: "icomoon" !important;
+    font-size: 24px;
+    color: var(--global-blue-color);
+    right: 0.5rem;
+  }
 }

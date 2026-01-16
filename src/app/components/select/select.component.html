@@ -1,23 +1,214 @@
 <p-card>
-  <p-select
-    #selectElement
-    [options]="options"
-    [(ngModel)]="value"
-    (onChange)="onChange($event)"
-    (onShow)="onShow()"
-    (onHide)="onHide()"
-    [placeholder]="placeholder"
-    [disabled]="disabled"
-    [showClear]="showClear"
-    [filter]="filter"
-    [appendTo]="appendTo"
-    optionLabel="label"
-    optionValue="value"
-    [class.ng-invalid]="invalid"
-    [class.ng-dirty]="invalid"
-    [dropdownIcon]="'icon-arrow'"
-    [pTooltip]="showTooltip ? selectedLabel : ''"
-    tooltipPosition="top"
-    [escape]="false"
-  />
+  <div #selectContainer class="select-container">
+    @if (useFloatLabel) {
+    <p-floatLabel>
+      @switch (mode) {
+      <!-- Режим SELECT (p-select) -->
+      @case ('select') {
+      <p-select
+        #selectElement
+        [options]="options"
+        [(ngModel)]="value"
+        (onChange)="onChange($event)"
+        (onShow)="onShow()"
+        (onHide)="onHide()"
+        [placeholder]=""
+        [disabled]="disabled"
+        [showClear]="showClear"
+        [filter]="filter"
+        [appendTo]="appendTo"
+        [optionLabel]="optionLabel"
+        [optionValue]="optionValue"
+        [resetFilterOnHide]="resetFilterOnHide"
+        [dropdownIcon]="dropdownIcon"
+        [pTooltip]="tooltipText"
+        [tooltipPosition]="tooltipPosition"
+        [tooltipDisabled]="!isOverflowing || !showTooltipOnOverflow"
+        tooltipStyleClass="select-overflow-tooltip"
+        [escape]="false"
+        [panelStyleClass]="getPanelStyleClass()"
+        class="w-100"
+      />
+      }
+
+      <!-- Режим DROPDOWN (p-dropdown) -->
+      @case ('dropdown') {
+      <p-dropdown
+        #selectElement
+        [options]="options"
+        [(ngModel)]="value"
+        (onChange)="onChange($event)"
+        (onShow)="onShow()"
+        (onHide)="onHide()"
+        [placeholder]=""
+        [disabled]="disabled"
+        [showClear]="showClear"
+        [filter]="filter"
+        [appendTo]="appendTo"
+        [optionLabel]="optionLabel"
+        [optionValue]="optionValue"
+        [resetFilterOnHide]="resetFilterOnHide"
+        [dropdownIcon]="dropdownIcon"
+        [pTooltip]="tooltipText"
+        [tooltipPosition]="tooltipPosition"
+        [tooltipDisabled]="!isOverflowing || !showTooltipOnOverflow"
+        [panelStyleClass]="getPanelStyleClass()"
+        tooltipStyleClass="select-overflow-tooltip"
+        class="w-100"
+      />
+      }
+
+      <!-- Режим MULTISELECT (p-multiselect) -->
+      @case ('multiselect') {
+      <p-multiselect
+        #selectElement
+        [options]="options"
+        [(ngModel)]="value"
+        (onChange)="onChange($event)"
+        (onPanelShow)="onShow()"
+        (onPanelHide)="onHide()"
+        [placeholder]=""
+        [disabled]="disabled"
+        [showClear]="showClear"
+        [filter]="showHeader"
+        [appendTo]="appendTo"
+        [optionLabel]="optionLabel"
+        [optionValue]="optionValue"
+        [resetFilterOnHide]="resetFilterOnHide"
+        [dropdownIcon]="dropdownIcon"
+        [maxSelectedLabels]="maxSelectedLabels"
+        [selectionLimit]="selectionLimit"
+        [selectedItemsLabel]="selectedItemsLabel"
+        [showToggleAll]="showHeader"
+        [pTooltip]="tooltipText"
+        [tooltipPosition]="tooltipPosition"
+        [tooltipDisabled]="!isOverflowing || !showTooltipOnOverflow"
+        tooltipStyleClass="select-overflow-tooltip"
+        [panelStyleClass]="getPanelStyleClass()"
+        class="w-100"
+      >
+        <!-- Кастомная иконка очистки -->
+        <ng-template pTemplate="clearicon">
+          <span class="custom-clear-icon"></span>
+        </ng-template>
+
+        <!-- Кастомная иконка фильтра -->
+        <ng-template *ngIf="showHeader" pTemplate="filtericon">
+          <span class="icon-search"></span>
+        </ng-template>
+
+        <!-- Кастомный шаблон элемента -->
+        <ng-template let-option pTemplate="item">
+          <div class="select-item-wrapper">
+            <span class="select-item-text">{{ option[optionLabel] }}</span>
+          </div>
+        </ng-template>
+      </p-multiselect>
+      } }
+      <label>{{ floatLabelText || placeholder }}</label>
+    </p-floatLabel>
+    } @else { @switch (mode) {
+    <!-- Режим SELECT (p-select) -->
+    @case ('select') {
+    <p-select
+      #selectElement
+      [options]="options"
+      [(ngModel)]="value"
+      (onChange)="onChange($event)"
+      (onShow)="onShow()"
+      (onHide)="onHide()"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [showClear]="showClear"
+      [filter]="filter"
+      [appendTo]="appendTo"
+      [optionLabel]="optionLabel"
+      [optionValue]="optionValue"
+      [resetFilterOnHide]="resetFilterOnHide"
+      [dropdownIcon]="dropdownIcon"
+      [pTooltip]="tooltipText"
+      [tooltipPosition]="tooltipPosition"
+      [tooltipDisabled]="!isOverflowing || !showTooltipOnOverflow"
+      tooltipStyleClass="select-overflow-tooltip"
+      [escape]="false"
+      [panelStyleClass]="getPanelStyleClass()"
+      class="w-100"
+    />
+    }
+
+    <!-- Режим DROPDOWN (p-dropdown) -->
+    @case ('dropdown') {
+    <p-dropdown
+      #selectElement
+      [options]="options"
+      [(ngModel)]="value"
+      (onChange)="onChange($event)"
+      (onShow)="onShow()"
+      (onHide)="onHide()"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [showClear]="showClear"
+      [filter]="filter"
+      [appendTo]="appendTo"
+      [optionLabel]="optionLabel"
+      [optionValue]="optionValue"
+      [resetFilterOnHide]="resetFilterOnHide"
+      [dropdownIcon]="dropdownIcon"
+      [pTooltip]="tooltipText"
+      [tooltipPosition]="tooltipPosition"
+      [tooltipDisabled]="!isOverflowing || !showTooltipOnOverflow"
+      [panelStyleClass]="getPanelStyleClass()"
+      tooltipStyleClass="select-overflow-tooltip"
+      class="w-100"
+    />
+    }
+
+    <!-- Режим MULTISELECT (p-multiselect) -->
+    @case ('multiselect') {
+    <p-multiselect
+      #selectElement
+      [options]="options"
+      [(ngModel)]="value"
+      (onChange)="onChange($event)"
+      (onPanelShow)="onShow()"
+      (onPanelHide)="onHide()"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [showClear]="showClear"
+      [filter]="showHeader"
+      [appendTo]="appendTo"
+      [optionLabel]="optionLabel"
+      [optionValue]="optionValue"
+      [resetFilterOnHide]="resetFilterOnHide"
+      [dropdownIcon]="dropdownIcon"
+      [maxSelectedLabels]="maxSelectedLabels"
+      [selectionLimit]="selectionLimit"
+      [selectedItemsLabel]="selectedItemsLabel"
+      [showToggleAll]="showHeader"
+      [pTooltip]="tooltipText"
+      [tooltipPosition]="tooltipPosition"
+      [tooltipDisabled]="!isOverflowing || !showTooltipOnOverflow"
+      tooltipStyleClass="select-overflow-tooltip"
+      [panelStyleClass]="getPanelStyleClass()"
+      class="w-100"
+    >
+      <!-- Кастомная иконка очистки -->
+      <ng-template pTemplate="clearicon">
+        <span class="custom-clear-icon"></span>
+      </ng-template>
+
+      <!-- Кастомная иконка фильтра -->
+      <ng-template *ngIf="showHeader" pTemplate="filtericon">
+        <span class="icon-search"></span>
+      </ng-template>
+
+      <!-- Кастомный шаблон элемента -->
+      <ng-template let-option pTemplate="item">
+        <div class="select-item-wrapper">
+          <span class="select-item-text">{{ option[optionLabel] }}</span>
+        </div>
+      </ng-template>
+    </p-multiselect>
+    } } }
+  </div>
 </p-card>

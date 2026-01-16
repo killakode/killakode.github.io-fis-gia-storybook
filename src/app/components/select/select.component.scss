@@ -1,0 +1,20 @@
+.expand-container-for-overlay {
+  .select-container {
+    position: relative;
+    min-height: 400px; // или нужная вам высота
+    padding: 1rem;
+    border: 1px dashed #ccc; // для визуализации в демо
+  }
+}
+
+.p-select-clear-icon svg, .p-multiselect-clear-icon svg{
+  display: none !important;
+}
+
+.p-select,
+.p-dropdown,
+.p-multiselect,
+.multiselect-append-to-body{
+  max-width: 34rem;
+  width: 100%;
+}
