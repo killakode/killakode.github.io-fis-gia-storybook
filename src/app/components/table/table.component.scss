@@ -146,3 +146,181 @@ tr td p-treetabletoggler chevronrighticon::before {
 tr td p-treetabletoggler chevrondownicon::before {
   content: "\e908";
 }
+
+.frozen-columns-table {
+  padding: 1rem;
+  background-color: white;
+  .p-datatable-table-container {
+    padding: 0;
+  }
+  .p-datatable-frozen-column {
+    th {
+      display: none !important;
+      background-color: #e5eaf5 !important;
+    }
+    // background-color: inherit;
+
+    &:last-child {
+      th {
+        border-right-width: 0.0625rem;
+      }
+    }
+  }
+  .p-datatable-thead {
+    tr:first-child {
+      th:first-child,
+      th:nth-child(2) {
+        background-color: var(--p-datatable-header-cell-background);
+      }
+    }
+    tr:nth-child(2) {
+      th:first-child,
+      th:nth-child(2) {
+        z-index: 1;
+      }
+    }
+    tr {
+      th.p-datatable-frozen-column {
+        position: sticky;
+      }
+    }
+  }
+  .p-datatable-thead,
+  .p-datatable-tbody {
+    tr {
+      th:not(.p-datatable-frozen-column),
+      td:not(.p-datatable-frozen-column) {
+        z-index: 0;
+      }
+    }
+  }
+  .p-datatable-table {
+    .p-datatable-thead,
+    .p-datatable-tbody {
+      tr,
+      tr:first-child {
+        th,
+        th:last-child,
+        td,
+        td:last-child {
+          border-width: 0 0.0625rem 0.0625rem 0;
+        }
+      }
+      tr {
+        th:first-child,
+        td:first-child {
+          border-left-width: 0.0625rem;
+        }
+        th:first-child.planning-grid-day {
+          border-left-width: 0;
+        }
+      }
+    }
+    .p-datatable-thead {
+      tr:first-child {
+        th {
+          border-top-width: 0.0625rem !important;
+        }
+      }
+    }
+  }
+}
+
+.p-datatable-table-container .p-datatable-thead > tr > th > span,
+.p-datatable-table-container .p-treetable-thead > tr > th > span,
+.p-treetable-wrapper .p-datatable-thead > tr > th > span,
+.p-treetable-wrapper .p-treetable-thead > tr > th > span {
+  max-width: 100%;
+}
+.p-treetable .p-column-resizer-helper {
+  --p-treetable-resize-indicator-color: #9dacce;
+  --p-treetable-resize-indicator-width: 2px;
+  cursor:
+    url(/assets/images/svg/unfold-horizontal.cur) 12 12,
+    col-resize;
+}
+.p-treetable .p-column-resizer {
+  cursor:
+    url(/assets/images/svg/unfold-horizontal.cur) 12 12,
+    col-resize;
+}
+/* Стилизация скроллбара для контейнера таблицы */
+.p-datatable-table-container::-webkit-scrollbar,
+.p-treetable-wrapper::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.p-datatable-table-container::-webkit-scrollbar-thumb,
+.p-treetable-wrapper::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background-color: var(--global-light-gray-3-color);
+  background-clip: padding-box;
+  border: 3px solid transparent;
+}
+
+.p-datatable-table-container::-webkit-scrollbar-track,
+.p-treetable-wrapper::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.p-datatable-table-container::-webkit-scrollbar-thumb:hover,
+.p-treetable-wrapper::-webkit-scrollbar-thumb:hover {
+  background-color: var(--global-gray-color);
+}
+.p-datatable-table-container::-webkit-scrollbar-button,
+.p-treetable-wrapper::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* Для Firefox */
+@supports (scrollbar-color: gray white) and (-moz-appearance: none) {
+  .p-datatable-table-container,
+  .p-treetable-wrapper {
+    scrollbar-width: thin;
+    scrollbar-color: var(--global-light-gray-3-color) transparent;
+  }
+}
+
+.exam-table .p-treetable.p-treetable-gridlines .p-treetable-wrapper > table {
+  table-layout: fixed;
+}
+
+// Do NOT delete
+.p-dialog-content {
+  height: 100% !important;
+}
+
+.parameters {
+  overflow-x: auto;
+
+  table {
+    min-width: 44rem;
+  }
+  &::-webkit-scrollbar {
+    width: 1rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 0.5rem;
+    background-color: var(--global-light-gray-3-color);
+    background-clip: padding-box;
+    border: solid transparent 0.3125rem;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: var(--global-gray-color);
+  }
+}
+@supports (scrollbar-color: gray white) and (-moz-appearance: none) {
+  .parameters {
+    scrollbar-color: var(--global-gray-color) var(--global-white-color);
+    scrollbar-width: auto;
+  }
+}
+p-fieldset {
+  .p-fieldset-legend-label {
+    text-align: left;
+  }
+}
