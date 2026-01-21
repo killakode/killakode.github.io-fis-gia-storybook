@@ -2,10 +2,15 @@
   "extends": "../tsconfig.app.json",
   "compilerOptions": {
     "types": ["node"],
+    "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": "../", // Базовая директория для импортов
+    "rootDir": "../" // Все исходники (включая src/) считаются частью проекта
   },
-  "exclude": ["../src/test.ts", "../src/**/*.spec.ts"],
-  "include": ["../src/**/*.stories.*", "./preview.ts"],
-  "files": ["./typings.d.ts"]
+  "exclude": ["../src/test.ts", "../src/**/*.spec.ts", "../node_modules"],
+  "include": [
+    "../src/**/*.stories.*", // Файлы сторисов
+    "./preview.ts" // Preview-файл Storybook
+  ]
 }
