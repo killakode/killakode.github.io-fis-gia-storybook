@@ -49,7 +49,7 @@ export class SelectComponent implements AfterViewInit {
   @Input() placeholder: string = '';
   @Input() disabled: boolean = false;
   @Input() showClear: boolean = false;
-  @Input() appendTo: 'body' | null = null;
+  @Input() appendTo: 'body' | null = 'body';
   @Input() useFloatLabel: boolean = false;
   @Input() floatLabelText: string = '';
   @Input() panelStyleClass: string = '';
