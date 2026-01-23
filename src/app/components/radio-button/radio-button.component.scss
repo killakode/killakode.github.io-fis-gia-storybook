@@ -1,77 +1,154 @@
+/* radio-button.styles.scss */
+
+/* Базовые стили */
 .p-radiobutton {
   .p-radiobutton-box {
     border-width: 0.125rem;
+    transition: all 0.2s ease;
   }
 
-  &:has(input:hover) .p-radiobutton-box {
-    --p-radiobutton-background: var(--global-light-gray-4-color);
+  /* Состояния */
+  &:has(.p-radiobutton-input:hover) .p-radiobutton-box {
+    background-color: var(--global-light-gray-4-color);
+    border-color: var(--global-blue-3-color);
   }
 
-  &:has(input:disabled) .p-radiobutton-box {
-    --p-radiobutton-border-color: var(--global-gray-4-color);
-    --p-radiobutton-hover-border-color: var(--global-gray-4-color);
-    --p-radiobutton-background: var(--global-light-gray-3-color);
+  &:has(.p-radiobutton-input:disabled) .p-radiobutton-box {
+    border-color: var(--global-gray-4-color);
+    background-color: var(--global-light-gray-3-color);
   }
 
-  &:has(input:focus-visible) .p-radiobutton-box {
-    --p-radiobutton-focus-border-color: var(--global-blue-3-color);
-    --p-radiobutton-background: var(--global-light-gray-4-color);
-  }
-}
-
-.p-radiobutton-checked {
-  &:has(input:disabled) .p-radiobutton-box {
-    --p-radiobutton-checked-border-color: var(--global-gray-4-color);
-    --p-radiobutton-checked-background: var(--global-light-gray-3-color);
-    --p-radiobutton-icon-checked-color: var(--global-gray-4-color);
-    --p-radiobutton-checked-hover-border-color: var(--global-gray-4-color);
-    --p-radiobutton-checked-hover-background: var(--global-light-gray-3-color);
-    --p-radiobutton-icon-checked-hover-color: var(--global-gray-4-color);
-  }
-
-  &:has(input:focus-visible) .p-radiobutton-box {
-    --p-radiobutton-checked-focus-border-color: var(--global-blue-3-color);
-    --p-radiobutton-icon-checked-color: var(--global-blue-3-color);
+  &:has(.p-radiobutton-input:focus-visible):not(.p-highlight)
+    .p-radiobutton-box {
+    outline: 2px solid var(--global-blue-3-color);
+    outline-offset: 2px;
+    background-color: var(--global-light-gray-4-color);
   }
 }
 
+/* Выбранное состояние */
+.p-radiobutton.p-highlight {
+  .p-radiobutton-box {
+    border-color: var(--global-blue-color);
+    background-color: var(--global-white-color);
+  }
+
+  .p-radiobutton-icon {
+    color: var(--global-blue-color);
+  }
+
+  &:has(.p-radiobutton-input:focus-visible) {
+    .p-radiobutton-box {
+      outline: 2px solid var(--global-blue-3-color);
+      outline-offset: 2px;
+    }
+
+    .p-radiobutton-icon {
+      color: var(--global-blue-3-color);
+    }
+  }
+}
+
+/* Disabled состояние */
+.p-radiobutton.p-disabled {
+  cursor: not-allowed;
+
+  &.p-highlight {
+    .p-radiobutton-box {
+      border-color: var(--global-gray-4-color);
+      background-color: var(--global-light-gray-3-color);
+    }
+
+    .p-radiobutton-icon {
+      color: var(--global-gray-4-color);
+    }
+  }
+}
+
+/* Лейблы и контейнеры */
 .p-radio-label {
   margin-left: 1rem;
   cursor: pointer;
+  white-space: normal;
+  word-break: break-word;
+  display: block;
+  line-height: 1.4;
 }
 
 .radio-wrapper {
   display: flex;
   align-items: center;
+}
 
-  // Forced hover state (unchecked)
-  &.forced-hover .p-radiobutton-box {
-    --p-radiobutton-background: var(--global-light-gray-4-color) !important;
-    --p-radiobutton-border-color: var(--global-blue-3-color) !important;
+/* Стили для Storybook */
+.states-demo-container {
+  .demo-only {
+    pointer-events: none;
+    user-select: none;
+    cursor: default;
+
+    .p-radiobutton,
+    .p-radio-label {
+      pointer-events: none;
+      cursor: default;
+    }
   }
 
-  // Forced hover state (checked) ← Новое
-  &.forced-hover-checked .p-radiobutton-box {
-    --p-radiobutton-checked-background: var(--global-white-color) !important;
-    --p-radiobutton-checked-hover-background: var(
-      --global-white-color
-    ) !important;
-    --p-radiobutton-background: var(--global-light-gray-4-color) !important;
-    --p-radiobutton-checked-hover-border-color: var(
-      --global-blue-3-color
-    ) !important;
-    --p-radiobutton-border-color: var(--global-blue-3-color) !important;
-    --p-radiobutton-icon-checked-hover-color: var(
-      --global-blue-3-color
-    ) !important;
-    --p-radiobutton-icon-checked-color: var(--global-blue-3-color) !important;
+  /* Forced состояния */
+  .forced-hover .p-radiobutton-box {
+    background-color: var(--global-light-gray-4-color) !important;
+    border-color: var(--global-blue-3-color) !important;
   }
 
-  // Forced focus state
-  &.forced-focus .p-radiobutton-box {
-    --p-radiobutton-background: var(--global-light-gray-4-color) !important;
-    --p-radiobutton-focus-border-color: var(--global-blue-3-color) !important;
-    outline: 2px solid var(--global-blue-3-color);
-    outline-offset: 2px;
+  .forced-hover-checked .p-radiobutton-box {
+    background-color: var(--global-white-color) !important;
+    border-color: var(--global-blue-3-color) !important;
+  }
+
+  .forced-hover-checked .p-radiobutton-icon {
+    color: var(--global-blue-3-color) !important;
+  }
+
+  .forced-focus .p-radiobutton-box {
+    background-color: var(--global-light-gray-4-color) !important;
+    border-color: var(--global-blue-3-color) !important;
+    outline: 2px solid var(--global-blue-3-color) !important;
+    outline-offset: 2px !important;
+  }
+
+  .forced-focus-checked .p-radiobutton-box {
+    background-color: var(--global-white-color) !important;
+    border-color: var(--global-blue-3-color) !important;
+    outline: 2px solid var(--global-blue-3-color) !important;
+    outline-offset: 2px !important;
+  }
+
+  .forced-focus-checked .p-radiobutton-icon {
+    color: var(--global-blue-3-color) !important;
+  }
+}
+
+/* Стили для группы */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  .p-radiobutton {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* PrimeNG специфичные стили */
+:host ::ng-deep {
+  .p-radiobutton:has(.p-radiobutton-input:focus-visible) .p-radiobutton-box {
+    outline: 2px solid var(--global-blue-3-color) !important;
+    outline-offset: 2px !important;
+  }
+
+  .p-radiobutton.p-highlight:has(.p-radiobutton-input:focus-visible)
+    .p-radiobutton-box {
+    outline: 2px solid var(--global-blue-3-color) !important;
+    outline-offset: 2px !important;
   }
 }

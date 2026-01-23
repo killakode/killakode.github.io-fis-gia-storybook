@@ -1,15 +1,20 @@
-<!-- radio-button.component.html -->
 <p-card>
-  <div class="radio-wrapper" [ngClass]="stateClass">
-    <p-radiobutton
+  <div
+    class="radio-wrapper"
+    [class.demo-disabled]="demoMode"
+    [class.forced-hover]="false"
+    [class.forced-focus]="false"
+    tabindex="0"
+  >
+    <p-radioButton
       [name]="name"
       [value]="value"
-      [ngModel]="effectiveSelectedValue"
+      [(ngModel)]="selectedValue"
       (ngModelChange)="onValueChange($event)"
-      [disabled]="isDisabled"
+      [disabled]="disabled || demoMode"
       [inputId]="value"
-    >
-    </p-radiobutton>
+      [style.pointer-events]="demoMode ? 'none' : 'auto'"
+    />
     <label [for]="value" class="p-radio-label">{{ label }}</label>
   </div>
 </p-card>

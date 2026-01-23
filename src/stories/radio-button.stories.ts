@@ -1,42 +1,92 @@
 // radio-button.stories.ts
 import type { Meta, StoryObj } from '@storybook/angular';
-import { RadioButtonComponent } from '../app/components/radio-button/radio-button.component';
+import { RadioButtonComponent } from 'src/app/components/radio-button/radio-button.component';
 import { moduleMetadata } from '@storybook/angular';
 import { FormsModule } from '@angular/forms';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 const meta: Meta<RadioButtonComponent> = {
   title: 'Components/RadioButton',
   component: RadioButtonComponent,
   decorators: [
     moduleMetadata({
-      imports: [FormsModule],
+      imports: [FormsModule, RadioButtonModule],
     }),
   ],
   tags: ['autodocs'],
   argTypes: {
     label: {
       control: 'text',
-      description: 'Текст метки радиокнопки',
+      description:
+        'Текст метки радиокнопки. Поддерживает многострочный текст с переносами.',
     },
-    state: {
-      control: 'select',
-      options: [
-        'default',
-        'checked',
-        'disabled',
-        'disabled-checked',
-        'hover',
-        'hover-checked',
-        'focus',
-      ],
-      description: 'Состояние радиокнопки для демонстрации',
+    value: {
+      control: 'text',
+      description: 'Значение радиокнопки, используется для привязки данных.',
+    },
+    name: {
+      control: 'text',
+      description:
+        'Имя группы радиокнопок. Все кнопки с одинаковым name образуют группу.',
+    },
+    disabled: {
+      control: 'boolean',
+      description:
+        'Отключает радиокнопку. Визуально серый цвет, курсор not-allowed.',
+    },
+    selectedValue: {
+      control: 'text',
+      description:
+        'Выбранное значение для двусторонней привязки [(selectedValue)].',
     },
   },
   parameters: {
     docs: {
       description: {
-        component:
-          'Компонент радиокнопки с поддержкой состояний: default, checked, disabled, hover, hover-checked, focus',
+        component: `
+# RadioButton (на базе p-radiobutton)
+
+Кастомная обертка над компонентом p-radiobutton из PrimeNG с улучшенными стилями.
+
+## Особенности
+### 1. Поддерживаемые состояния
+| Состояние       | Описание                                      | Пример кода                          |
+|------------------|-----------------------------------------------|---------------------------------------|
+| Default          | Базовое состояние                            | \`<p-radiobutton />\`               |
+| Hover            | Подсветка при наведении                      | \`.forced-hover\` (в Storybook)      |
+| Checked          | Выбранная радиокнопка                        | \`[ngModel]="value"\`                |
+| Disabled         | Недоступная радиокнопка                      | \`[disabled]="true"\`                |
+| Focus            | Состояние при фокусе (клавиатура/tab)       | \`:focus-visible\`                   |
+| Focus Checked   | Фокус на выбранной радиокнопке               | \`.forced-focus-checked\` (Storybook)|
+
+### 2. Двусторонняя привязка
+Используйте \`[(ngModel)]\` или \`[(selectedValue)]\` для синхронизации:
+\`\`\`html
+<p-radiobutton
+  label="Опция 1"
+  value="opt1"
+  name="group1"
+  [(ngModel)]="selectedValue"
+/>
+\`\`\`
+
+### 3. Группировка
+Все кнопки с одинаковым \`name\` образуют группу:
+\`\`\`html
+<p-radiobutton
+  label="Опция 1"
+  value="opt1"
+  name="group1"
+  [(ngModel)]="selectedValue"
+/>
+<p-radiobutton
+  label="Опция 2"
+  value="opt2"
+  name="group1"
+  [(ngModel)]="selectedValue"
+/>
+\`\`\`
+        `,
       },
     },
   },
@@ -46,133 +96,150 @@ export default meta;
 type Story = StoryObj<RadioButtonComponent>;
 
 // ========================================
-// PLAYGROUND - Интерактивная песочница
+// PLAYGROUND - Интерактивная песочница (первая история)
 // ========================================
 export const Playground: Story = {
+  args: {
+    label: 'Опция 1',
+    value: 'opt1',
+    name: 'demo-group',
+    disabled: false,
+  },
   render: (args) => ({
     props: {
-      state: args.state,
-      interactiveGroupValue: 'opt1', // ← Добавили переменную
+      ...args,
+      selectedValue: args.value,
     },
     template: `
-      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-        <div>
-          <h4 style="margin: 0 0 0.5rem 0;">Single Radio (State Demo)</h4>
-          <p style="color: #666; font-size: 0.875rem; margin: 0 0 1rem 0;">
-            Current state: <strong>{{ state }}</strong>
-          </p>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <h3>Интерактивное демо</h3>
+        <p>Выбрано: <strong>{{ selectedValue }}</strong></p>
 
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
           <app-radio-button
-            label="Demo radio button"
-            value="demo"
-            name="single-demo"
-            [state]="state">
-          </app-radio-button>
-        </div>
-
-        <div style="border-top: 1px solid #e0e0e0; padding-top: 1rem;">
-          <h4 style="margin: 0 0 0.5rem 0;">Interactive Group (Normal Behavior)</h4>
-          <p style="color: #666; font-size: 0.875rem; margin: 0 0 1rem 0;">
-            Try clicking to see real interaction | Selected: <strong>{{ interactiveGroupValue }}</strong>
-          </p>
-
-          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-            <app-radio-button
-              label="Option 1"
-              value="opt1"
-              name="interactive-group"
-              [(selectedValue)]="interactiveGroupValue">
-            </app-radio-button>
-
-            <app-radio-button
-              label="Option 2"
-              value="opt2"
-              name="interactive-group"
-              [(selectedValue)]="interactiveGroupValue">
-            </app-radio-button>
-          </div>
+            label="{{ label }}"
+            value="{{ value }}"
+            name="{{ name }}"
+            [(selectedValue)]="selectedValue"
+            [disabled]="disabled"
+          />
+          <app-radio-button
+            label="Опция 2"
+            value="opt2"
+            name="{{ name }}"
+            [(selectedValue)]="selectedValue"
+          />
+          <app-radio-button
+            label="Опция 3 (отключена)"
+            value="opt3"
+            name="{{ name }}"
+            [(selectedValue)]="selectedValue"
+            [disabled]="true"
+          />
         </div>
       </div>
     `,
   }),
-  args: {
-    state: 'default',
+  parameters: {
+    docs: {
+      description: {
+        story: `
+### 🎮 Интерактивная песочница
+Играйте с параметрами в панели Controls, чтобы увидеть как они влияют на компонент.
+
+**Особенности:**
+- Двусторонняя привязка через \`[(selectedValue)]\`
+- Группировка через одинаковое \`name\`
+- Поддержка состояния \`disabled\`
+
+**Пример кода:**
+\`\`\`html
+<app-radio-button
+  label="Опция 1"
+  value="opt1"
+  name="group1"
+  [(selectedValue)]="selectedValue"
+/>
+\`\`\`
+        `,
+      },
+    },
   },
 };
 
 // ========================================
-// STATES - Все состояния
+// STATES - Все состояния (для демонстрации)
 // ========================================
 export const States: Story = {
   render: () => ({
-    props: {},
     template: `
-      <div style="display: flex; flex-direction: column; gap: 2rem;">
+      <div style="display: flex; flex-direction: column; gap: 2rem;" class="states-demo-container">
+        <!-- UNCHECKED STATES -->
         <div>
-          <h3>Default State</h3>
-          <app-radio-button
-            label="Unchecked option"
-            value="opt1"
-            name="state-demo-1"
-            state="default">
-          </app-radio-button>
+          <h3>⬜️ Unchecked States</h3>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+            <div style="text-align: center;">
+              <div class="radio-wrapper demo-only">
+                <app-radio-button label="Default" value="default" name="states-1" />
+              </div>
+              <div style="font-size: 0.75rem; color: #666;">Default</div>
+            </div>
+            <div style="text-align: center;">
+              <div class="radio-wrapper forced-hover demo-only">
+                <app-radio-button label="Hover" value="hover" name="states-1" />
+              </div>
+              <div style="font-size: 0.75rem; color: #666;">Hover</div>
+            </div>
+            <div style="text-align: center;">
+              <div class="radio-wrapper">
+                <app-radio-button label="Disabled" value="disabled" name="states-1" [disabled]="true" />
+              </div>
+              <div style="font-size: 0.75rem; color: #666;">Disabled</div>
+            </div>
+          </div>
         </div>
 
+        <!-- CHECKED STATES -->
         <div>
-          <h3>Checked State</h3>
-          <app-radio-button
-            label="Checked option"
-            value="opt2"
-            name="state-demo-2"
-            state="checked">
-          </app-radio-button>
+          <h3>✅ Checked States</h3>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+            <div style="text-align: center;">
+              <div class="radio-wrapper demo-only">
+                <app-radio-button label="Checked" value="checked" name="states-2" [selectedValue]="'checked'" />
+              </div>
+              <div style="font-size: 0.75rem; color: #666;">Checked</div>
+            </div>
+            <div style="text-align: center;">
+              <div class="radio-wrapper forced-hover-checked demo-only">
+                <app-radio-button label="Hover" value="hover-checked" name="states-2" [selectedValue]="'hover-checked'" />
+              </div>
+              <div style="font-size: 0.75rem; color: #666;">Hover Checked</div>
+            </div>
+            <div style="text-align: center;">
+              <div class="radio-wrapper">
+                <app-radio-button label="Disabled" value="disabled-checked" name="states-2" [disabled]="true" [selectedValue]="'disabled-checked'" />
+              </div>
+              <div style="font-size: 0.75rem; color: #666;">Disabled Checked</div>
+            </div>
+          </div>
         </div>
 
+        <!-- FOCUS STATES -->
         <div>
-          <h3>Hover State</h3>
-          <app-radio-button
-            label="Hover state"
-            value="opt-hover"
-            name="state-demo-hover"
-            state="hover">
-          </app-radio-button>
-        </div>
-
-        <div>
-          <h3>Hover Checked State</h3>
-          <app-radio-button
-            label="Hover checked state"
-            value="opt-hover-checked"
-            name="state-demo-hover-checked"
-            state="hover-checked">
-          </app-radio-button>
-        </div>
-
-        <div>
-          <h3>Focus State</h3>
-          <app-radio-button
-            label="Focus state"
-            value="opt-focus"
-            name="state-demo-focus"
-            state="focus">
-          </app-radio-button>
-        </div>
-
-        <div>
-          <h3>Disabled States</h3>
-          <div style="display: flex; flex-direction: column; gap: 1rem;">
-            <app-radio-button
-              label="Disabled unchecked"
-              value="opt3"
-              name="state-demo-3"
-              state="disabled">
-            </app-radio-button>
-            <app-radio-button
-              label="Disabled checked"
-              value="opt4"
-              name="state-demo-4"
-              state="disabled-checked">
-            </app-radio-button>
+          <h3>🔵 Focus States</h3>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+            <div style="text-align: center;">
+              <div class="radio-wrapper forced-focus demo-only" tabindex="0">
+                <app-radio-button label="Focus" value="focus" name="states-3" />
+              </div>
+              <div style="font-size: 0.75rem; color: #666;">Focus</div>
+            </div>
+            <div style="text-align: center;">
+              <div class="radio-wrapper forced-focus-checked demo-only" tabindex="0">
+                <app-radio-button label="Focus Checked" value="focus-checked" name="states-3" [selectedValue]="'focus-checked'" />
+              </div>
+              <div style="font-size: 0.75rem; color: #666;">Focus Checked</div>
+            </div>
           </div>
         </div>
       </div>
@@ -181,8 +248,18 @@ export const States: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          'Демонстрация всех состояний радиокнопок: default, checked, hover, hover-checked, focus, disabled (unchecked/checked).',
+        story: `
+### 📊 Все состояния компонента
+Демонстрация всех визуальных состояний радиокнопки.
+
+**Особенности:**
+- Default/Hover/Disabled для невыбранных кнопок
+- Checked/Hover Checked/Disabled Checked для выбранных
+- Focus/Focus Checked для навигации с клавиатуры
+
+> ⚠️ В Storybook focus симулируется через forced-классы.
+> В реальном приложении используйте клавишу **Tab** для навигации.
+        `,
       },
     },
   },
@@ -198,45 +275,56 @@ export const Group: Story = {
     },
     template: `
       <div style="display: flex; flex-direction: column; gap: 1rem;">
-        <h3>Radio Group Example</h3>
-        <p style="color: #666; font-size: 0.875rem;">Selected: {{ groupValue }}</p>
+        <h3>Группа радиокнопок</h3>
+        <p>Выбрано: {{ groupValue }}</p>
 
         <app-radio-button
-          label="Option 1"
+          label="Опция 1"
           value="opt1"
-          name="group1"
-          [(selectedValue)]="groupValue">
-        </app-radio-button>
-
-        <app-radio-button
-          label="Option 2"
-          value="opt2"
-          name="group1"
-          [(selectedValue)]="groupValue">
-        </app-radio-button>
-
-        <app-radio-button
-          label="Option 3"
-          value="opt3"
-          name="group1"
-          [(selectedValue)]="groupValue">
-        </app-radio-button>
-
-        <app-radio-button
-          label="Option 4 (disabled)"
-          value="opt4"
-          name="group1"
+          name="group-demo"
           [(selectedValue)]="groupValue"
-          [disabled]="true">
-        </app-radio-button>
+        />
+        <app-radio-button
+          label="Опция 2"
+          value="opt2"
+          name="group-demo"
+          [(selectedValue)]="groupValue"
+        />
+        <app-radio-button
+          label="Опция 3 (отключена)"
+          value="opt3"
+          name="group-demo"
+          [(selectedValue)]="groupValue"
+          [disabled]="true"
+        />
       </div>
     `,
   }),
   parameters: {
     docs: {
       description: {
-        story:
-          'Пример группы радиокнопок с общим name. Только одна кнопка может быть выбрана одновременно.',
+        story: `
+### 📋 Группа радиокнопок
+Пример группы радиокнопок с разными состояниями.
+
+**Особенности:**
+- Все кнопки в группе имеют одинаковый \`name\`
+- Выбранное значение отображается в реальном времени
+- Отключенная кнопка не участвует в выборе
+
+**Пример кода:**
+\`\`\`html
+<div *ngFor="let option of options">
+  <app-radio-button
+    [label]="option.label"
+    [value]="option.value"
+    name="group-name"
+    [(selectedValue)]="selectedValue"
+    [disabled]="option.disabled"
+  />
+</div>
+\`\`\`
+        `,
       },
     },
   },
@@ -252,28 +340,43 @@ export const WithLongLabels: Story = {
     },
     template: `
       <div style="display: flex; flex-direction: column; gap: 1rem; max-width: 600px;">
-        <h3>Radio with Long Text</h3>
-
+        <h3>Радиокнопки с длинными метками</h3>
         <app-radio-button
-          label="I agree to the terms and conditions, privacy policy, and data processing agreement"
+          label="Я согласен с условиями использования, политикой конфиденциальности и соглашением об обработке персональных данных"
           value="agree"
           name="terms"
-          [(selectedValue)]="termsValue">
-        </app-radio-button>
-
+          [(selectedValue)]="termsValue"
+        />
         <app-radio-button
-          label="I disagree and wish to proceed without accepting the terms"
+          label="Я не согласен с вышеуказанными условиями и хочу продолжить без принятия соглашения"
           value="disagree"
           name="terms"
-          [(selectedValue)]="termsValue">
-        </app-radio-button>
+          [(selectedValue)]="termsValue"
+        />
       </div>
     `,
   }),
   parameters: {
     docs: {
       description: {
-        story: 'Радиокнопки с длинными текстовыми метками',
+        story: `
+### 📜 Длинные метки
+Демонстрация работы с многострочными метками.
+
+**Особенности:**
+- Автоматический перенос текста
+- Сохранение отступов и выравнивания
+- Полная поддержка всех состояний
+
+**Пример кода:**
+\`\`\`html
+<app-radio-button
+  label="Очень длинный текст метки, который автоматически переносится на новую строку"
+  value="long-label"
+  name="long-group"
+/>
+\`\`\`
+        `,
       },
     },
   },
