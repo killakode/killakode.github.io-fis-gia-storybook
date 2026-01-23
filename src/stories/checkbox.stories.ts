@@ -1,41 +1,46 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { CheckboxComponent } from '../app/components/checkbox/checkbox.component';
+import { CheckboxComponent } from 'src/app/components/checkbox/checkbox.component';
 
 const meta: Meta<CheckboxComponent> = {
   title: 'Components/Checkbox',
   component: CheckboxComponent,
   tags: ['autodocs'],
   argTypes: {
-    // ===== PRIMENG PROPS =====
+    // ===== MAIN PROPS =====
     checked: {
       control: 'boolean',
-      description: 'Состояние чекбокса (checked/unchecked)',
+      description:
+        'Состояние чекбокса (`true` — отмечен, `false` — не отмечен).',
       table: {
-        category: 'PrimeNG Props',
+        category: 'Main Props',
         defaultValue: { summary: 'false' },
       },
     },
     disabled: {
       control: 'boolean',
-      description: 'Отключает взаимодействие с чекбоксом',
+      description: 'Блокирует взаимодействие с чекбоксом.',
       table: {
-        category: 'PrimeNG Props',
+        category: 'Main Props',
         defaultValue: { summary: 'false' },
       },
     },
     readonly: {
       control: 'boolean',
-      description: 'Режим только для чтения (можно видеть, но нельзя изменить)',
+      description: `
+        Режим "только для чтения".
+        **Отличие от \`disabled\`:**
+        - Визуально идентичен \`disabled\`.
+        - **Не блокирует события** (можно кликать, но состояние не изменится).
+      `,
       table: {
-        category: 'PrimeNG Props',
+        category: 'Main Props',
         defaultValue: { summary: 'false' },
       },
     },
-
     // ===== CONTENT =====
     label: {
       control: 'text',
-      description: 'Текстовая метка рядом с чекбоксом',
+      description: 'Текстовая метка рядом с чекбоксом.',
       table: {
         category: 'Content',
         defaultValue: { summary: 'undefined' },
@@ -44,126 +49,78 @@ const meta: Meta<CheckboxComponent> = {
     inputId: {
       control: 'text',
       description:
-        'HTML ID для связи с label (генерируется автоматически если не указан)',
+        'HTML ID для связи с `label` (автогенерируется, если не указан).',
       table: {
         category: 'Content',
         defaultValue: { summary: 'auto-generated' },
       },
     },
-
-    // ===== DEMO STATE =====
-    state: {
-      control: 'select',
-      options: [
-        'default',
-        'hover',
-        'focus',
-        'active',
-        'hover-checked',
-        'active-checked',
-      ],
-      description: `
-⚠️ Только для демонстрации в Storybook. Имитирует псевдо-состояния.
-
-**Автоматическая установка checked:**
-- \`default\`, \`hover\`, \`focus\`, \`active\` → \`checked = false\`
-- \`hover-checked\`, \`active-checked\` → \`checked = true\`
-      `,
-      table: {
-        category: 'Demo State',
-        defaultValue: { summary: 'undefined' },
-      },
-    },
   },
-  // ========================================
-  // 🔥 ГЛОБАЛЬНЫЙ ДЕКОРАТОР
-  // ========================================
-  decorators: [
-    (story, context) => {
-      // Автоматически устанавливаем checked в зависимости от state
-      const checkedStates = ['hover-checked', 'active-checked'];
-
-      if (context.args.state && checkedStates.includes(context.args.state)) {
-        context.args.checked = true;
-      } else if (context.args.state) {
-        // Если выбрано состояние без -checked, сбрасываем checked
-        // (но только если пользователь не установил его вручную)
-        if (
-          context.args.checked === undefined ||
-          context.initialArgs.state !== context.args.state
-        ) {
-          context.args.checked = false;
-        }
-      }
-
-      return story();
-    },
-  ],
   parameters: {
     docs: {
       description: {
         component: `
-# Checkbox Component
+# Checkbox (PrimeNG)
 
-Кастомный компонент чекбокса на базе **PrimeNG Checkbox** с поддержкой:
-- ✅ Состояний: default, hover, focus, active, disabled, readonly
-- ✅ Двусторонняя привязка через \`[(checked)]\`
-- ✅ Автоматическая генерация уникальных ID
+Кастомный компонент чекбокса на базе **PrimeNG** с поддержкой:
+- Состояний: **default**, **hover**, **checked**, **disabled**, **readonly**.
+- Двусторонней привязки (\`[(checked)]\`).
+- Автоматической генерации \`inputId\`.
+- Кастомных стилей (цвета, иконки через \`icomoon\`).
 
-## Базовое использование
+---
 
+## Особенности
+### 1. Поддерживаемые состояния
+| Состояние       | Описание                                                                 | Пример кода                                  |
+|------------------|-------------------------------------------------------------------------|----------------------------------------------|
+| **Default**      | Базовое состояние.                                                      | \`<p-checkbox />\`                          |
+| **Hover**        | Подсветка при наведении (\`--global-light-gray-4-color\`).               | \`.p-checkbox:hover\`                        |
+| **Checked**      | Отмеченный чекбокс (синяя галочка).                                     | \`[checked]="true"\`                          |
+| **Disabled**     | Недоступный чекбокс (серый фон).                                       | \`[disabled]="true"\`                         |
+| **Readonly**     | Только для чтения (визуально как \`disabled\`, но **не блокирует события**). | \`[readonly]="true"\`                     |
+
+### 2. Отличия от стандартного PrimeNG
+- **\`readonly\`:** В вашей реализации **не блокирует события** (в отличие от \`disabled\`).
+- **Стили:** Полностью переопределены (нет стандартных \`focus\`/\`active\` состояний).
+
+### 3. Неиспользуемые свойства PrimeNG
+| Свойство       | Почему не используется                          |
+|----------------|-------------------------------------------------|
+| \`name\`       | Нет обработки форм с \`name\`.                  |
+| \`value\`      | Используется только булево \`checked\`.         |
+| \`tabindex\`   | Нет кастомной логики фокуса.                    |
+| \`styleClass\` | Стили жёстко заданы в CSS.                      |
+| \`icon\`       | Иконка фиксирована (\`$icon-check\` из \`icomoon\`). |
+
+---
+## Примеры использования
+### Базовый чекбокс
 \`\`\`html
-<!-- Простой чекбокс -->
-<p-checkbox label="Согласен с условиями" />
+<p-checkbox [(checked)]="isAgreed" label="Согласен с условиями" />
+\`\`\`
 
-<!-- С двусторонней привязкой -->
+### Чекбокс только для чтения
+\`\`\`html
 <p-checkbox
-  [(checked)]="isSubscribed"
+  [readonly]="true"
+  [checked]="true"
+  label="Настройка по умолчанию"
+/>
+\`\`\`
+
+### В форме с \`ReactiveForms\`
+\`\`\`typescript
+this.form = this.fb.group({
+  subscribe: [false]
+});
+\`\`\`
+\`\`\`html
+<p-checkbox
+  formControlName="subscribe"
   label="Подписаться на рассылку"
 />
-
-<!-- Readonly чекбокс -->
-<p-checkbox
-  [checked]="true"
-  [readonly]="true"
-  label="Настройка по умолчанию (неизменяемая)"
-/>
-
-<!-- Disabled чекбокс -->
-<p-checkbox
-  [disabled]="true"
-  label="Опция недоступна"
-/>
 \`\`\`
-
-## PrimeNG Reference
-
-Компонент является оберткой над \`p-checkbox\`:
-
-\`\`\`html
-<!-- Нативный PrimeNG аналог -->
-<p-checkbox
-  #myCheckbox
-  checkboxIcon="icon-check"
-  [(ngModel)]="checked"
-  [binary]="true"
-  [disabled]="false"
-  [readonly]="false"
-/>
-\`\`\`
-
-## 🎮 Demo States в Storybook
-
-При выборе \`state\` в контролах, \`checked\` устанавливается автоматически:
-
-| State | Auto checked |
-|-------|--------------|
-| \`default\` | \`false\` |
-| \`hover\` | \`false\` |
-| \`focus\` | \`false\` |
-| \`active\` | \`false\` |
-| \`hover-checked\` | \`true\` ✅ |
-| \`active-checked\` | \`true\` ✅ |
         `,
       },
     },
@@ -182,39 +139,20 @@ export const Playground: Story = {
     checked: false,
     disabled: false,
     readonly: false,
-    state: 'default',
   },
   parameters: {
     docs: {
       description: {
         story: `
 ### 🎮 Интерактивная песочница
+Экспериментируйте с комбинациями свойств.
 
-Экспериментируйте с различными комбинациями свойств.
+**Поддерживаемые свойства:**
+- \`checked\` (двусторонняя привязка).
+- \`disabled\` / \`readonly\` (см. отличия выше).
 
-**💡 Подсказка:** При выборе \`state\` со значением \`*-checked\`,
-свойство \`checked\` автоматически устанавливается в \`true\`.
-
-**Валидные комбинации:**
-
-| checked | disabled | readonly | Описание |
-|---------|----------|----------|----------|
-| ✅      | ❌       | ❌       | Обычный отмеченный чекбокс |
-| ❌      | ❌       | ❌       | Обычный пустой чекбокс |
-| ✅/❌   | ✅       | ❌       | Disabled (любое состояние) |
-| ✅/❌   | ❌       | ✅       | Readonly (можно видеть, нельзя менять) |
-
-**⚠️ Несовместимые комбинации:**
-- \`disabled + readonly\` — используйте что-то одно
-
-\`\`\`html
-<p-checkbox
-  label="Checkbox label"
-  [checked]="false"
-  [disabled]="false"
-  [readonly]="false"
-/>
-\`\`\`
+**⚠️ Важно:**
+- \`readonly\` **не блокирует события** (в отличие от \`disabled\`).
         `,
       },
     },
@@ -222,91 +160,57 @@ export const Playground: Story = {
 };
 
 // ========================================
-// 📊 ALL STATES
+// 📊 ALL STATES (Только реальные состояния)
 // ========================================
 export const AllStates: Story = {
   render: () => ({
     template: `
-      <div style="display: flex; flex-direction: column; gap: 3rem; font-family: Inter, system-ui;">
-
+      <div style="display: flex; flex-direction: column; gap: 2rem;">
         <!-- UNCHECKED STATES -->
         <div>
-          <h3 style="margin: 0 0 1.5rem; font-size: 16px; font-weight: 600; color: #1d2129;">
-            ⬜ Unchecked States
-          </h3>
-          <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 2rem;">
-
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem;">
-              <app-checkbox label="Default" state="default" />
-              <span style="font-size: 12px; color: #86909c; font-weight: 500;">Default</span>
+          <h3 style="margin: 0 0 1rem;">⬜ Unchecked States</h3>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+            <div style="text-align: center;">
+              <app-checkbox label="Default" />
+              <div style="font-size: 0.75rem; color: #666;">Default</div>
             </div>
-
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem;">
-              <app-checkbox label="Hover" state="hover" />
-              <span style="font-size: 12px; color: #86909c; font-weight: 500;">Hover</span>
+            <div style="text-align: center;">
+              <app-checkbox label="Hover" class="p-checkbox-hover" />
+              <div style="font-size: 0.75rem; color: #666;">Hover</div>
             </div>
-
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem;">
-              <app-checkbox label="Focus" state="focus" />
-              <span style="font-size: 12px; color: #86909c; font-weight: 500;">Focus</span>
-            </div>
-
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem;">
-              <app-checkbox label="Active" state="active" />
-              <span style="font-size: 12px; color: #86909c; font-weight: 500;">Active</span>
-            </div>
-
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem;">
+            <div style="text-align: center;">
               <app-checkbox label="Disabled" [disabled]="true" />
-              <span style="font-size: 12px; color: #86909c; font-weight: 500;">Disabled</span>
+              <div style="font-size: 0.75rem; color: #666;">Disabled</div>
             </div>
-
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem;">
+            <div style="text-align: center;">
               <app-checkbox label="Readonly" [readonly]="true" />
-              <span style="font-size: 12px; color: #86909c; font-weight: 500;">Readonly</span>
+              <div style="font-size: 0.75rem; color: #666;">Readonly</div>
             </div>
           </div>
         </div>
 
         <!-- CHECKED STATES -->
         <div>
-          <h3 style="margin: 0 0 1.5rem; font-size: 16px; font-weight: 600; color: #1d2129;">
-            ✅ Checked States
-          </h3>
-          <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 2rem;">
-
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem;">
-              <app-checkbox label="Default" [checked]="true" state="default" />
-              <span style="font-size: 12px; color: #86909c; font-weight: 500;">Default</span>
+          <h3 style="margin: 0 0 1rem;">✅ Checked States</h3>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+            <div style="text-align: center;">
+              <app-checkbox label="Default" [checked]="true" />
+              <div style="font-size: 0.75rem; color: #666;">Default</div>
             </div>
-
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem;">
-              <app-checkbox label="Hover" state="hover-checked" />
-              <span style="font-size: 12px; color: #86909c; font-weight: 500;">Hover</span>
+            <div style="text-align: center;">
+              <app-checkbox label="Hover" [checked]="true" class="p-checkbox-hover" />
+              <div style="font-size: 0.75rem; color: #666;">Hover</div>
             </div>
-
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem;">
-              <app-checkbox label="Focus" [checked]="true" state="focus" />
-              <span style="font-size: 12px; color: #86909c; font-weight: 500;">Focus</span>
-            </div>
-
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem;">
-              <app-checkbox label="Active" state="active-checked" />
-              <span style="font-size: 12px; color: #86909c; font-weight: 500;">Active</span>
-            </div>
-
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem;">
+            <div style="text-align: center;">
               <app-checkbox label="Disabled" [checked]="true" [disabled]="true" />
-              <span style="font-size: 12px; color: #86909c; font-weight: 500;">Disabled</span>
+              <div style="font-size: 0.75rem; color: #666;">Disabled</div>
             </div>
-
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem;">
+            <div style="text-align: center;">
               <app-checkbox label="Readonly" [checked]="true" [readonly]="true" />
-              <span style="font-size: 12px; color: #86909c; font-weight: 500;">Readonly</span>
+              <div style="font-size: 0.75rem; color: #666;">Readonly</div>
             </div>
           </div>
         </div>
-
       </div>
     `,
   }),
@@ -314,36 +218,20 @@ export const AllStates: Story = {
     docs: {
       description: {
         story: `
-### 📊 Все состояния компонента
-
-Полная визуализация всех состояний чекбокса.
+### 📊 Все **реальные** состояния компонента
+Демонстрация **всех поддерживаемых состояний** (без вымышленных \`focus\`/\`active\`).
 
 **Unchecked (⬜):**
-- **Default** — базовое состояние
-- **Hover** — при наведении мыши
-- **Focus** — при фокусе с клавиатуры (Tab)
-- **Active** — при клике (нажатие кнопки мыши)
-- **Disabled** — недоступен для взаимодействия
-- **Readonly** — видимый, но неизменяемый
+- \`default\`, \`hover\`, \`disabled\`, \`readonly\`.
 
 **Checked (✅):**
-- **Default** — отмеченный чекбокс
-- **Hover** — отмеченный + наведение
-- **Focus** — отмеченный + фокус
-- **Active** — отмеченный + клик
-- **Disabled** — отмеченный + недоступен
-- **Readonly** — отмеченный + только чтение
+- \`default\`, \`hover\`, \`disabled\`, \`readonly\`.
 
+**Пример кода:**
 \`\`\`html
-<!-- Пример использования состояний в коде -->
-<p-checkbox label="Default" />
-<p-checkbox label="Checked" [checked]="true" />
-<p-checkbox label="Disabled" [disabled]="true" />
-<p-checkbox label="Readonly" [readonly]="true" [checked]="true" />
+<!-- Readonly (можно кликать, но не меняет состояние) -->
+<p-checkbox [readonly]="true" [checked]="true" label="Фиксированное значение" />
 \`\`\`
-
-**💡 В Playground:** При выборе \`hover-checked\` или \`active-checked\`
-в контроле \`state\`, чекбокс автоматически становится отмеченным.
         `,
       },
     },
@@ -358,8 +246,7 @@ export const WithLabels: Story = {
     template: `
       <div style="display: flex; flex-direction: column; gap: 1rem; max-width: 500px;">
         <app-checkbox label="Согласен с условиями использования" />
-        <app-checkbox label="Подписаться на рассылку новостей и обновлений" [checked]="true" />
-        <app-checkbox label="Запомнить меня на этом устройстве (30 дней)" />
+        <app-checkbox label="Подписаться на рассылку новостей" [checked]="true" />
         <app-checkbox label="Получать уведомления по email" [disabled]="true" />
         <app-checkbox label="Разрешить доступ к геолокации" [checked]="true" [disabled]="true" />
         <app-checkbox label="Автоматически сохранять черновики" [checked]="true" [readonly]="true" />
@@ -370,39 +257,21 @@ export const WithLabels: Story = {
     docs: {
       description: {
         story: `
-### 📝 Примеры с метками
-
-Реальные сценарии использования чекбоксов в формах.
-
-\`\`\`html
-<!-- Согласие с условиями -->
-<p-checkbox label="Согласен с условиями использования" />
-
-<!-- С предустановленным значением -->
-<p-checkbox
-  label="Подписаться на рассылку"
-  [checked]="true"
-/>
-
-<!-- Недоступный чекбокс -->
-<p-checkbox
-  label="Получать уведомления (недоступно)"
-  [disabled]="true"
-/>
-
-<!-- Readonly (нельзя изменить) -->
-<p-checkbox
-  label="Автоматически сохранять черновики"
-  [checked]="true"
-  [readonly]="true"
-/>
-\`\`\`
+### 📝 Чекбоксы с метками
+Реальные сценарии использования в формах.
 
 **Когда использовать:**
-- ✅ Формы регистрации/авторизации
-- ✅ Настройки приложения
-- ✅ Фильтры и параметры поиска
-- ✅ Согласие с условиями
+- ✅ Формы согласия (регистрация, обработка данных).
+- ✅ Настройки уведомлений.
+- ✅ Фильтры в поиске.
+
+**Пример:**
+\`\`\`html
+<p-checkbox
+  label="Согласен с условиями *"
+  [(checked)]="acceptTerms"
+/>
+\`\`\`
         `,
       },
     },
@@ -429,9 +298,13 @@ export const WithoutLabels: Story = {
       description: {
         story: `
 ### 🎨 Без меток
-
 Чекбоксы без текстовых меток для компактного размещения.
 
+**Когда использовать:**
+- ✅ Таблицы с множественным выбором.
+- ✅ Компактные списки опций.
+
+**Пример:**
 \`\`\`html
 <!-- В таблице -->
 <tr *ngFor="let item of items">
@@ -440,20 +313,7 @@ export const WithoutLabels: Story = {
   </td>
   <td>{{ item.name }}</td>
 </tr>
-
-<!-- В header таблицы -->
-<th>
-  <p-checkbox
-    [(checked)]="allSelected"
-    (onChange)="toggleAll()"
-  />
-</th>
 \`\`\`
-
-**Когда использовать:**
-- ✅ Таблицы с множественным выбором
-- ✅ Компактные списки
-- ✅ Визуальные чеклисты
         `,
       },
     },
@@ -470,8 +330,8 @@ export const TwoWayBinding: Story = {
     },
     template: `
       <div style="display: flex; flex-direction: column; gap: 1.5rem; max-width: 500px;">
-        <h4 style="margin: 0; font-size: 14px; font-weight: 600; color: #1d2129;">
-          Двусторонняя привязка [(checked)]
+        <h4 style="margin: 0; font-size: 14px; font-weight: 600;">
+          Двусторонняя привязка \`[(checked)]\`
         </h4>
 
         <app-checkbox
@@ -479,21 +339,15 @@ export const TwoWayBinding: Story = {
           label="Согласен с условиями использования"
         />
 
-        <div style="padding: 12px; background: #f7f8fa; border-radius: 6px; font-size: 13px; font-family: 'Courier New', monospace;">
+        <div style="padding: 12px; background: #f7f8fa; border-radius: 6px; font-family: monospace;">
           <div><strong>isChecked:</strong> {{ isChecked }}</div>
         </div>
 
         <div style="display: flex; gap: 8px;">
-          <button
-            (click)="isChecked = true"
-            style="padding: 8px 16px; border: 1px solid #d9d9d9; border-radius: 4px; background: white; cursor: pointer;"
-          >
+          <button (click)="isChecked = true" style="padding: 8px 16px; border: 1px solid #d9d9d9; border-radius: 4px; background: white; cursor: pointer;">
             Set True
           </button>
-          <button
-            (click)="isChecked = false"
-            style="padding: 8px 16px; border: 1px solid #d9d9d9; border-radius: 4px; background: white; cursor: pointer;"
-          >
+          <button (click)="isChecked = false" style="padding: 8px 16px; border: 1px solid #d9d9d9; border-radius: 4px; background: white; cursor: pointer;">
             Set False
           </button>
         </div>
@@ -505,40 +359,23 @@ export const TwoWayBinding: Story = {
       description: {
         story: `
 ### 🔄 Двусторонняя привязка
+Компонент поддерживает \`[(checked)]\` для синхронизации с переменными.
 
-Компонент поддерживает двустороннюю привязку через \`[(checked)]\`.
-
+**Пример:**
 \`\`\`typescript
 // Component
-export class MyComponent {
-  isAccepted = false;
-  isSubscribed = true;
-}
+isSubscribed = false;
 \`\`\`
-
 \`\`\`html
-<!-- Template -->
-<p-checkbox
-  [(checked)]="isAccepted"
-  label="Согласен с условиями"
-/>
-
 <p-checkbox
   [(checked)]="isSubscribed"
-  label="Получать новости"
+  label="Подписаться на рассылку"
 />
 
-<button
-  [disabled]="!isAccepted"
-  (click)="submit()"
->
+<button [disabled]="!isSubscribed">
   Отправить
 </button>
 \`\`\`
-
-**Как работает:**
-- Изменение в компоненте → обновляется чекбокс
-- Клик по чекбоксу → обновляется переменная в компоненте
         `,
       },
     },
@@ -552,7 +389,6 @@ export const PracticalExamples: Story = {
   render: () => ({
     template: `
       <div style="display: flex; flex-direction: column; gap: 2rem; max-width: 600px;">
-
         <!-- 1. Форма регистрации -->
         <div>
           <h4 style="margin: 0 0 1rem; font-size: 14px; font-weight: 600;">
@@ -586,10 +422,8 @@ export const PracticalExamples: Story = {
             <app-checkbox label="В наличии" [checked]="true" />
             <app-checkbox label="Со скидкой" />
             <app-checkbox label="Новинки" />
-            <app-checkbox label="Бесплатная доставка" />
           </div>
         </div>
-
       </div>
     `,
   }),
@@ -598,28 +432,19 @@ export const PracticalExamples: Story = {
       description: {
         story: `
 ### 🎯 Практические примеры
-
 Реальные сценарии использования чекбоксов.
 
 #### 1️⃣ Форма регистрации
 \`\`\`html
 <form>
   <p-checkbox
-    label="Согласен с условиями использования *"
+    label="Согласен с условиями *"
     [(checked)]="acceptTerms"
-  />
-  <p-checkbox
-    label="Согласен на обработку персональных данных *"
-    [(checked)]="acceptPrivacy"
   />
   <p-checkbox
     label="Подписаться на рассылку"
     [(checked)]="newsletter"
   />
-
-  <button [disabled]="!acceptTerms || !acceptPrivacy">
-    Зарегистрироваться
-  </button>
 </form>
 \`\`\`
 
@@ -631,12 +456,8 @@ export const PracticalExamples: Story = {
     [(checked)]="notifications.email"
   />
   <p-checkbox
-    label="Push уведомления"
-    [(checked)]="notifications.push"
-  />
-  <p-checkbox
     label="SMS уведомления"
-    [disabled]="!hasSMS"
+    [disabled]="true"
   />
 </div>
 \`\`\`
@@ -647,17 +468,10 @@ export const PracticalExamples: Story = {
   <p-checkbox
     label="В наличии"
     [(checked)]="filters.inStock"
-    (onChange)="applyFilters()"
   />
   <p-checkbox
     label="Со скидкой"
     [(checked)]="filters.onSale"
-    (onChange)="applyFilters()"
-  />
-  <p-checkbox
-    label="Новинки"
-    [(checked)]="filters.isNew"
-    (onChange)="applyFilters()"
   />
 </div>
 \`\`\`

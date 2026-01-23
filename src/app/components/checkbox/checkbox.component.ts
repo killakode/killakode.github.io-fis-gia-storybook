@@ -1,4 +1,3 @@
-// checkbox.component.ts
 import { Component, Input, forwardRef, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -9,7 +8,7 @@ import {
 import { CheckboxModule } from 'primeng/checkbox';
 import { CardModule } from 'primeng/card';
 
-let nextUniqueId = 0; // ← Счётчик для уникальных ID
+let nextUniqueId = 0;
 
 @Component({
   selector: 'app-checkbox',
@@ -27,22 +26,46 @@ let nextUniqueId = 0; // ← Счётчик для уникальных ID
   encapsulation: ViewEncapsulation.None,
 })
 export class CheckboxComponent implements ControlValueAccessor {
+  /**
+   * Текстовая метка рядом с чекбоксом.
+   */
   @Input() label?: string;
-  @Input() disabled = false;
-  @Input() readonly = false;
-  @Input() state?: 'default' | 'hover' | 'focus' | 'active';
-  @Input() indeterminate = false;
-  @Input() checked = false;
-  @Input() inputId?: string; // ← Возможность передать свой ID
 
-  // Генерируем уникальный ID, если не передан
+  /**
+   * Блокирует взаимодействие с чекбоксом.
+   */
+  @Input() disabled = false;
+
+  /**
+   * Разрешает только просмотр (визуально как disabled, но не блокирует события).
+   */
+  @Input() readonly = false;
+
+  /**
+   * Состояние чекбокса (checked/unchecked).
+   */
+  @Input() checked = false;
+
+  /**
+   * Неопределённое состояние (визуально — прочерк).
+   * Устанавливается через атрибут [attr.data-indeterminate].
+   */
+  @Input() indeterminate = false;
+
+  /**
+   * HTML ID для связи с label (автогенерируется, если не указан).
+   */
+  @Input() inputId?: string;
+
+  /**
+   * Уникальный ID (автогенерируется, если не передан inputId).
+   */
   uniqueId: string = `checkbox-${++nextUniqueId}`;
 
   private onChange: (value: boolean) => void = () => {};
   private onTouched: () => void = () => {};
 
   ngOnInit() {
-    // Если inputId передан извне, используем его
     if (this.inputId) {
       this.uniqueId = this.inputId;
     }
@@ -66,24 +89,16 @@ export class CheckboxComponent implements ControlValueAccessor {
 
   onCheckboxChange(event: any): void {
     if (this.readonly) return;
-
     this.checked = event.checked;
     this.onChange(this.checked);
     this.onTouched();
   }
 
+  /**
+   * Возвращает классы для состояний (используется в шаблоне).
+   * В текущей реализации не применяется (стилизация через CSS).
+   */
   getStateClass(): string {
-    if (!this.state) return '';
-
-    const stateMap: Record<string, string> = {
-      default: '',
-      hover: 'state-hover',
-      focus: 'state-focus',
-      active: 'state-active',
-      'hover-checked': 'state-hover-checked',
-      'active-checked': 'state-active-checked',
-    };
-
-    return stateMap[this.state] || '';
+    return ''; // Стили определены в CSS, этот метод не нужен
   }
 }
