@@ -1,7 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { applicationConfig } from '@storybook/angular';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { TextInputComponent } from '../app/components/input/input.component';
+import { TextInputComponent, TextInputVariant } from 'src/app/components/input/input.component';
+
+/**
+ * 📝 TextInputComponent (на основе PrimeNG)
+ *
+ * Универсальный компонент для работы с текстовыми полями ввода,
+ * построенный на базе компонентов PrimeNG с кастомными стилями и логикой.
+ *
+ * 🔹 **Используемые компоненты PrimeNG:**
+ * - `p-inputtext` (для `variant="input"`)
+ * - `p-inputnumber` (для `variant="inputnumber"`)
+ * - `p-autocomplete` (для `variant="gar-address"`)
+ * - `p-inputmask` + `p-chip` (для `variant="phone-multi"`)
+ * - `p-textarea` (для `variant="textarea"`)
+ * - `p-date-picker` (для `variant="datepicker"`)
+ * - `p-floatlabel` (для всех вариантов)
+ * - `p-message` (для отображения ошибок)
+ */
 
 const meta: Meta<TextInputComponent> = {
   title: 'Components/Text Input (All Variants)',
@@ -12,7 +29,6 @@ const meta: Meta<TextInputComponent> = {
       providers: [provideAnimations()],
     }),
   ],
-
   argTypes: {
     variant: {
       control: 'select',
@@ -23,348 +39,269 @@ const meta: Meta<TextInputComponent> = {
         'phone-multi',
         'textarea',
         'datepicker',
-      ],
-      description: `
-**Вариант отображения поля согласно документации проекта:**
-
-1. \`input\` — Обычное текстовое поле
-2. \`inputnumber\` — Для чисел (p-inputnumber)
-3. \`gar-address\` — Адрес (p-autoComplete с mock данными)
-4. \`phone-multi\` — Телефоны (p-inputMask в чипах)
-5. \`textarea\` — Текстовый блок (p-textarea)
-6. \`datepicker\` — Дата / Дейтпикер (p-date-picker)
-      `,
+      ] as TextInputVariant[],
+      description: 'Вариант отображения поля.',
       table: {
-        category: 'Appearance',
+        category: 'Common',
         defaultValue: { summary: 'input' },
       },
     },
-
     label: {
       control: 'text',
-      description: 'Текст label над полем (FloatLabel)',
-      table: { category: 'Content' },
+      description: 'Текст label (используется p-floatlabel).',
+      table: { category: 'Common' },
     },
-
     required: {
       control: 'boolean',
-      description: 'Обязательное поле (добавляет красную звёздочку)',
+      description: 'Обязательное поле (добавляет красную звёздочку).',
       table: {
-        category: 'Content',
+        category: 'Common',
         defaultValue: { summary: 'false' },
       },
     },
-
     placeholder: {
       control: 'text',
-      description: 'Placeholder текст внутри поля',
-      table: { category: 'Content' },
+      description: 'Placeholder текст внутри поля.',
+      table: { category: 'Common' },
     },
-
     invalid: {
       control: 'boolean',
-      description: 'Состояние ошибки валидации (красная обводка + сообщение)',
+      description: 'Состояние ошибки валидации (красная обводка + сообщение).',
       table: {
         category: 'State',
         defaultValue: { summary: 'false' },
       },
     },
-
     errorMessage: {
       control: 'text',
-      description: 'Текст сообщения об ошибке (если пусто - дефолтный)',
-      table: { category: 'Content' },
+      description:
+        'Текст сообщения об ошибке (если пусто - используется дефолтный).',
+      table: { category: 'Common' },
     },
-
     readonly: {
       control: 'boolean',
-      description: 'Режим только для чтения (минималистичный стиль)',
+      description: 'Режим только для чтения (минималистичный стиль без рамки).',
       table: {
         category: 'State',
         defaultValue: { summary: 'false' },
       },
     },
-
     disabled: {
       control: 'boolean',
-      description: 'Отключенное состояние',
+      description:
+        'Отключенное состояние (полностью блокирует взаимодействие).',
       table: {
         category: 'State',
         defaultValue: { summary: 'false' },
       },
     },
-
     showTooltip: {
       control: 'boolean',
-      description: 'Показывать тултип при overflow текста',
+      description: 'Показывать тултип при overflow текста (pTooltip).',
       table: {
         category: 'Layout',
         defaultValue: { summary: 'true' },
       },
     },
-
+    inputId: {
+      control: 'text',
+      description: 'HTML ID элемента (автогенерация если не указан).',
+      table: { category: 'Common' },
+    },
+    showCard: {
+      control: 'boolean',
+      description: 'Обёртка в p-card (автоматически включается при ошибках).',
+      table: {
+        category: 'Layout',
+        defaultValue: { summary: 'true' },
+      },
+    },
+    customClass: {
+      control: 'text',
+      description: 'Дополнительный CSS класс для корневого элемента.',
+      table: { category: 'Layout' },
+    },
     type: {
       control: 'select',
-      options: ['text', 'email', 'password', 'tel', 'number'],
-      description: 'Тип HTML input элемента (только для variant="input")',
+      options: ['text', 'email', 'password', 'tel', 'number', 'search'],
+      description: 'Тип HTML input элемента (только для variant="input").',
       table: {
         category: 'Input Params',
         defaultValue: { summary: 'text' },
       },
+      if: { arg: 'variant', eq: 'input' },
     },
-
     showIcon: {
       control: 'boolean',
-      description: 'Показать иконку поиска слева (только для variant="input")',
+      description: 'Показать иконку поиска слева (только для variant="input").',
       table: {
         category: 'Input Params',
         defaultValue: { summary: 'false' },
       },
+      if: { arg: 'variant', eq: 'input' },
     },
-
     useGrouping: {
       control: 'boolean',
-      description: 'Группировка тысяч (1 000 вместо 1000)',
+      description: 'Группировка тысяч (1 000 вместо 1000).',
       table: {
         category: 'InputNumber Params',
         defaultValue: { summary: 'true' },
       },
+      if: { arg: 'variant', eq: 'inputnumber' },
     },
-
     min: {
       control: 'number',
-      description: 'Минимальное значение',
+      description: 'Минимальное значение.',
       table: { category: 'InputNumber Params' },
+      if: { arg: 'variant', eq: 'inputnumber' },
     },
-
     max: {
       control: 'number',
-      description: 'Максимальное значение',
+      description: 'Максимальное значение.',
       table: { category: 'InputNumber Params' },
+      if: { arg: 'variant', eq: 'inputnumber' },
     },
-
     step: {
       control: 'number',
-      description: 'Шаг изменения значения',
+      description: 'Шаг изменения значения.',
       table: {
         category: 'InputNumber Params',
         defaultValue: { summary: '1' },
       },
+      if: { arg: 'variant', eq: 'inputnumber' },
     },
-
     rows: {
       control: 'number',
-      description: 'Количество строк для textarea',
+      description: 'Количество строк для textarea.',
       table: {
         category: 'Textarea Params',
         defaultValue: { summary: '2' },
       },
+      if: { arg: 'variant', eq: 'textarea' },
     },
-
     maxlength: {
       control: 'number',
-      description: 'Максимальная длина текста',
+      description: 'Максимальная длина текста.',
       table: {
         category: 'Textarea Params',
         defaultValue: { summary: '255' },
       },
+      if: { arg: 'variant', eq: 'textarea' },
     },
-
     autoResize: {
       control: 'boolean',
-      description: 'Автоувеличение размера textarea',
+      description: 'Автоувеличение высоты textarea при вводе.',
       table: {
         category: 'Textarea Params',
         defaultValue: { summary: 'true' },
       },
+      if: { arg: 'variant', eq: 'textarea' },
     },
-
     showCharCount: {
       control: 'boolean',
       description:
-        'Показывать счетчик символов и кнопку "Очистить" (только для textarea)',
+        'Показывать панель с кнопкой "Очистить" и счетчиком символов.',
       table: {
         category: 'Textarea Params',
         defaultValue: { summary: 'false' },
       },
+      if: { arg: 'variant', eq: 'textarea' },
     },
-
     maxDate: {
       control: 'date',
-      description: 'Максимально возможная дата',
+      description: 'Максимально возможная дата.',
       table: { category: 'DatePicker Params' },
+      if: { arg: 'variant', eq: 'datepicker' },
     },
-
     minDate: {
       control: 'date',
-      description: 'Минимально возможная дата',
+      description: 'Минимально возможная дата.',
       table: { category: 'DatePicker Params' },
+      if: { arg: 'variant', eq: 'datepicker' },
     },
-
     readonlyInput: {
       control: 'boolean',
-      description: 'Можно ли редактировать дату вручную',
+      description: 'Можно ли редактировать дату вручную.',
       table: {
         category: 'DatePicker Params',
         defaultValue: { summary: 'false' },
       },
+      if: { arg: 'variant', eq: 'datepicker' },
     },
-
     showOnFocus: {
       control: 'boolean',
-      description: 'Показывать календарь при фокусе',
+      description: 'Показывать календарь при фокусе.',
       table: {
         category: 'DatePicker Params',
         defaultValue: { summary: 'true' },
       },
+      if: { arg: 'variant', eq: 'datepicker' },
     },
-
     showCalendarIcon: {
       control: 'boolean',
-      description: 'Показывать иконку календаря',
+      description: 'Показывать иконку календаря.',
       table: {
         category: 'DatePicker Params',
         defaultValue: { summary: 'true' },
       },
+      if: { arg: 'variant', eq: 'datepicker' },
     },
-
     maxPhones: {
       control: 'number',
-      description: 'Максимальное количество телефонов',
+      description: 'Максимальное количество телефонов.',
       table: {
         category: 'PhoneMulti Params',
         defaultValue: { summary: '3' },
       },
+      if: { arg: 'variant', eq: 'phone-multi' },
     },
-
     phoneMask: {
       control: 'text',
-      description: 'Маска для телефона',
+      description: 'Маска для телефона (формат +7(999)999-99-99).',
       table: {
         category: 'PhoneMulti Params',
         defaultValue: { summary: '+7(999)999-99-99' },
       },
+      if: { arg: 'variant', eq: 'phone-multi' },
     },
-
     phonePlaceholder: {
       control: 'text',
-      description: 'Placeholder для телефона',
+      description: 'Placeholder для телефона.',
       table: {
         category: 'PhoneMulti Params',
         defaultValue: { summary: '+7(___)___-__-__' },
       },
-    },
-
-    showCard: {
-      control: 'boolean',
-      description: 'Обёртка в p-card',
-      table: {
-        category: 'Layout',
-        defaultValue: { summary: 'true' },
-      },
-    },
-
-    customClass: {
-      control: 'text',
-      description: 'Дополнительный CSS класс',
-      table: { category: 'Layout' },
+      if: { arg: 'variant', eq: 'phone-multi' },
     },
   },
-
   parameters: {
     docs: {
       description: {
         component: `
-# Text Input Component (All Variants)
+# Text Input Component (на основе PrimeNG)
 
-Универсальный компонент текстовых полей, объединяющий **6 вариантов** из проекта OISU-GIA.
+Универсальный компонент для работы с текстовыми полями ввода, построенный на базе **PrimeNG** с кастомными стилями и логикой.
 
-## 📋 Варианты:
+## 📌 Варианты компонента
 
-### 1️⃣ **input** — Обычное текстовое поле
-- Компонент: \`<input pInputText>\`
-- Поддержка иконок (поиск)
-- Тултипы при overflow
+| Вариант         | Компонент PrimeNG          | Особенности |
+|-----------------|----------------------------|-------------|
+| **input**       | \`<input pInputText>\`      | Поддержка иконок, тултипов, различных типов (text/email/password/tel/number/search) |
+| **inputnumber** | \`<p-inputNumber>\`        | Группировка тысяч, ограничения min/max, шаг изменения |
+| **gar-address** | \`<p-autoComplete>\`       | Mock данные (30 адресов), поиск, панель открывается в body |
+| **phone-multi** | \`<p-inputGroup>\` + \`<p-chip>\` + \`<p-inputMask>\` | Маска телефона, добавление/удаление номеров (макс. 3) |
+| **textarea**    | \`<textarea pTextarea>\`    | Автоувеличение высоты, счётчик символов, кнопка "Очистить" |
+| **datepicker**  | \`<p-date-picker>\`        | Min/Max даты, кастомная иконка календаря, ручной ввод |
 
-### 2️⃣ **inputnumber** — Для чисел
-- Компонент: \`<p-inputNumber>\`
-- Группировка тысяч
-- Min/Max значения
+## ✨ Общие возможности
 
-### 3️⃣ **gar-address** — Адрес
-- Компонент: \`<p-autoComplete>\`
-- Mock данные (30 адресов)
-- Поиск по введенному тексту
-- Панель открывается в body
-- Scrollable список
-
-### 4️⃣ **phone-multi** — Телефоны
-- Компонент: \`<p-inputGroup>\` + \`<p-chip>\` + \`<p-inputMask>\`
-- Маска телефона
-- Добавление/удаление номеров
-- Максимум 3 телефона
-
-### 5️⃣ **textarea** — Текстовый блок
-- Компонент: \`<textarea pTextarea>\`
-- Автоувеличение высоты
-- Ограничение длины
-- Панель с кнопкой "Очистить" и счетчиком символов
-
-### 6️⃣ **datepicker** — Дата
-- Компонент: \`<p-date-picker>\`
-- Min/Max даты
-- Иконка календаря
-
-## ✨ Общие возможности:
-
-- ✅ **FloatLabel** — label перемещается вверх при фокусе
-- ✅ **Валидация** — красная обводка + сообщение об ошибке
-- ✅ **Required asterisk** — красная звёздочка
-- ✅ **Тултипы** — автоматическое отображение при overflow
-- ✅ **Состояния** — disabled, readonly, invalid
-- ✅ **ControlValueAccessor** — интеграция с Angular Forms
-- ✅ **p-card обёртка** — автоматически при ошибках
-
-## 📝 Примеры использования:
-
-\`\`\`html
-<app-text-input
-  variant="input"
-  label="Наименование"
-  [required]="true"
-/>
-
-<app-text-input
-  variant="inputnumber"
-  label="Номер аудитории"
-  [useGrouping]="false"
-/>
-
-<app-text-input
-  variant="gar-address"
-  label="Адрес"
-  [required]="true"
-/>
-
-<app-text-input
-  variant="phone-multi"
-  label="Телефоны"
-  [maxPhones]="3"
-/>
-
-<app-text-input
-  variant="textarea"
-  label="Комментарий"
-  [rows]="3"
-  [showCharCount]="true"
-/>
-
-<app-text-input
-  variant="datepicker"
-  label="Дата рождения"
-  [maxDate]="maxDate"
-/>
-\`\`\`
+- **FloatLabel**: Анимация label при фокусе (p-floatlabel)
+- **Валидация**: Красная обводка + сообщение об ошибке (p-message)
+- **Состояния**: Поддержка всех состояний (default, hover, focus, disabled, readonly, invalid)
+- **ControlValueAccessor**: Полная интеграция с Angular Forms (ngModel и ReactiveForms)
+- **Тултипы**: Автоматическое отображение при overflow текста (pTooltip)
+- **Локализация**: Русский язык для календаря
+- **Автообертка**: В p-card при ошибках валидации
         `,
       },
     },
@@ -374,6 +311,9 @@ const meta: Meta<TextInputComponent> = {
 export default meta;
 type Story = StoryObj<TextInputComponent>;
 
+// =============================================
+// БАЗОВЫЙ ПРИМЕР (Песочница)
+// =============================================
 export const Playground: Story = {
   args: {
     variant: 'input',
@@ -387,557 +327,576 @@ export const Playground: Story = {
     errorMessage: '',
     showIcon: false,
     showTooltip: true,
-    useGrouping: true,
-    rows: 2,
-    maxlength: 255,
-    autoResize: true,
-    showCharCount: false,
-    readonlyInput: false,
-    showOnFocus: true,
-    showCalendarIcon: true,
     showCard: true,
-    maxPhones: 3,
+    customClass: '',
   },
 };
 
-export const Variant1_Input: Story = {
-  args: {
-    variant: 'input',
-    label: 'Наименование',
-    placeholder: 'Введите наименование',
-    required: true,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: `
-# 📝 Вариант 1: Обычное текстовое поле (input)
-
-## Компонент:
-\`<input pInputText>\`
-
-## Особенности:
-- Поддержка различных типов: text, email, password, tel, number
-- Опциональная иконка поиска слева
-- Тултип при overflow текста
-- FloatLabel анимация
-
-## Использование:
-\`\`\`html
-<app-text-input
-  variant="input"
-  label="Наименование"
-  placeholder="Введите наименование"
-  [required]="true"
-/>
-\`\`\`
-        `,
-      },
-    },
-  },
-};
-
-export const Variant2_InputNumber: Story = {
-  args: {
-    variant: 'inputnumber',
-    label: 'Номер аудитории',
-    placeholder: '101',
-    required: true,
-    useGrouping: false,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: `
-# 🔢 Вариант 2: Поле для чисел (inputnumber)
-
-## Компонент:
-\`<p-inputNumber>\`
-
-## Особенности:
-- Группировка тысяч (опционально)
-- Min/Max ограничения
-- Шаг изменения значения
-- Валидация числового формата
-
-## Использование:
-\`\`\`html
-<app-text-input
-  variant="inputnumber"
-  label="Номер аудитории"
-  [useGrouping]="false"
-  [min]="1"
-  [max]="999"
-/>
-\`\`\`
-        `,
-      },
-    },
-  },
-};
-
-export const Variant3_GarAddress: Story = {
-  args: {
-    variant: 'gar-address',
-    label: 'Фактический адрес',
-    required: true,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: `
-# 🏠 Вариант 3: Адрес (gar-address)
-
-## Компонент:
-\`<p-autoComplete>\` с mock данными (30 адресов городов России)
-
-## Особенности:
-- \`appendTo="body"\` — панель открывается в body
-- \`forceSelection="true"\` — можно выбрать только из списка
-- Поиск по введенному тексту
-- Scrollable список
-- Loading состояние с spinner
-- Empty message при отсутствии результатов
-
-## Mock данные:
-30 адресов различных городов России (Москва, Санкт-Петербург, Казань, Екатеринбург и др.)
-
-## Использование:
-\`\`\`html
-<app-text-input
-  variant="gar-address"
-  label="Фактический адрес"
-  [required]="true"
-/>
-\`\`\`
-        `,
-      },
-    },
-  },
-};
-
-export const Variant4_PhoneMulti: Story = {
-  args: {
-    variant: 'phone-multi',
-    label: 'Телефон',
-    required: true,
-    maxPhones: 3,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: `
-# 📞 Вариант 4: Телефоны (phone-multi)
-
-## Компонент:
-\`<p-inputGroup>\` + \`<p-chip>\` + \`<p-inputMask>\`
-
-## Особенности:
-- Маска телефона: \`+7(999)999-99-99\`
-- Добавление номеров кнопкой "+"
-- Удаление номеров через иконку в чипе
-- Минимум 1 телефон (нельзя удалить последний)
-- Максимум 3 телефона (по умолчанию)
-- Валидация формата номера
-
-## Использование:
-\`\`\`html
-<app-text-input
-  variant="phone-multi"
-  label="Телефон"
-  [required]="true"
-  [maxPhones]="3"
-  phoneMask="+7(999)999-99-99"
-  phonePlaceholder="+7(___)___-__-__"
-/>
-\`\`\`
-        `,
-      },
-    },
-  },
-};
-
-export const Variant5_Textarea: Story = {
-  args: {
-    variant: 'textarea',
-    label: 'Написать комментарий',
-    placeholder: 'Введите комментарий...',
-    rows: 3,
-    maxlength: 255,
-    autoResize: true,
-    showCharCount: true,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: `
-# 📄 Вариант 5: Текстовый блок (textarea)
-
-## Компонент:
-\`<textarea pTextarea>\`
-
-## Особенности:
-- \`rows="3"\` — начальное количество строк
-- \`maxlength="255"\` — ограничение длины текста
-- \`autoResize="true"\` — автоувеличение при вводе
-- \`showCharCount="true"\` — панель с:
-  - Кнопкой "Очистить" (показывается только при наличии текста)
-  - Счетчиком символов "250 / 255"
-
-## Панель управления:
-\`\`\`html
-<div class="textarea-panel text-end">
-  <span class="textarea-clear" (click)="onClearTextarea()">Очистить</span>
-  <span class="textarea-length">250 / 255</span>
-</div>
-\`\`\`
-
-## Использование:
-\`\`\`html
-<app-text-input
-  variant="textarea"
-  label="Написать комментарий"
-  [rows]="3"
-  [maxlength]="255"
-  [showCharCount]="true"
-/>
-\`\`\`
-        `,
-      },
-    },
-  },
-};
-
-export const Variant6_DatePicker: Story = {
-  args: {
-    variant: 'datepicker',
-    label: 'Дата рождения',
-    required: true,
-    readonlyInput: false,
-    showOnFocus: true,
-    showCalendarIcon: true,
-    maxDate: new Date(),
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: `
-# 📅 Вариант 6: Дата / Дейтпикер (datepicker)
-
-## Компонент:
-\`<p-date-picker>\`
-
-## Особенности:
-- Min/Max даты для ограничения выбора
-- Иконка календаря
-- Ручной ввод (опционально)
-- Открытие при фокусе
-- Панель открывается в body
-- Кастомный стиль панели
-
-## Использование:
-\`\`\`html
-<app-text-input
-  variant="datepicker"
-  label="Дата рождения"
-  [required]="true"
-  [maxDate]="maxDate"
-  [showCalendarIcon]="true"
-/>
-\`\`\`
-        `,
-      },
-    },
-  },
-};
-
+// =============================================
+// ДЕМОНСТРАЦИЯ ВСЕХ ВАРИАНТОВ
+// =============================================
 export const AllVariantsComparison: Story = {
   render: (args) => ({
-    props: args,
+    props: {
+      ...args,
+      currentDate: new Date(),
+      minDate: new Date(1900, 0, 1),
+    },
     template: `
-      <div style="display: flex; flex-direction: column; gap: 2rem; padding: 1rem;">
-
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; padding: 1rem;">
+        <!-- Input -->
         <div>
-          <h2>1️⃣ Обычное текстовое поле (input)</h2>
-          <p style="color: #666;">Компонент: <code>&lt;input pInputText&gt;</code></p>
+          <h3>1️⃣ Текстовое поле (input)</h3>
+          <p style="color: #666; font-size: 0.875rem;">Компонент: <code>p-inputtext</code></p>
           <app-text-input
             variant="input"
-            label="Наименование"
-            placeholder="Введите наименование"
+            label="Email"
+            placeholder="example@mail.com"
             [required]="true"
-          />
+            [showIcon]="true">
+          </app-text-input>
         </div>
 
+        <!-- InputNumber -->
         <div>
-          <h2>2️⃣ Поле для чисел (p-inputnumber)</h2>
-          <p style="color: #666;">Компонент: <code>&lt;p-inputNumber&gt;</code></p>
+          <h3>2️⃣ Числовое поле (inputnumber)</h3>
+          <p style="color: #666; font-size: 0.875rem;">Компонент: <code>p-inputnumber</code></p>
           <app-text-input
             variant="inputnumber"
-            label="Номер аудитории"
-            placeholder="101"
-            [required]="true"
-            [useGrouping]="false"
-          />
+            label="Количество"
+            [min]="0"
+            [max]="100"
+            [useGrouping]="false">
+          </app-text-input>
         </div>
 
+        <!-- GAR Address -->
         <div>
-          <h2>3️⃣ Адрес (p-autoComplete)</h2>
-          <p style="color: #666;">Компонент: <code>&lt;p-autoComplete&gt;</code> с 30 mock адресами</p>
+          <h3>3️⃣ Адрес (gar-address)</h3>
+          <p style="color: #666; font-size: 0.875rem;">Компонент: <code>p-autocomplete</code> с 30 mock адресами</p>
           <app-text-input
             variant="gar-address"
-            label="Фактический адрес"
-            [required]="true"
-          />
+            label="Адрес"
+            [required]="true">
+          </app-text-input>
         </div>
 
+        <!-- Phone Multi -->
         <div>
-          <h2>4️⃣ Телефоны (p-inputGroup + p-chip)</h2>
-          <p style="color: #666;">Компонент: <code>&lt;p-inputGroup&gt;</code> + <code>&lt;p-inputMask&gt;</code></p>
+          <h3>4️⃣ Телефоны (phone-multi)</h3>
+          <p style="color: #666; font-size: 0.875rem;">Компонент: <code>p-inputmask + p-chip</code></p>
           <app-text-input
             variant="phone-multi"
-            label="Телефон"
-            [required]="true"
+            label="Телефоны"
             [maxPhones]="3"
-          />
+            [value]="['+7(912)345-67-89']">
+          </app-text-input>
         </div>
 
+        <!-- Textarea -->
         <div>
-          <h2>5️⃣ Текстовый блок (textarea)</h2>
-          <p style="color: #666;">Компонент: <code>&lt;textarea pTextarea&gt;</code> + панель с "Очистить" и счетчиком</p>
+          <h3>5️⃣ Текстовый блок (textarea)</h3>
+          <p style="color: #666; font-size: 0.875rem;">Компонент: <code>p-textarea</code></p>
           <app-text-input
             variant="textarea"
-            label="Написать комментарий"
-            placeholder="Введите комментарий..."
+            label="Комментарий"
             [rows]="3"
             [maxlength]="255"
             [showCharCount]="true"
-          />
+            value="Пример текста для демонстрации счётчика символов (255 max).">
+          </app-text-input>
         </div>
 
+        <!-- DatePicker -->
         <div>
-          <h2>6️⃣ Дата / Дейтпикер (p-date-picker)</h2>
-          <p style="color: #666;">Компонент: <code>&lt;p-date-picker&gt;</code></p>
+          <h3>6️⃣ Календарь (datepicker)</h3>
+          <p style="color: #666; font-size: 0.875rem;">Компонент: <code>p-datepicker</code></p>
           <app-text-input
             variant="datepicker"
             label="Дата рождения"
-            [required]="true"
-            [maxDate]="maxDate"
-          />
+            [maxDate]="currentDate"
+            [minDate]="minDate">
+          </app-text-input>
         </div>
-
       </div>
     `,
   }),
-  args: {
-    maxDate: new Date(),
-  },
   parameters: {
     docs: {
       description: {
-        story: 'Сравнение всех 6 вариантов компонента на одной странице',
+        story: 'Демонстрация всех 6 вариантов компонента на одной странице.',
       },
     },
   },
 };
 
-export const WithErrors: Story = {
-  args: {
-    variant: 'input',
-    label: 'Email',
-    type: 'email',
-    invalid: true,
-    errorMessage: 'Введите корректный email адрес',
-    required: true,
-  },
+// =============================================
+// ДЕМОНСТРАЦИЯ СОСТОЯНИЙ
+// =============================================
+export const StatesDemo: Story = {
+  render: () => ({
+    template: `
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <!-- Default -->
+        <div>
+          <h3>✅ Default</h3>
+          <app-text-input variant="input" label="Email" placeholder="example@mail.com"></app-text-input>
+        </div>
+
+        <!-- Required -->
+        <div>
+          <h3>⭐ Required</h3>
+          <app-text-input variant="input" label="Email" [required]="true"></app-text-input>
+        </div>
+
+        <!-- Invalid -->
+        <div>
+          <h3>❌ Invalid</h3>
+          <app-text-input
+            variant="input"
+            label="Email"
+            [invalid]="true"
+            errorMessage="Некорректный email">
+          </app-text-input>
+        </div>
+
+        <!-- Disabled -->
+        <div>
+          <h3>🔇 Disabled</h3>
+          <app-text-input variant="input" label="Email" [disabled]="true"></app-text-input>
+        </div>
+
+        <!-- Readonly -->
+        <div>
+          <h3>📖 Readonly</h3>
+          <app-text-input
+            variant="input"
+            label="Email"
+            [readonly]="true"
+            placeholder="Это поле только для чтения"
+            value="example@mail.com">
+          </app-text-input>
+        </div>
+
+        <!-- Hover (демонстрация) -->
+        <div>
+          <h3>🖱️ Hover</h3>
+          <app-text-input class="demo-hover" variant="input" label="Email" placeholder="Наведи на меня"></app-text-input>
+        </div>
+
+        <!-- Focus (демонстрация) -->
+        <div>
+          <h3>🔍 Focus</h3>
+          <app-text-input class="demo-focus" variant="input" label="Email" placeholder="Фокус"></app-text-input>
+        </div>
+      </div>
+    `,
+  }),
   parameters: {
     docs: {
       description: {
         story: `
-Пример поля с ошибкой валидации:
-- Красная обводка
-- Сообщение об ошибке снизу
-- Автоматическая обёртка в p-card
-- Красный фон поля
-        `,
+Демонстрация всех состояний компонента:
+
+- **Default**: Базовое состояние
+- **Required**: Обязательное поле (красная звёздочка)
+- **Invalid**: Ошибка валидации (красная обводка + сообщение)
+- **Disabled**: Полностью заблокированное поле
+- **Readonly**: Только для чтения (серый фон) с placeholder
+- **Hover**: Состояние при наведении (синяя обводка)
+- **Focus**: Состояние при фокусе (синяя обводка + тень)
+      `,
       },
     },
   },
 };
 
-export const Disabled: Story = {
-  args: {
-    variant: 'input',
-    label: 'Заблокированное поле',
-    disabled: true,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Поле в отключенном состоянии (disabled)',
-      },
-    },
-  },
-};
+// =============================================
+// ПРИМЕРЫ ДЛЯ КАЖДОГО ВАРИАНТА
+// =============================================
 
-export const Readonly: Story = {
-  args: {
-    variant: 'input',
-    label: 'Только для чтения',
-    readonly: true,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Поле в режиме readonly (минималистичный стиль без рамки)',
-      },
-    },
-  },
-};
-
-export const WithIcon: Story = {
+// 1. Input с иконкой
+export const InputWithIcon: Story = {
   args: {
     variant: 'input',
     label: 'Поиск',
     placeholder: 'Введите запрос',
     showIcon: true,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Текстовое поле с иконкой поиска слева',
-      },
-    },
-  },
-};
-
-export const TextareaWithClearButton: Story = {
-  args: {
-    variant: 'textarea',
-    label: 'Комментарий',
-    placeholder: 'Начните печатать...',
-    rows: 4,
-    maxlength: 500,
-    showCharCount: true,
+    type: 'search',
   },
   parameters: {
     docs: {
       description: {
         story: `
-# Textarea с кнопкой очистки
+# Текстовое поле с иконкой
 
-Демонстрация работы панели управления:
-- Кнопка **"Очистить"** появляется только когда есть текст
-- Счетчик показывает **оставшиеся символы / максимум**
-- В режиме \`readonly\` панель скрыта
-- При нажатии "Очистить" поле очищается и вызывается \`onChange\`
+- Использует **p-iconfield** и **p-inputicon** из PrimeNG
+- Иконка появляется слева от поля
+- Поддерживает все стандартные типы input (text, email, password, etc.)
 
-## Формула счетчика:
-\`\`\`typescript
-maxlength - (value?.length ?? 0) + ' / ' + maxlength
-// Пример: "450 / 500"
+\`\`\`html
+<app-text-input
+  variant="input"
+  label="Поиск"
+  placeholder="Введите запрос"
+  [showIcon]="true"
+  type="search"
+/>
 \`\`\`
-        `,
+      `,
       },
     },
   },
 };
 
-export const MixedStates: Story = {
-  render: () => ({
-    template: `
-      <div style="display: flex; flex-direction: column; gap: 1.5rem; padding: 1rem;">
+// 2. InputNumber с ограничениями
+export const InputNumberWithConstraints: Story = {
+  args: {
+    variant: 'inputnumber',
+    label: 'Количество',
+    placeholder: 'Введите число',
+    useGrouping: true,
+    min: 0,
+    max: 1000,
+    step: 1,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+# Числовое поле с ограничениями
 
-        <div>
-          <h3>Default</h3>
-          <app-text-input variant="input" label="Email" placeholder="example@mail.com" />
-        </div>
+- **Группировка тысяч**: 1 000 вместо 1000 ([useGrouping]="true")
+- **Ограничения**: min=0, max=1000, step=1
+- **Валидация**: Автоматически блокирует ввод значений вне диапазона
 
-        <div>
-          <h3>Required</h3>
-          <app-text-input variant="input" label="Email" [required]="true" />
-        </div>
-
-        <div>
-          <h3>Invalid</h3>
-          <app-text-input
-            variant="input"
-            label="Email"
-            [invalid]="true"
-          />
-        </div>
-
-        <div>
-          <h3>Disabled</h3>
-          <app-text-input
-            variant="input"
-            label="Email"
-            [disabled]="true"
-          />
-        </div>
-
-        <div>
-          <h3>Readonly</h3>
-          <app-text-input
-            variant="input"
-            label="Email"
-            [readonly]="true"
-          />
-        </div>
-
-        <div>
-          <h3>Number Field</h3>
-          <app-text-input
-            variant="inputnumber"
-            label="Количество"
-            [useGrouping]="false"
-          />
-        </div>
-
-        <div>
-          <h3>Address with Mock Data</h3>
-          <app-text-input
-            variant="gar-address"
-            label="Адрес"
-          />
-        </div>
-
-        <div>
-          <h3>Phone Multi</h3>
-          <app-text-input
-            variant="phone-multi"
-            label="Телефоны"
-          />
-        </div>
-
-        <div>
-          <h3>Textarea with Char Count</h3>
-          <app-text-input
-            variant="textarea"
-            label="Комментарий"
-            [rows]="3"
-            [showCharCount]="true"
-          />
-        </div>
-
-        <div>
-          <h3>DatePicker</h3>
-          <app-text-input
-            variant="datepicker"
-            label="Дата"
-            [maxDate]="maxDate"
-          />
-        </div>
-
-      </div>
-    `,
-    props: {
-      maxDate: new Date(),
+\`\`\`html
+<app-text-input
+  variant="inputnumber"
+  label="Количество"
+  [min]="0"
+  [max]="1000"
+  [useGrouping]="true"
+/>
+\`\`\`
+      `,
+      },
     },
+  },
+};
+
+// 3. GAR Address с mock данными
+export const GarAddressWithMockData: Story = {
+  args: {
+    variant: 'gar-address',
+    label: 'Адрес',
+    required: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+# Поле адреса с автокомплитом
+
+- **Mock данные**: 30 адресов городов России (Москва, СПб, Казань etc.)
+- **Поиск**: Фильтрация по введенному тексту
+- **Оформление**:
+  - Панель открывается в body (appendTo="body")
+  - Loading индикатор при загрузке
+  - Сообщение "Адреса не найдены" при пустом результате
+
+\`\`\`html
+<app-text-input
+  variant="gar-address"
+  label="Адрес"
+  [required]="true"
+/>
+\`\`\`
+
+## Пример mock данных:
+\`\`\`typescript
+const mockAddresses = [
+  { garId: 1, fullName: 'г Москва, ул Тверская, д 1' },
+  { garId: 2, fullName: 'г Санкт-Петербург, Невский пр-кт, д 20' },
+  // ... еще 28 адресов
+];
+\`\`\`
+      `,
+      },
+    },
+  },
+};
+
+// 4. Phone Multi с валидацией
+export const PhoneMultiWithValidation: Story = {
+  args: {
+    variant: 'phone-multi',
+    label: 'Телефоны',
+    required: true,
+    maxPhones: 3,
+    phoneMask: '+7(999)999-99-99',
+    phonePlaceholder: '+7(___)___-__-__',
+    value: ['+7(912)345-67-89', '+7(987)654-32-10'],
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+# Множественные телефоны с валидацией
+
+- **Маска**: +7(999)999-99-99
+- **Валидация**: Регулярное выражение /^\\+7\\(\\d{3}\\)\\d{3}-\\d{2}-\\d{2}$/
+- **Ограничения**:
+  - Минимум 1 телефон (нельзя удалить последний)
+  - Максимум 3 телефона (настраивается через maxPhones)
+- **Интерфейс**:
+  - Добавление нового номера кнопкой "+"
+  - Удаление номера через крестик в чипе
+  - Подсветка невалидных номеров
+
+\`\`\`html
+<app-text-input
+  variant="phone-multi"
+  label="Телефоны"
+  [maxPhones]="3"
+  [value]="['+7(912)345-67-89']"
+/>
+\`\`\`
+      `,
+      },
+    },
+  },
+};
+
+// 5. Textarea с счётчиком символов
+export const TextareaWithCounter: Story = {
+  args: {
+    variant: 'textarea',
+    label: 'Комментарий',
+    placeholder: 'Введите комментарий...',
+    rows: 3,
+    maxlength: 255,
+    autoResize: true,
+    showCharCount: true,
+    value: 'Пример текста для демонстрации счётчика символов и кнопки очистки.',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+# Текстовый блок с счётчиком символов
+
+- **Автоувеличение**: Высота поля растет при вводе текста ([autoResize]="true")
+- **Счётчик символов**: Показывает "осталось / максимум" (255 по умолчанию)
+- **Кнопка очистки**: Появляется при наличии текста
+- **Панель управления**: Отображается только когда showCharCount=true
+
+\`\`\`html
+<app-text-input
+  variant="textarea"
+  label="Комментарий"
+  [rows]="3"
+  [maxlength]="255"
+  [showCharCount]="true"
+/>
+\`\`\`
+
+## Логика счётчика:
+\`\`\`typescript
+const remaining = maxlength - (value?.length ?? 0);
+const display = \`$\{remaining} / $\{maxlength}\`;
+\`\`\`
+      `,
+      },
+    },
+  },
+};
+
+// 6. DatePicker с ограничениями
+export const DatePickerWithConstraints: Story = {
+  render: (args) => ({
+    props: {
+      ...args,
+      currentDate: new Date(),
+      minDate: new Date(1900, 0, 1),
+    },
+    template: `
+      <app-text-input
+        variant="datepicker"
+        label="Дата рождения"
+        [required]="true"
+        [readonlyInput]="false"
+        [showOnFocus]="true"
+        [showCalendarIcon]="true"
+        [maxDate]="currentDate"
+        [minDate]="minDate">
+      </app-text-input>
+    `,
   }),
   parameters: {
     docs: {
       description: {
-        story: 'Демонстрация различных состояний и вариантов компонента',
+        story: `
+# Календарь с ограничениями
+
+- **Ограничения дат**:
+  - minDate: 01.01.1900
+  - maxDate: Текущая дата
+- **Локализация**: Русский язык (названия месяцев, кнопки "Сегодня"/"Очистить")
+- **Интерфейс**:
+  - Иконка календаря справа
+  - Панель открывается при фокусе ([showOnFocus]="true")
+  - Возможность ручного ввода ([readonlyInput]="false")
+
+\`\`\`html
+<app-text-input
+  variant="datepicker"
+  label="Дата рождения"
+  [maxDate]="new Date()"
+  [minDate]="new Date(1900, 0, 1)"
+/>
+\`\`\`
+      `,
+      },
+    },
+  },
+};
+
+// =============================================
+// ПРИМЕРЫ С ОШИБКАМИ ВАЛИДАЦИИ
+// =============================================
+export const WithValidationErrors: Story = {
+  render: (args) => ({
+    props: {
+      ...args,
+      currentDate: new Date(),
+    },
+    template: `
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <div>
+          <h3>❌ Ошибка в текстовом поле</h3>
+          <app-text-input
+            variant="input"
+            label="Email"
+            type="email"
+            [invalid]="true"
+            errorMessage="Введите корректный email адрес"
+            [required]="true">
+          </app-text-input>
+        </div>
+
+        <div>
+          <h3>❌ Ошибка в числовом поле</h3>
+          <app-text-input
+            variant="inputnumber"
+            label="Возраст"
+            [invalid]="true"
+            errorMessage="Значение должно быть от 18 до 99"
+            [min]="18"
+            [max]="99">
+          </app-text-input>
+        </div>
+
+        <div>
+          <h3>❌ Ошибка в телефоне</h3>
+          <app-text-input
+            variant="phone-multi"
+            label="Телефон"
+            [invalid]="true"
+            [value]="['+7(912)345-67']">
+          </app-text-input>
+        </div>
+
+        <div>
+          <h3>❌ Ошибка в календаре</h3>
+          <app-text-input
+            variant="datepicker"
+            label="Дата"
+            [invalid]="true"
+            errorMessage="Дата не может быть в будущем"
+            [maxDate]="currentDate">
+          </app-text-input>
+        </div>
+      </div>
+    `,
+  }),
+  parameters: {
+    docs: {
+      description: {
+        story: `
+# Примеры с ошибками валидации
+
+Все варианты компонента поддерживают состояние ошибки:
+
+1. **Красная обводка** поля
+2. **Сообщение об ошибке** под полем (p-message)
+3. **Автоматическая обертка в p-card** (если showCard=true)
+4. **Кастомные сообщения** через параметр errorMessage
+      `,
+      },
+    },
+  },
+};
+
+// =============================================
+// ПРИМЕРЫ С РАЗНЫМИ СОСТОЯНИЯМИ
+// =============================================
+export const MixedStatesGrid: Story = {
+  render: (args) => ({
+    props: {
+      ...args,
+      currentDate: new Date(),
+      minDate: new Date(1900, 0, 1),
+    },
+    template: `
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+        <!-- Column 1: Input variants -->
+        <div>
+          <h4>1. Input</h4>
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <app-text-input variant="input" label="Default" placeholder="Text"></app-text-input>
+            <app-text-input variant="input" label="Required" [required]="true"></app-text-input>
+            <app-text-input variant="input" label="Disabled" [disabled]="true"></app-text-input>
+            <app-text-input variant="input" label="Readonly" [readonly]="true" placeholder="Readonly text" value="Example"></app-text-input>
+            <app-text-input variant="input" label="Invalid" [invalid]="true" errorMessage="Error!"></app-text-input>
+          </div>
+        </div>
+
+        <!-- Column 2: Special variants -->
+        <div>
+          <h4>2. Special</h4>
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <app-text-input variant="inputnumber" label="Number" [min]="0" [max]="100"></app-text-input>
+            <app-text-input variant="datepicker" label="Date" [maxDate]="currentDate" [minDate]="minDate"></app-text-input>
+            <app-text-input variant="gar-address" label="Address"></app-text-input>
+          </div>
+        </div>
+
+        <!-- Column 3: Complex variants -->
+        <div>
+          <h4>3. Complex</h4>
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <app-text-input variant="phone-multi" label="Phones" [value]="['+7(912)345-67-89']"></app-text-input>
+            <app-text-input variant="textarea" label="Textarea" [rows]="2" [showCharCount]="true" value="Some text here"></app-text-input>
+          </div>
+        </div>
+      </div>
+    `,
+  }),
+  parameters: {
+    docs: {
+      description: {
+        story: `
+# Сетка с различными состояниями
+
+Демонстрация всех вариантов компонента в разных состояниях:
+
+1. **Первый столбец**: Базовые input поля (default, required, disabled, readonly, invalid)
+2. **Второй столбец**: Специальные варианты (number, date, address)
+3. **Третий столбец**: Сложные варианты (phones, textarea)
+
+Эта сетка помогает быстро сравнить визуальное отображение всех вариантов.
+      `,
       },
     },
   },
