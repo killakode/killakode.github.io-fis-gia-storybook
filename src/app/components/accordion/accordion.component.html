@@ -1,13 +1,7 @@
-<!-- accordion.component.html -->
-
 <div class="demo-cont">
   <p-card>
     <!-- ОБЫЧНЫЙ АККОРДЕОН -->
-    <p-accordion
-      *ngIf="!config.withExpandableTable"
-      [value]="config.value"
-      [multiple]="config.multiple"
-    >
+    <p-accordion *ngIf="!withExpandableTable">
       <p-accordion-panel
         *ngFor="let panel of panels"
         [value]="panel.value"
@@ -41,12 +35,8 @@
       </p-accordion-panel>
     </p-accordion>
 
-    <!-- АККОРДЕОН С ТАБЛИЦЕЙ И РАСКРЫВАЮЩИМИСЯ СТРОКАМИ -->
-    <p-accordion
-      *ngIf="config.withExpandableTable"
-      [value]="config.value"
-      [multiple]="config.multiple"
-    >
+    <!-- АККОРДЕОН С ТАБЛИЦЕЙ -->
+    <p-accordion *ngIf="withExpandableTable">
       <p-accordion-panel
         *ngFor="let group of reportGroups; trackBy: trackByValue"
         [value]="group.value"
@@ -81,57 +71,24 @@
               <tr>
                 <td class="width-40 nopadding text-center"></td>
                 <td class="nopadding">
-                  <!-- ФОРМА ОТЧЁТА (имитация) -->
                   <div class="report-form-wrapper">
                     <h4 class="report-title">
                       Форма отчёта: {{ report.code }}
                     </h4>
-
                     <div class="form-field">
                       <label>Этап сдачи</label>
                       <p-select
-                        [(ngModel)]="demoWaveId"
                         [options]="[
                           { id: 1, name: 'Этап 1' },
                           { id: 2, name: 'Этап 2' },
-                          { id: 3, name: 'Этап 3' }
                         ]"
                         optionLabel="name"
                         optionValue="id"
                         placeholder="Выберите этап"
-                        styleClass="form-select"
-                        [dropdownIcon]="'icon-arrow'"
+                        dropdownIcon="icon-arrow"
+                        appendTo="body"
                       />
                     </div>
-
-                    <div class="form-field">
-                      <p class="field-label">
-                        Формировать отчет в разбивке по:
-                      </p>
-                      <div class="radio-group">
-                        <div class="radio-item">
-                          <p-radioButton
-                            [(ngModel)]="demoSeparateBy[report.code]"
-                            [name]="'separateBy_' + report.code"
-                            value="government"
-                            [inputId]="'government_' + report.code"
-                          />
-                          <label [for]="'government_' + report.code">
-                            ОМСУ
-                          </label>
-                        </div>
-                        <div class="radio-item">
-                          <p-radioButton
-                            [(ngModel)]="demoSeparateBy[report.code]"
-                            [name]="'separateBy_' + report.code"
-                            value="area"
-                            [inputId]="'area_' + report.code"
-                          />
-                          <label [for]="'area_' + report.code">АТЕ</label>
-                        </div>
-                      </div>
-                    </div>
-
                     <div class="form-actions">
                       <p-button
                         label="Сформировать"
@@ -146,12 +103,6 @@
                     </div>
                   </div>
                 </td>
-              </tr>
-            </ng-template>
-
-            <ng-template pTemplate="emptymessage">
-              <tr>
-                <td [attr.colspan]="2" class="text-center">Нет данных</td>
               </tr>
             </ng-template>
           </p-table>
