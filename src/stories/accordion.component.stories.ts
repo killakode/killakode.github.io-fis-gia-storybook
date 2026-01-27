@@ -6,6 +6,12 @@ import {
   type ReportGroup,
 } from '../app/components/accordion/accordion.component';
 
+// Интерфейс для события
+interface RowEvent {
+  type: 'onRowExpand' | 'onRowCollapse';
+  data: any;
+}
+
 const meta: Meta<AccordionComponent> = {
   title: 'Components/Accordion',
   component: AccordionComponent,
@@ -76,7 +82,12 @@ const meta: Meta<AccordionComponent> = {
     // ===== STYLING =====
     styleClass: {
       control: 'text',
-      description: 'Дополнительные CSS классы для корневого элемента',
+      description: `
+Дополнительные CSS классы для корневого элемента.
+**Доступные модификаторы:**
+- \`.dialog\` - для диалогового режима
+- \`.compact\` - уменьшенные отступы
+      `,
       table: {
         category: 'Styling',
         defaultValue: { summary: '' },
@@ -91,7 +102,7 @@ const meta: Meta<AccordionComponent> = {
 
 Универсальный компонент аккордеона на базе **PrimeNG** с поддержкой:
 - Одиночного и множественного раскрытия панелей
-- Вложенных таблиц с раскрывающимися строками
+- Вложенных таблиц с раскрытием строк (режим withExpandableTable)
 - Кастомного контента через \`<ng-template>\`
 - Разных режимов отображения (диалоговый, обычный)
 - Отключённых панелей и режима "только заголовок"
@@ -123,9 +134,51 @@ const meta: Meta<AccordionComponent> = {
    - Для кастомизации использовать \`styleClass\`
 
 3. **Отличия от PrimeNG**:
-   - Полностью переопределённые стили (нет зависимости от \`p-fieldset\`)
+   - Полностью переопределённые стили
    - Кастомные иконки через icomoon
    - Дополнительные режимы (диалоговый, табличный)
+
+4. **Ограничения**:
+   - Максимальное рекомендуемое количество панелей: 15
+   - Не поддерживается вложенность аккордеонов
+   - В режиме \`withExpandableTable\` не работает \`isHeaderOnly\`
+
+---
+## 📜 События
+
+Компонент поддерживает следующие события:
+
+| Событие          | Описание                                      | Данные события                     | Когда использовать |
+|------------------|-----------------------------------------------|-------------------------------------|---------------------|
+| onPanelOpen      | Срабатывает при открытии панели              | { panel: AccordionPanelConfig }     | Для логирования или загрузки данных при открытии панели |
+| onPanelClose     | Срабатывает при закрытии панели              | { panel: AccordionPanelConfig }     | Для сохранения состояния или очистки данных |
+| onRowExpand      | Срабатывает при раскрытии строки таблицы     | { data: Report, index: number }     | Только для режима withExpandableTable. Используйте для загрузки детальной информации по строке |
+| onRowCollapse    | Срабатывает при сворачивании строки таблицы | { data: Report, index: number }     | Только для режима withExpandableTable |
+
+**Пример использования событий:**
+\`\`\`html
+<app-accordion
+  [config]="config"
+  [panels]="panels"
+  (onPanelOpen)="onPanelOpen($event)"
+  (onRowExpand)="onRowExpand($event)"
+>
+  <!-- Контент -->
+</app-accordion>
+\`\`\`
+
+\`\`\`typescript
+// В компоненте
+onPanelOpen(event: { panel: AccordionPanelConfig }) {
+  console.log('Открыта панель:', event.panel.header);
+  // Загрузка данных для панели
+}
+
+onRowExpand(event: { data: Report, index: number }) {
+  console.log('Раскрыта строка:', event.data.name);
+  // Загрузка детальной информации для строки
+}
+\`\`\`
 
 ---
 ## 📄 Примеры использования
@@ -157,33 +210,7 @@ const meta: Meta<AccordionComponent> = {
     }
   ]"
 />
-\`\`\`
-
-### 3. В диалоговом окне
-\`\`\`html
-<p-accordion
-  [config]="{value: [0], multiple: false, dialog: true}"
-  [panels]="[
-    {value: 0, header: 'Настройки', disabled: false},
-    {value: 1, header: 'Уведомления', disabled: false}
-  ]"
-/>
-\`\`\`
-
-### 4. С кастомным контентом
-\`\`\`html
-<p-accordion [panels]="panels">
-  <ng-template #panelContent let-panel>
-    <div *ngIf="panel.value === 0">
-      <!-- Кастомный контент для панели -->
-      <div class="custom-content">
-        Специальный контент для панели "{{ panel.header }}"
-      </div>
-    </div>
-  </ng-template>
-</p-accordion>
-\`\`\`
-        `,
+\`\`\`        `,
       },
     },
   },
@@ -300,14 +327,6 @@ export const AllStates: Story = {
               />
               <div class="state-label">With Table</div>
             </div>
-            <div class="state-item">
-              <app-accordion
-                [config]="{value: [0], multiple: false, dialog: true}"
-                [withExpandableTable]="false"
-                [panels]="[{value: 0, header: 'Dialog Mode', disabled: false}]"
-              />
-              <div class="state-label">Dialog Mode</div>
-            </div>
           </div>
         </div>
       </div>
@@ -338,7 +357,6 @@ export const AllStates: Story = {
 #### Специальные режимы:
 - **Multiple Open** - Множественное раскрытие панелей
 - **With Table** - Режим с вложенной таблицей
-- **Dialog Mode** - Специальные стили для диалоговых окон
 
 **Пример кода для Header Only:**
 \`\`\`html
@@ -406,7 +424,7 @@ export const BasicAccordion: Story = {
 };
 
 // =======================================================
-// 📊 WITH EXPANDABLE TABLE
+// 📊 WITH EXPANDABLE TABLE (Пример из GIA11 Reports)
 // =======================================================
 export const WithExpandableTable: Story = {
   args: {
@@ -419,60 +437,130 @@ export const WithExpandableTable: Story = {
     reportGroups: [
       {
         value: 0,
-        name: 'Отчёты Q1 2024',
+        name: 'Отчёты ГИА-11 за Q1 2024',
         reports: [
-          { code: 'Q1-01', name: 'Отчёт по продажам' },
-          { code: 'Q1-02', name: 'Финансовый отчёт' },
+          { code: 'GIA11-Q1-01', name: 'Отчёт по регистрации участников' },
+          { code: 'GIA11-Q1-02', name: 'Отчёт по распределению по ППЭ' },
+          { code: 'GIA11-Q1-03', name: 'Отчёт по конфликтам' },
+        ],
+      },
+      {
+        value: 1,
+        name: 'Отчёты ГИА-11 за Q2 2024',
+        reports: [
+          { code: 'GIA11-Q2-01', name: 'Отчёт по апелляциям' },
+          { code: 'GIA11-Q2-02', name: 'Отчёт по результатам' },
         ],
       },
     ],
   },
+  render: (args) => ({
+    template: `
+      <app-accordion
+        [config]="config"
+        [withExpandableTable]="withExpandableTable"
+        [reportGroups]="reportGroups"
+        (onRowExpand)="onRowExpand($event)"
+        (onRowCollapse)="onRowCollapse($event)"
+      >
+        <ng-template #expandedrow let-report>
+          <tr>
+            <td colspan="2" style="padding: 1rem; background: #f8f9fa;">
+              <div style="display: flex; gap: 1rem; align-items: center;">
+                <i class="pi pi-file" style="font-size: 2rem; color: #495057;"></i>
+                <div>
+                  <h4 style="margin: 0 0 0.5rem; font-size: 1.1rem;">{{ report.name }}</h4>
+                  <p style="margin: 0; color: #666;">Код отчёта: {{ report.code }}</p>
+                </div>
+              </div>
+              <div style="margin-top: 1rem;">
+                <button pButton label="Скачать" icon="pi pi-download" style="margin-right: 0.5rem;"></button>
+                <button pButton label="Редактировать" icon="pi pi-pencil" class="p-button-secondary"></button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </app-accordion>
+
+      <div *ngIf="lastEvent" style="margin-top: 1rem; padding: 0.75rem; background: #f0f0f0; border-radius: 4px; font-family: monospace; font-size: 0.875rem;">
+        <div style="color: #0d4cd3; margin-bottom: 0.25rem;">Последнее событие:</div>
+        <pre style="margin: 0;">{{ lastEvent | json }}</pre>
+      </div>
+    `,
+    props: {
+      ...args,
+      lastEvent: null as RowEvent | null,
+      onRowExpand: function (this: any, event: { data: any; index: number }) {
+        this.lastEvent = { type: 'onRowExpand', data: event.data };
+        console.log('Row expanded:', event.data);
+      },
+      onRowCollapse: function (this: any, event: { data: any; index: number }) {
+        this.lastEvent = { type: 'onRowCollapse', data: event.data };
+        console.log('Row collapsed:', event.data);
+      },
+    },
+  }),
   parameters: {
     docs: {
       description: {
         story: `
-### 📊 Аккордеон с таблицей
+### 📊 Аккордеон с таблицей (как в GIA11 Reports)
 
-Сложная структура с вложенными таблицами и раскрывающимися строками.
+**Реальный пример из:**
+🔗 [Отчёты ГИА-11](https://app-master.oisu-gia.srvdev.ru/planning/gia11-reports)
 
 **Особенности:**
 - Включается флагом \`withExpandableTable=true\`
-- Требует обязательной передачи \`reportGroups\`
-- Поддерживает события \`onRowExpand\`/\`onRowCollapse\`
+- Требует обязательной передачи \`reportGroups\` (как в \`gia11-reports.component.html\`)
+- Поддерживает события \`onRowExpand\`/\`onRowCollapse\` (см. лог ниже)
 - Каждая строка таблицы может раскрываться в форму
 
-**Когда использовать:**
-- ✅ Отображение иерархических данных
-- ✅ Когда нужно показать детализированную информацию по каждому элементу
-- ✅ Для сложных отчётов с возможностью редактирования
-
-**Пример кода:**
-\`\`\`html
-<p-accordion
-  [withExpandableTable]="true"
-  [config]="{value: [0], multiple: true, dialog: false}"
-  [reportGroups]="[
-    {
-      value: 0,
-      name: 'Отчёты Q1',
-      reports: [
-        {code: 'R1', name: 'Отчёт 1'},
-        {code: 'R2', name: 'Отчёт 2'}
-      ]
-    }
-  ]"
-/>
-\`\`\`
-
-**Структура reportGroups:**
+**Структура reportGroups (как в реальном коде):**
 \`\`\`typescript
 interface ReportGroup {
-  value: number;       // Идентификатор группы
-  name: string;        // Название группы
+  value: number;       // Идентификатор группы (например, квартал)
+  name: string;        // Название группы (например, "Q1 2024")
   reports: Array<{
-    code: string;      // Код отчёта
+    code: string;      // Код отчёта (например, "GIA11-Q1-01")
     name: string;      // Название отчёта
   }>;
+}
+\`\`\`
+
+**Пример использования с обработкой событий:**
+\`\`\`html
+<app-accordion
+  [withExpandableTable]="true"
+  [config]="{value: [0], multiple: true}"
+  [reportGroups]="reportGroups"
+  (onRowExpand)="onRowExpand($event)"
+  (onRowCollapse)="onRowCollapse($event)"
+>
+  <ng-template #expandedrow let-report>
+    <tr>
+      <td colspan="2">
+        <!-- Кастомная форма для строки (как в gia11-reports) -->
+        <app-report-form [reportCode]="report.code" />
+      </td>
+    </tr>
+  </ng-template>
+</app-accordion>
+\`\`\`
+
+**TS-код для обработки событий:**
+\`\`\`typescript
+// В компоненте
+lastEvent: { type: string, data: any } | null = null;
+
+onRowExpand(event: { data: Report, index: number }) {
+  this.lastEvent = { type: 'onRowExpand', data: event.data };
+  console.log('Раскрыта строка:', event.data.name);
+  // Загрузка дополнительных данных для строки
+}
+
+onRowCollapse(event: { data: Report, index: number }) {
+  this.lastEvent = { type: 'onRowCollapse', data: event.data };
+  console.log('Свернута строка:', event.data.name);
 }
 \`\`\`
         `,
@@ -556,7 +644,7 @@ export const DisabledPanel: Story = {
         story: `
 ### 🚫 Отключённая панель
 
-Панель с \`disabled: true\` нельзя раскрыть и она визуально отличается.
+Панель с \`disabled: true\` нельзя раскрыть, и она визуально отличается.
 
 **Особенности:**
 - Визуально затемнена и неактивна
@@ -641,60 +729,7 @@ export const HeaderOnly: Story = {
 };
 
 // =======================================================
-// 💬 DIALOG MODE
-// =======================================================
-export const DialogMode: Story = {
-  args: {
-    config: {
-      value: [0],
-      multiple: false,
-      dialog: true,
-    },
-    withExpandableTable: false,
-    panels: [
-      { value: 0, header: 'Настройки профиля', disabled: false },
-      { value: 1, header: 'Уведомления', disabled: false },
-      { value: 2, header: 'Безопасность', disabled: false },
-    ],
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: `
-### 💬 Диалоговый режим
-
-Специальные стили для использования аккордеона в модальных окнах.
-
-**Особенности:**
-- Включается через \`config.dialog = true\`
-- Изменяет отступы и стили заголовков
-- Оптимизирован для компактного отображения в диалогах
-
-**Когда использовать:**
-- ✅ В модальных окнах
-- ✅ Во всплывающих панелиях
-- ✅ Когда нужно сэкономить вертикальное пространство
-
-**Пример кода:**
-\`\`\`html
-<div class="dialog">
-  <p-accordion
-    [config]="{value: [0], multiple: false, dialog: true}"
-    [panels]="[
-      {value: 0, header: 'Настройки', disabled: false},
-      {value: 1, header: 'Уведомления', disabled: false}
-    ]"
-  />
-</div>
-\`\`\`
-        `,
-      },
-    },
-  },
-};
-
-// =======================================================
-// 🏗️ PRACTICAL EXAMPLES
+// 🏗️ PRACTICAL EXAMPLES (Реальные примеры из проекта)
 // =======================================================
 export const PracticalExamples: Story = {
   render: () => ({
@@ -703,7 +738,7 @@ export const PracticalExamples: Story = {
         <!-- 1. Форма настроек профиля -->
         <div>
           <h3 style="margin: 0 0 1rem; font-size: 16px; font-weight: 600; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">
-            1. Форма настроек профиля
+            1. Форма настроек профиля (базовый аккордеон)
           </h3>
           <app-accordion
             [config]="{value: [0], multiple: false, dialog: false}"
@@ -724,14 +759,23 @@ export const PracticalExamples: Story = {
                   <input type="email" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
                 </div>
               </div>
+              <div *ngIf="panel.value === 1" style="padding: 1rem;">
+                <div style="margin-bottom: 1rem;">
+                  <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Телефон</label>
+                  <input type="tel" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+              </div>
             </ng-template>
           </app-accordion>
         </div>
 
-        <!-- 2. Отчёты по кварталам -->
+        <!-- 2. Отчёты по кварталам (как в GIA11 Reports) -->
         <div>
           <h3 style="margin: 0 0 1rem; font-size: 16px; font-weight: 600; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">
-            2. Отчёты по кварталам (с таблицей)
+            2. Отчёты ГИА-11 по кварталам (с таблицей)
+            <small style="display: block; margin-top: 0.25rem; color: #666;">
+              🔗 <a href="https://app-master.oisu-gia.srvdev.ru/planning/gia11-reports" target="_blank">Реальный пример в системе</a>
+            </small>
           </h3>
           <app-accordion
             [withExpandableTable]="true"
@@ -739,98 +783,114 @@ export const PracticalExamples: Story = {
             [reportGroups]="[
               {
                 value: 0,
-                name: 'Q1 2024',
+                name: 'GIA11: Q1 2024',
                 reports: [
-                  {code: 'Q1-01', name: 'Отчёт по продажам'},
-                  {code: 'Q1-02', name: 'Финансовый отчёт'}
+                  {code: 'GIA11-Q1-01', name: 'Отчёт по регистрации участников'},
+                  {code: 'GIA11-Q1-02', name: 'Отчёт по распределению по ППЭ'},
+                  {code: 'GIA11-Q1-03', name: 'Отчёт по конфликтам'}
                 ]
               },
               {
                 value: 1,
-                name: 'Q2 2024',
+                name: 'GIA11: Q2 2024',
                 reports: [
-                  {code: 'Q2-01', name: 'Отчёт по логистике'},
-                  {code: 'Q2-02', name: 'Маркетинговый отчёт'}
+                  {code: 'GIA11-Q2-01', name: 'Отчёт по апелляциям'},
+                  {code: 'GIA11-Q2-02', name: 'Отчёт по результатам'}
                 ]
               }
             ]"
-          />
-        </div>
-
-        <!-- 3. Диалоговые настройки -->
-        <div style="border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem; background: #f8f9fa; max-width: 500px;">
-          <h3 style="margin: 0 0 1rem; font-size: 16px; font-weight: 600;">
-            3. Настройки уведомлений (диалоговый режим)
-          </h3>
-          <app-accordion
-            [config]="{value: [0], multiple: false, dialog: true}"
-            [panels]="[
-              {value: 0, header: 'Email уведомления', disabled: false},
-              {value: 1, header: 'Push уведомления', disabled: false},
-              {value: 2, header: 'SMS уведомления', disabled: true}
-            ]"
+            (onRowExpand)="onRowExpand($event)"
+            (onRowCollapse)="onRowCollapse($event)"
           >
-            <ng-template #panelContent let-panel>
-              <div *ngIf="panel.value === 0" style="padding: 1rem;">
-                <div style="margin-bottom: 1rem;">
-                  <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Частота уведомлений</label>
-                  <select style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
-                    <option>Ежедневно</option>
-                    <option>Еженедельно</option>
-                    <option>Ежемесячно</option>
-                  </select>
-                </div>
-                <button style="padding: 0.5rem 1rem; background: #0d4cd3; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                  Сохранить настройки
-                </button>
-              </div>
+            <ng-template #expandedrow let-report>
+              <tr>
+                <td colspan="2" style="padding: 1rem; background: #f8f9fa;">
+                  <!-- Кастомная форма для строки (как в реальном проекте) -->
+                  <div style="display: flex; gap: 1rem; align-items: center;">
+                    <i class="pi pi-file" style="font-size: 2rem; color: #495057;"></i>
+                    <div>
+                      <h4 style="margin: 0 0 0.5rem; font-size: 1.1rem;">{{ report.name }}</h4>
+                      <p style="margin: 0; color: #666;">Код отчёта: {{ report.code }}</p>
+                    </div>
+                  </div>
+                  <div style="margin-top: 1rem;">
+                    <button pButton label="Скачать" icon="pi pi-download" style="margin-right: 0.5rem;"></button>
+                    <button pButton label="Редактировать" icon="pi pi-pencil" class="p-button-secondary"></button>
+                  </div>
+                </td>
+              </tr>
             </ng-template>
           </app-accordion>
         </div>
       </div>
+
+      <!-- Скрытый блок для демонстрации обработки событий -->
+      <div *ngIf="lastEvent" style="margin-top: 2rem; padding: 1rem; background: #f0f0f0; border-radius: 4px;">
+        <h4 style="margin: 0 0 0.5rem;">Последнее событие:</h4>
+        <pre style="margin: 0; font-size: 0.875rem;">{{ lastEvent | json }}</pre>
+      </div>
     `,
+    component: class {
+      lastEvent: RowEvent | null = null;
+
+      onRowExpand(event: { data: any; index: number }) {
+        this.lastEvent = { type: 'onRowExpand', data: event.data };
+        console.log('Row expanded:', event.data);
+      }
+
+      onRowCollapse(event: { data: any; index: number }) {
+        this.lastEvent = { type: 'onRowCollapse', data: event.data };
+        console.log('Row collapsed:', event.data);
+      }
+    },
   }),
   parameters: {
     docs: {
       description: {
         story: `
-### 🏗️ Практические примеры использования
+### 🏗️ Практические примеры использования (из реального проекта)
 
-Реальные сценарии использования аккордеона в приложении:
+Реальные сценарии использования аккордеона в системе ОИСУ ГИА.
 
-#### 1️⃣ Форма настроек профиля
-\`\`\`html
-<app-accordion [config]="{dialog: false}">
-  <ng-template #panelContent let-panel>
-    <div *ngIf="panel.value === 0">
-      <!-- Форма редактирования профиля -->
-    </div>
-  </ng-template>
-</app-accordion>
+---
+
+#### 1️⃣ **Форма настроек профиля**
+Базовый аккордеон для группировки полей в форме.
+**Когда использовать:**
+- Простые формы с 2-4 группами полей
+- Когда нужно показать одну группу полей за раз
+
+---
+
+#### 2️⃣ **Отчёты ГИА-11 по кварталам**
+**Реальный пример:** [Отчёты ГИА-11](https://app-master.oisu-gia.srvdev.ru/planning/gia11-reports)
+**Особенности:**
+- Режим \`withExpandableTable=true\`
+- Кастомный контент в раскрытой строке (\`<ng-template #expandedrow>\`)
+- Обработка событий \`onRowExpand\`/\`onRowCollapse\` (см. лог ниже)
+- Данные загружаются динамически при раскрытии строки
+
+**Структура reportGroups (как в реальном коде):**
+\`\`\`typescript
+// Пример из gia11-reports.component.ts
+this.reportGroups = [
+  {
+    value: 1, // ID квартала
+    name: 'GIA11: Q1 2024',
+    reports: [
+      { code: 'GIA11-Q1-01', name: 'Отчёт по регистрации' },
+      { code: 'GIA11-Q1-02', name: 'Отчёт по распределению' }
+    ]
+  }
+];
 \`\`\`
 
-#### 2️⃣ Отчёты по кварталам с таблицей
-\`\`\`html
-<app-accordion
-  [withExpandableTable]="true"
-  [reportGroups]="reportGroups"
-/>
-\`\`\`
-
-#### 3️⃣ Настройки в диалоговом окне
-\`\`\`html
-<div class="dialog">
-  <app-accordion [config]="{dialog: true}">
-    <!-- Контент -->
-  </app-accordion>
-</div>
-\`\`\`
-
-**Рекомендации по использованию:**
-- Для простых форм используйте базовый аккордеон
-- Для сложных иерархических данных - режим с таблицей
-- В модальных окнах всегда используйте \`dialog: true\`
-- Для временно недоступных секций используйте \`disabled: true\`
+---
+### 📌 Рекомендации по использованию
+| Сценарий | Рекомендуемый компонент | Пример использования |
+|----------|-------------------------|----------------------|
+| Простые формы с группировкой полей | Базовый аккордеон (\`p-accordion\`) | Настройки профиля |
+| Иерархические данные с таблицами | \`withExpandableTable=true\` | Отчёты ГИА-11 |
         `,
       },
     },
