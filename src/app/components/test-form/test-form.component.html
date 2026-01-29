@@ -1,0 +1,202 @@
+<div class="form-container">
+  <!-- Прогресс-бар -->
+  <div class="progress-bar">
+    <div
+      class="progress-step"
+      [class.active]="activeStep >= 0"
+      [class.completed]="activeStep > 0"
+      [class.invalid]="activeStep === 0 && !isCurrentStepValid()"
+    >
+      Личные данные
+    </div>
+    <div
+      class="progress-step"
+      [class.active]="activeStep >= 1"
+      [class.completed]="activeStep > 1"
+      [class.invalid]="activeStep === 1 && !isCurrentStepValid()"
+    >
+      Документы
+    </div>
+    <div
+      class="progress-step"
+      [class.active]="activeStep >= 2"
+      [class.completed]="activeStep > 2"
+      [class.invalid]="activeStep === 2 && !isCurrentStepValid()"
+    >
+      Экзамены
+    </div>
+    <div
+      class="progress-step"
+      [class.active]="activeStep >= 3"
+      [class.completed]="activeStep > 3"
+    >
+      Подтверждение
+    </div>
+  </div>
+
+  <!-- Аккордеон с шагами -->
+  <p-accordion [activeIndex]="activeStep">
+    <!-- Шаг 1: Личные данные -->
+    <p-accordionTab header="Личные данные">
+      <div class="form-step">
+        <form [formGroup]="personalData">
+          <app-text-input
+            variant="input"
+            label="ФИО"
+            formControlName="fullName"
+            [required]="true"
+            placeholder="Иванов Иван Иванович"
+          ></app-text-input>
+
+          <app-text-input
+            variant="input"
+            label="Email"
+            formControlName="email"
+            [required]="true"
+            type="email"
+            placeholder="example@mail.ru"
+          ></app-text-input>
+
+          <app-text-input
+            variant="phone-multi"
+            label="Телефон"
+            formControlName="phone"
+            [required]="true"
+          ></app-text-input>
+
+          <app-text-input
+            variant="datepicker"
+            label="Дата регистрации"
+            formControlName="date"
+            [required]="true"
+          ></app-text-input>
+
+
+          <app-checkbox
+            label="Согласен на обработку персональных данных"
+            formControlName="agreeTerms"
+            [required]="true"
+          ></app-checkbox>
+        </form>
+      </div>
+    </p-accordionTab>
+
+    <!-- Шаг 2: Документы -->
+    <p-accordionTab header="Документы">
+      <div class="form-step">
+        <app-file-upload
+          variant="upload-field"
+          [files]="uploadedFiles"
+          (onUpload)="onFileUpload($event)"
+          (onRemove)="onFileRemove($event.index)"
+          [multiple]="true"
+        ></app-file-upload>
+
+        <div
+          *ngIf="
+            form.get('documents')?.invalid && form.get('documents')?.touched
+          "
+          class="p-error"
+        >
+          Загрузите хотя бы один документ
+        </div>
+      </div>
+    </p-accordionTab>
+
+    <!-- Шаг 3: Выбор экзаменов -->
+    <p-accordionTab header="Выбор экзаменов">
+      <div class="form-step">
+        <form [formGroup]="examSelection">
+          <div class="radio-group">
+            <label>Тип участия:</label>
+            <div *ngFor="let type of examTypes">
+              <p-radioButton
+                [name]="'examType'"
+                [value]="type"
+                formControlName="examType"
+              ></p-radioButton>
+            </div>
+          </div>
+
+          <app-select
+            [options]="availableExams"
+            formControlName="exams"
+            placeholder="Выберите экзамены"
+            [showHeader]="true"
+            [maxSelectedLabels]="3"
+            selectedItemsLabel="Выбрано: {0}"
+          ></app-select>
+        </form>
+      </div>
+    </p-accordionTab>
+
+    <!-- Шаг 4: Подтверждение -->
+    <p-accordionTab header="Подтверждение">
+      <div class="form-step">
+        <h3>Проверьте введенные данные</h3>
+        <p-card>
+          <div class="summary">
+            <p>
+              <strong>ФИО:</strong> {{ personalData.get("fullName")?.value }}
+            </p>
+            <p>
+              <strong>Email:</strong> {{ personalData.get("email")?.value }}
+            </p>
+            <p>
+              <strong>Телефон:</strong> {{ personalData.get("phone")?.value }}
+            </p>
+            <p>
+              <strong>Дата рождения:</strong>
+              {{ personalData.get("birthDate")?.value | date }}
+            </p>
+            <p>
+              <strong>Тип участия:</strong>
+              {{ examSelection.get("examType")?.value }}
+            </p>
+            <p>
+              <strong>Экзамены:</strong>
+              {{ examSelection.get("exams")?.value | json }}
+            </p>
+            <p><strong>Документы:</strong> {{ uploadedFiles.length }} файлов</p>
+          </div>
+        </p-card>
+
+        <div class="button-group">
+          <p-button
+            label="Назад"
+            icon="pi pi-arrow-left"
+            (click)="prevStep()"
+            class="p-button-secondary"
+          ></p-button>
+          <p-button
+            label="Отправить"
+            icon="pi pi-check"
+            (click)="submitForm()"
+            [loading]="false"
+          ></p-button>
+        </div>
+      </div>
+    </p-accordionTab>
+  </p-accordion>
+
+  <!-- Кнопки навигации между шагами -->
+  <div class="navigation-buttons" *ngIf="activeStep < 3">
+    <p-button
+      label="Назад"
+      icon="pi pi-arrow-left"
+      (click)="prevStep()"
+      class="p-button-secondary"
+      [disabled]="activeStep === 0"
+    ></p-button>
+    <p-button
+      label="Далее"
+      icon="pi pi-arrow-right"
+      iconPos="right"
+      (click)="nextStep()"
+      [disabled]="!isCurrentStepValid()"
+    ></p-button>
+  </div>
+
+  <!-- Уведомления -->
+  <p-toast></p-toast>
+</div>

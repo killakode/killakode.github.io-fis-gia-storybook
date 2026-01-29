@@ -1,0 +1,164 @@
+<div style="max-width: 1200px; margin: 0 auto; padding: 2rem">
+  <!-- ЗАГОЛОВОК -->
+  <h1 style="font-size: 2rem; margin-bottom: 1rem">📖 Документация UI Kit</h1>
+
+  <!-- ОПИСАНИЕ -->
+  <p-card>
+    <h2>📚 Что такое Storybook?</h2>
+    <p style="margin-bottom: 1rem">
+      <strong>Storybook</strong> — это инструмент для разработки UI-компонентов
+      в изоляции.
+    </p>
+  </p-card>
+
+  <!-- ИНТЕРАКТИВНЫЕ ПРИМЕРЫ -->
+  <h2 style="margin-bottom: 1rem">🎮 Интерактивные примеры</h2>
+
+  <!-- 1. INPUT -->
+  <p-card header="👋 Пример ввода">
+    <div style="display: flex; flex-direction: column; gap: 1rem">
+      <app-text-input
+        variant="input"
+        label="Ваше имя"
+        placeholder="Введите ваше имя"
+        [(ngModel)]="userName"
+        style="max-width: 300px"
+      ></app-text-input>
+      @if (userName) {
+        <div style="padding: 1rem; background: #f0f8ff; border-radius: 4px">
+          <p style="margin: 0; font-size: 1.1rem">
+            👋 Привет, <strong>{{ userName }}</strong
+            >!
+          </p>
+        </div>
+      }
+    </div>
+  </p-card>
+
+  <!-- 2. RADIO BUTTONS -->
+  <p-card header="🎨 Пример переключателя">
+    <div style="display: flex; flex-direction: column; gap: 1rem">
+      <div style="display: flex; gap: 1rem; align-items: center">
+        @for (option of themeOptions; track option.value) {
+          <div style="display: flex; align-items: center">
+            <p-radioButton
+              [name]="'theme'"
+              [value]="option.value"
+              [(ngModel)]="selectedTheme"
+              [inputId]="option.value"
+            ></p-radioButton>
+            <label [for]="option.value" style="margin-left: 0.5rem">{{
+              option.label
+            }}</label>
+          </div>
+        }
+      </div>
+
+      <div
+        [style.background]="
+          selectedTheme === 'dark'
+            ? '#1e1e1e'
+            : selectedTheme === 'light'
+              ? '#ffffff'
+              : '#f5f5f5'
+        "
+        [style.color]="selectedTheme === 'dark' ? '#ffffff' : '#000000'"
+        style="padding: 1rem; border-radius: 4px; border: 1px solid #ddd"
+      >
+        <p style="margin: 0">
+          ✅ Выбрана тема:
+          <strong>{{
+            selectedTheme === "light"
+              ? "Светлая"
+              : selectedTheme === "dark"
+                ? "Тёмная"
+                : "Системная"
+          }}</strong>
+        </p>
+      </div>
+    </div>
+  </p-card>
+
+  <!-- 3. CHECKBOX -->
+  <p-card header="👁️ Пример флажка">
+    <div style="display: flex; flex-direction: column; gap: 1rem">
+      <app-checkbox
+        label="Показать приветственный блок"
+        [(ngModel)]="showWelcomeBlock"
+      ></app-checkbox>
+      @if (showWelcomeBlock) {
+        <div style="padding: 1rem; background: #e8f5e8; border-radius: 4px">
+          <p>Приветственный блок!</p>
+        </div>
+      }
+    </div>
+  </p-card>
+
+  <!-- 4. SELECT -->
+  <p-card header="🏙️ Пример выпадающего списка">
+    <div style="display: flex; flex-direction: column; gap: 1rem">
+      <p-select
+        [options]="mockCities"
+        optionLabel="name"
+        optionValue="code"
+        placeholder="Выберите город"
+        [(ngModel)]="selectedCity"
+      ></p-select>
+      @if (selectedCity) {
+        <div style="padding: 1rem; background: #fff3e0; border-radius: 4px">
+          <p>
+            Вы выбрали: <strong>{{ getSelectedCityLabel() }}</strong>
+          </p>
+        </div>
+      }
+    </div>
+  </p-card>
+
+  <!-- 5. BUTTON -->
+  <p-card header="🔍 Пример кнопки">
+    <div style="display: flex; flex-direction: column; gap: 1rem">
+      <app-button
+        label="Показать секрет"
+        (click)="toggleSecret()"
+        styleClass="blue-button"
+        style="max-width: 200px"
+      ></app-button>
+      @if (showSecret) {
+        <div style="padding: 1rem; background: #fff0f0; border-radius: 4px">
+          <p>Секретное сообщение!</p>
+        </div>
+      }
+    </div>
+  </p-card>
+
+  <!-- 6. ACCORDION -->
+  <p-card header="📂 Пример аккордеона">
+    <p-accordion>
+      <p-accordionTab header="Зачем нужен UI Kit?">
+        <p style="padding: 1rem">
+          UI Kit обеспечивает единообразие интерфейса во всём проекте.
+        </p>
+      </p-accordionTab>
+      <p-accordionTab header="Как добавить компонент?">
+        <p style="padding: 1rem">
+          1. Создайте компонент<br />
+          2. Добавьте в Storybook<br />
+          3. Задокументируйте
+        </p>
+      </p-accordionTab>
+    </p-accordion>
+  </p-card>
+
+  <!-- ФУТЕР -->
+  <div
+    style="
+      text-align: center;
+      margin-top: 2rem;
+      padding: 1rem;
+      border-top: 1px solid #eee;
+      color: #666;
+    "
+  >
+    <p style="margin: 0">📖 UI Kit Documentation</p>
+  </div>
+</div>

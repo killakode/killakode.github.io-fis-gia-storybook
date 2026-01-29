@@ -1,0 +1,139 @@
+/* test-form.component.scss */
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+
+  .progress-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 15px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #e0e0e0;
+      z-index: 1;
+    }
+
+    .progress-step {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      flex: 1;
+      padding: 10px 0;
+      color: #999;
+      font-size: 14px;
+      transition: all 0.3s ease;
+
+      &.active {
+        color: #1976d2;
+        font-weight: bold;
+      }
+
+      &.completed {
+        color: #4caf50;
+      }
+
+      &.invalid {
+        color: #f44336;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #e0e0e0;
+        z-index: 3;
+        transition: all 0.3s ease;
+      }
+
+      &.active::before {
+        background: #1976d2;
+      }
+
+      &.completed::before {
+        background: #4caf50;
+      }
+
+      &.invalid::before {
+        background: #f44336;
+      }
+    }
+  }
+
+  .form-step {
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 20px;
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    app-text-input,
+    p-calendar,
+    app-checkbox {
+      display: block;
+    }
+
+    .radio-group {
+      margin: 15px 0;
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+
+      p-radioButton {
+        margin-right: 15px;
+        margin-bottom: 10px;
+      }
+    }
+
+    .p-error {
+      color: #f44336;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+  }
+
+  .summary {
+    p {
+      margin: 10px 0;
+      line-height: 1.5;
+    }
+  }
+
+  .button-group,
+  .navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 10px;
+
+    p-button {
+      min-width: 120px;
+    }
+  }
+
+  .navigation-buttons {
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+}
